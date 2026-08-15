@@ -33,6 +33,7 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - Vehicle stays near the left side; the road and environment scroll right-to-left.
 - Exactly three depth lanes.
 - One input moves the vehicle to one adjacent lane.
+- Traffic mixes single cars, parallel pairs, staggered pairs, same-lane convoys, and scattered groups instead of repeating one formation.
 - Lane transition: 180 ms with one buffered command.
 - Desktop controls: arrow keys; mobile controls: on-screen up/down buttons.
 - Successful session target: 45–60 seconds.

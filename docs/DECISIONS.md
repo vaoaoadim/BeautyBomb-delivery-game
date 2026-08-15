@@ -12,7 +12,7 @@ Keep this file short. Record only decisions that change product behavior, archit
   - 360 × 640 Phaser canvas and interactive greybox added;
   - pure run-state transitions and deterministic obstacle waves added;
   - TypeScript check passed;
-  - 9 domain and configuration tests passed;
+  - 13 domain and configuration tests passed;
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
@@ -32,7 +32,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-007 | Use the selected concept with a turquoise vehicle, horizontal Water Bomb tube, and pixel BeautyBomb logo. | Captures the approved visual direction and later correction. |
 | D-008 | Do not copy the portfolio project's large skill collection or automatic design hooks. | They add context and maintenance cost before this game needs them. |
 | D-009 | Adapt Karpathy's baseline/measure/keep-discard loop without an infinite run or destructive reset. | Preserves measurable iteration while remaining safe for a product repository. |
-| D-010 | Use a fixed 45-second greybox route with curated, deterministic two-lane obstacle waves. | Makes difficulty reproducible and keeps one readable safe lane in every wave. |
+| D-010 | Use a fixed 45-second greybox route with a varied deterministic traffic schedule. | Keeps difficulty reproducible while mixing singles, parallel and staggered pairs, convoys, and scattered groups without an instant three-lane wall. |
 
 ## Open production questions
 

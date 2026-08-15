@@ -1,7 +1,10 @@
 import Phaser from "phaser";
 
 import { GAME_VIEWPORT, GAMEPLAY_RULES, LANE_CENTERS } from "../config";
-import { createObstacleWaves, type ObstacleWave } from "../content/obstacleWaves";
+import {
+  createTrafficSchedule,
+  type ObstacleSpawn,
+} from "../content/trafficSchedule";
 import {
   advanceRun,
   createRunState,
@@ -41,10 +44,10 @@ const OBSTACLE_SPAWN_X = GAME_VIEWPORT.width + 42;
 
 export class GreyboxScene extends Phaser.Scene {
   private runState: RunState = createRunState();
-  private readonly waves: readonly ObstacleWave[] = createObstacleWaves(
+  private readonly trafficSchedule: readonly ObstacleSpawn[] = createTrafficSchedule(
     GAMEPLAY_RULES.greyboxRunDurationMs,
   );
-  private nextWaveIndex = 0;
+  private nextObstacleIndex = 0;
   private obstacles: ActiveObstacle[] = [];
   private player!: Phaser.GameObjects.Container;
   private livesText!: Phaser.GameObjects.Text;
@@ -64,7 +67,7 @@ export class GreyboxScene extends Phaser.Scene {
 
   public create(): void {
     this.runState = createRunState();
-    this.nextWaveIndex = 0;
+    this.nextObstacleIndex = 0;
     this.obstacles = [];
     this.displayedPhase = "ready";
 
@@ -84,7 +87,7 @@ export class GreyboxScene extends Phaser.Scene {
 
     const previousPhase = this.runState.phase;
     this.runState = advanceRun(this.runState, delta);
-    this.spawnDueWaves();
+    this.spawnDueObstacles();
     this.moveObstacles(delta);
     this.checkCollisions();
     this.updateHud();
@@ -366,32 +369,30 @@ export class GreyboxScene extends Phaser.Scene {
     });
   }
 
-  private spawnDueWaves(): void {
-    let nextWave = this.waves[this.nextWaveIndex];
+  private spawnDueObstacles(): void {
+    let nextObstacle = this.trafficSchedule[this.nextObstacleIndex];
     while (
-      nextWave &&
-      nextWave.spawnAtMs <= this.runState.elapsedMs
+      nextObstacle &&
+      nextObstacle.spawnAtMs <= this.runState.elapsedMs
     ) {
-      this.spawnWave(nextWave);
-      this.nextWaveIndex += 1;
-      nextWave = this.waves[this.nextWaveIndex];
+      this.spawnObstacle(nextObstacle);
+      this.nextObstacleIndex += 1;
+      nextObstacle = this.trafficSchedule[this.nextObstacleIndex];
     }
   }
 
-  private spawnWave(wave: ObstacleWave): void {
-    for (const lane of wave.blockedLanes) {
-      const body = this.add.rectangle(
-        OBSTACLE_SPAWN_X,
-        LANE_CENTERS[lane],
-        62,
-        42,
-        lane % 2 === 0 ? COLORS.pink : COLORS.lime,
-        1,
-      );
-      body.setStrokeStyle(3, COLORS.navy, 1);
-      body.setDepth(18);
-      this.obstacles.push({ body, lane });
-    }
+  private spawnObstacle(obstacle: ObstacleSpawn): void {
+    const body = this.add.rectangle(
+      OBSTACLE_SPAWN_X,
+      LANE_CENTERS[obstacle.lane],
+      62,
+      42,
+      obstacle.id % 2 === 0 ? COLORS.pink : COLORS.lime,
+      1,
+    );
+    body.setStrokeStyle(3, COLORS.navy, 1);
+    body.setDepth(18);
+    this.obstacles.push({ body, lane: obstacle.lane });
   }
 
   private moveObstacles(delta: number): void {
@@ -482,7 +483,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.tweens.killTweensOf(this.player);
     this.clearObstacles();
     this.runState = retryRun(this.runState);
-    this.nextWaveIndex = 0;
+    this.nextObstacleIndex = 0;
     this.laneTweenActive = false;
     this.bufferedDirection = null;
     this.displayedPhase = "playing";
