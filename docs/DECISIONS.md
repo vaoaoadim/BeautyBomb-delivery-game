@@ -18,7 +18,7 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: Batch A courier design revision; awaiting approval of the side-profile, tapered-tube `v3` before native sprite production.
+- Current phase: Batch A courier design and native static proof approved; next are two obstacle silhouettes and the three-lane scale check.
 - Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
 
 ## Accepted decisions
@@ -39,6 +39,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-012 | Approve one static courier hero pose before producing animations or the full atlas. | Locks perspective, silhouette, product placement, and logo simplification before expensive downstream asset work. |
 | D-013 | Approve `veh-001-courier-near-concept-v1.png` as the courier design master. | The owner accepted the light-blue van, right-facing perspective, horizontal Waterbomb tube, and pixel BeautyBomb wordmark on 2026-08-15. |
 | D-014 | Replace the front-heavy `v1` perspective with the side-profile `veh-001-courier-side-concept-v2.png`. | A horizontal left-to-right runner needs the long side plane to dominate; the new candidate uses an `85–90%` side view and only a narrow front plane. |
+| D-015 | Approve `veh-001-courier-side-tapered-tube-concept-v3.png` as the courier design master. | The owner accepted the side-profile van and corrected tube taper on 2026-08-15; runtime production can use this version as its visual source. |
 
 ## Open production questions
 

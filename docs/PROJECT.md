@@ -87,4 +87,4 @@ Working colors are concept colors, not an official brand book:
 
 The deterministic greybox and varied traffic schedule are implemented. The Pixel Art Bible and Asset Manifest are specified from the approved references and stable traits observed on the official BeautyBomb site.
 
-The next phase begins with one static near-lane courier-vehicle concept containing the pixel wordmark and horizontal Waterbomb tube. Animation, environment, and later asset batches start only after this hero silhouette is approved. Prize roulette and client-site integration remain later phases.
+The approved courier design now has a transparent static `104 × 80` scale proof with documented origin and collision bounds. The next gate adds one compact hatchback and one sedan silhouette, then compares all three lane scales before courier or traffic animation begins. Prize roulette and client-site integration remain later phases.
