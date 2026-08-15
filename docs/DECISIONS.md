@@ -18,7 +18,7 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: visual specification complete; ready for the Batch A hero-asset approval gate.
+- Current phase: Batch A courier design approved; preparing the native sprite and lane-scale check.
 - Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
 
 ## Accepted decisions
@@ -37,6 +37,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-010 | Use a fixed 45-second greybox route with a varied deterministic traffic schedule. | Keeps difficulty reproducible while mixing singles, parallel and staggered pairs, convoys, and scattered groups without an instant three-lane wall. |
 | D-011 | Extend stable BeautyBomb site traits through an original pixel-art system rather than copying seasonal campaign artwork. | Keeps the concept recognizably aligned with the brand while avoiding dependence on temporary collaborations and unlicensed page art. |
 | D-012 | Approve one static courier hero pose before producing animations or the full atlas. | Locks perspective, silhouette, product placement, and logo simplification before expensive downstream asset work. |
+| D-013 | Approve `veh-001-courier-near-concept-v1.png` as the courier design master. | The owner accepted the light-blue van, right-facing perspective, horizontal Waterbomb tube, and pixel BeautyBomb wordmark on 2026-08-15. |
 
 ## Open production questions
 
