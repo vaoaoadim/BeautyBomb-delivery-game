@@ -3,8 +3,14 @@ export const GAME_VIEWPORT = Object.freeze({
   height: 640,
 });
 
-export const LANE_CENTERS = [326, 400, 474] as const;
-export const LANE_SCALES = [0.88, 0.94, 1] as const;
+export const LANE_BASELINES = [350, 424, 508] as const;
+export const LANE_VISUAL_SCALES = [1.12, 1.22, 1.32] as const;
+export const VEHICLE_COLLISION_TO_VISUAL_RATIO = 0.84;
+export const OBSTACLE_VISUAL_SCALE_MULTIPLIERS = Object.freeze({
+  "pink-hatchback": 1,
+  "yellow-sedan": 1.04,
+  "green-wagon": 1.18,
+} as const);
 
 export const GAMEPLAY_RULES = Object.freeze({
   startingLives: 3,

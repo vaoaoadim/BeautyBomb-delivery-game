@@ -46,9 +46,9 @@ An energetic BeautyBomb campaign has been compressed into a premium 16-bit deliv
 - Camera: shallow 2.5D three-quarter side view.
 - Vehicles face right; the environment and traffic move right-to-left.
 - The courier stays near `x = 74–82` logical pixels.
-- Lane centers remain `326`, `400`, and `474`.
-- Depth scale targets: far lane `0.88`, middle lane `0.94`, near lane `1.00`.
-- Lane changes may interpolate scale and vertical position, but collision boxes remain simpler and slightly smaller than visible sprites.
+- Vehicle wheel baselines are `350`, `424`, and `508`, positioned near the lower edge of each road section instead of at its geometric center.
+- Visual depth scale targets: far lane `1.12`, middle lane `1.22`, near lane `1.32`.
+- Lane changes interpolate visual scale and baseline position. Collision rectangles use the authored body guides at `84%` of visual scale so the larger art remains readable without making avoidance unfair.
 - Roofs, hoods, and top faces are visible; avoid a flat orthographic side view and avoid an isometric camera.
 
 ### Pixel grid

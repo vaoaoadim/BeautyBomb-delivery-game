@@ -3,8 +3,10 @@ import Phaser from "phaser";
 import {
   GAME_VIEWPORT,
   GAMEPLAY_RULES,
-  LANE_CENTERS,
-  LANE_SCALES,
+  LANE_BASELINES,
+  LANE_VISUAL_SCALES,
+  OBSTACLE_VISUAL_SCALE_MULTIPLIERS,
+  VEHICLE_COLLISION_TO_VISUAL_RATIO,
 } from "../config";
 import {
   createTrafficSchedule,
@@ -37,6 +39,7 @@ interface ActiveObstacle {
   readonly originPixelX: number;
   readonly originPixelY: number;
   readonly collision: CollisionSpec;
+  readonly collisionScaleRatio: number;
 }
 
 interface ObstacleAssetSpec {
@@ -46,6 +49,7 @@ interface ObstacleAssetSpec {
   readonly originPixelX: number;
   readonly originPixelY: number;
   readonly collision: CollisionSpec;
+  readonly visualScaleMultiplier: number;
 }
 
 const COLORS = Object.freeze({
@@ -65,7 +69,7 @@ const COLORS = Object.freeze({
 const ROAD_TOP = 282;
 const ROAD_BOTTOM = 522;
 const PLAYER_X = 74;
-const OBSTACLE_SPAWN_X = GAME_VIEWPORT.width + 42;
+const OBSTACLE_SPAWN_X = GAME_VIEWPORT.width + 72;
 const PLAYER_ASSET = Object.freeze({
   textureKey: "courier-static",
   path: "/assets/game/vehicles/veh-001-courier-static-v1.png",
@@ -83,6 +87,8 @@ const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
     originPixelX: 40,
     originPixelY: 52,
     collision: { x: 6, y: 27, width: 68, height: 24 },
+    visualScaleMultiplier:
+      OBSTACLE_VISUAL_SCALE_MULTIPLIERS["pink-hatchback"],
   },
   "yellow-sedan": {
     textureKey: "obstacle-yellow-sedan",
@@ -91,6 +97,8 @@ const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
     originPixelX: 44,
     originPixelY: 52,
     collision: { x: 6, y: 30, width: 76, height: 21 },
+    visualScaleMultiplier:
+      OBSTACLE_VISUAL_SCALE_MULTIPLIERS["yellow-sedan"],
   },
   "green-wagon": {
     textureKey: "obstacle-green-wagon",
@@ -99,6 +107,8 @@ const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
     originPixelX: 42,
     originPixelY: 54,
     collision: { x: 6, y: 29, width: 72, height: 24 },
+    visualScaleMultiplier:
+      OBSTACLE_VISUAL_SCALE_MULTIPLIERS["green-wagon"],
   },
 };
 
@@ -242,9 +252,9 @@ export class GreyboxScene extends Phaser.Scene {
   private createPlayer(): Phaser.GameObjects.Image {
     const lane = this.runState.lane;
     return this.add
-      .image(PLAYER_X, LANE_CENTERS[lane], PLAYER_ASSET.textureKey)
+      .image(PLAYER_X, LANE_BASELINES[lane], PLAYER_ASSET.textureKey)
       .setOrigin(0.5, PLAYER_ASSET.originPixelY / PLAYER_ASSET.canvasHeight)
-      .setScale(LANE_SCALES[lane])
+      .setScale(LANE_VISUAL_SCALES[lane])
       .setDepth(20 + lane);
   }
 
@@ -397,9 +407,9 @@ export class GreyboxScene extends Phaser.Scene {
     this.player.setDepth(20 + this.runState.lane);
     this.tweens.add({
       targets: this.player,
-      y: LANE_CENTERS[this.runState.lane],
-      scaleX: LANE_SCALES[this.runState.lane],
-      scaleY: LANE_SCALES[this.runState.lane],
+      y: LANE_BASELINES[this.runState.lane],
+      scaleX: LANE_VISUAL_SCALES[this.runState.lane],
+      scaleY: LANE_VISUAL_SCALES[this.runState.lane],
       duration: GAMEPLAY_RULES.laneSwitchMs,
       ease: "Cubic.Out",
       onComplete: () => {
@@ -429,11 +439,13 @@ export class GreyboxScene extends Phaser.Scene {
     const asset = OBSTACLE_ASSETS[obstacle.kind];
     const sprite = this.add.image(
       OBSTACLE_SPAWN_X,
-      LANE_CENTERS[obstacle.lane],
+      LANE_BASELINES[obstacle.lane],
       asset.textureKey,
     );
     sprite.setOrigin(0.5, asset.originPixelY / asset.canvasHeight);
-    sprite.setScale(LANE_SCALES[obstacle.lane]);
+    sprite.setScale(
+      LANE_VISUAL_SCALES[obstacle.lane] * asset.visualScaleMultiplier,
+    );
     sprite.setDepth(18 + obstacle.lane);
     this.obstacles.push({
       sprite,
@@ -441,6 +453,8 @@ export class GreyboxScene extends Phaser.Scene {
       originPixelX: asset.originPixelX,
       originPixelY: asset.originPixelY,
       collision: asset.collision,
+      collisionScaleRatio:
+        VEHICLE_COLLISION_TO_VISUAL_RATIO / asset.visualScaleMultiplier,
     });
   }
 
@@ -451,7 +465,7 @@ export class GreyboxScene extends Phaser.Scene {
 
     for (const obstacle of this.obstacles) {
       obstacle.sprite.x -= distance;
-      if (obstacle.sprite.x < -48) {
+      if (obstacle.sprite.x + obstacle.sprite.displayWidth / 2 < 0) {
         obstacle.sprite.destroy();
       } else {
         remaining.push(obstacle);
@@ -471,6 +485,7 @@ export class GreyboxScene extends Phaser.Scene {
       PLAYER_ASSET.originPixelX,
       PLAYER_ASSET.originPixelY,
       PLAYER_ASSET.collision,
+      VEHICLE_COLLISION_TO_VISUAL_RATIO,
     );
     const collidedIndex = this.obstacles.findIndex((obstacle) =>
       Phaser.Geom.Intersects.RectangleToRectangle(
@@ -480,6 +495,7 @@ export class GreyboxScene extends Phaser.Scene {
           obstacle.originPixelX,
           obstacle.originPixelY,
           obstacle.collision,
+          obstacle.collisionScaleRatio,
         ),
       ),
     );
@@ -546,8 +562,8 @@ export class GreyboxScene extends Phaser.Scene {
     this.laneTweenActive = false;
     this.bufferedDirection = null;
     this.displayedPhase = "playing";
-    this.player.setPosition(PLAYER_X, LANE_CENTERS[this.runState.lane]);
-    this.player.setScale(LANE_SCALES[this.runState.lane]);
+    this.player.setPosition(PLAYER_X, LANE_BASELINES[this.runState.lane]);
+    this.player.setScale(LANE_VISUAL_SCALES[this.runState.lane]);
     this.player.setDepth(20 + this.runState.lane);
     this.player.setAlpha(1);
     this.promptOverlay.setVisible(false);
@@ -566,12 +582,22 @@ export class GreyboxScene extends Phaser.Scene {
     originPixelX: number,
     originPixelY: number,
     collision: CollisionSpec,
+    collisionScaleRatio: number,
   ): Phaser.Geom.Rectangle {
+    const visualX =
+      sprite.x + (collision.x - originPixelX) * sprite.scaleX;
+    const visualY =
+      sprite.y + (collision.y - originPixelY) * sprite.scaleY;
+    const visualWidth = collision.width * sprite.scaleX;
+    const visualHeight = collision.height * sprite.scaleY;
+    const collisionWidth = visualWidth * collisionScaleRatio;
+    const collisionHeight = visualHeight * collisionScaleRatio;
+
     return new Phaser.Geom.Rectangle(
-      sprite.x + (collision.x - originPixelX) * sprite.scaleX,
-      sprite.y + (collision.y - originPixelY) * sprite.scaleY,
-      collision.width * sprite.scaleX,
-      collision.height * sprite.scaleY,
+      visualX + (visualWidth - collisionWidth) / 2,
+      visualY + (visualHeight - collisionHeight) / 2,
+      collisionWidth,
+      collisionHeight,
     );
   }
 }

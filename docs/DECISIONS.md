@@ -18,8 +18,8 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: the approved static courier and three obstacle candidates are integrated; the traffic trap is fixed and the three-lane scale check is implemented. Next is owner approval of the scale gate before animation production.
-- The in-app browser smoke test on 2026-08-15 confirmed that the local Phaser scene loads the courier and obstacle PNGs, interpolates lane position and scale, and renders the far and near lane states correctly; full-route feel remains an owner playtest gate.
+- Current phase: the courier and obstacle visuals have been enlarged and moved to proper wheel baselines; the corrected scale gate is ready for owner approval before animation production.
+- The in-app browser smoke test on 2026-08-16 confirmed that the enlarged courier remains inside the canvas and readable on all three lanes. The traffic schedule and domain behavior remain unchanged; full-route feel remains an owner playtest gate.
 
 ## Accepted decisions
 
@@ -43,6 +43,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-016 | Limit each traffic formation to two vehicles and require an open lane within every `1,200 ms` spawn window. | Prevents the scattered three-car sequence and neighboring groups from creating an unfair full-road trap. |
 | D-017 | Use a pink hatchback, yellow sedan, and green boxy wagon as the first playable traffic trio. | Distinct color, roofline, and wheelbase make obstacle recognition faster without competing with the turquoise courier. |
 | D-018 | Use shared lane scale factors `0.88`, `0.94`, and `1.00` for vehicle visuals and collision rectangles. | Keeps the shallow 2.5D depth cue readable without allowing visible art and gameplay hitboxes to drift apart. |
+| D-019 | Supersede D-018 with wheel baselines `350/424/508`, visual scales `1.12/1.22/1.32`, and collision scale ratio `0.84`; enlarge the green wagon by an additional `1.18`. | The first integrated scale left roughly half of each road section visually empty and reduced sprite legibility. Separating art scale from collider scale improves composition without materially increasing difficulty. |
 
 ## Open production questions
 

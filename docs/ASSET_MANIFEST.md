@@ -33,7 +33,7 @@ Native static scale proof: `public/assets/game/vehicles/veh-001-courier-static-v
 
 Integrated obstacle review candidates: `obs-001-pink-hatchback-static-v1.png`, `obs-002-yellow-sedan-static-v1.png`, and `obs-003-green-wagon-static-v1.png`, each with adjacent JSON collision metadata. Combined review sheet: `visual-references/obstacle-vehicles-static-v1-preview-4x.png`. They remain `concept` until owner visual approval; their static versions are integrated only for the current playtest.
 
-Three-lane scale proof: `visual-references/vehicle-lane-scale-check-v1.png`. The runtime now uses the shared far/middle/near factors `0.88`, `0.94`, and `1.00` for both vehicle rendering and the documented body collision rectangles. The Waterbomb tube remains visible but is intentionally excluded from the courier collision area.
+Approved-size review candidate: `visual-references/vehicle-lane-scale-check-v2.png`. It replaces the undersized `v1` comparison with wheel baselines `350/424/508`, visual scales `1.12/1.22/1.32`, and independently reduced body colliders. The green wagon uses an additional `1.18` optical multiplier so it is not smaller than the pink hatchback. The Waterbomb tube remains visible but is intentionally excluded from the courier collision area.
 
 ## Batch B — complete traffic set
 
@@ -124,4 +124,4 @@ Do not create these directories until their first approved exported asset exists
 
 ## Immediate next action
 
-Review `visual-references/vehicle-lane-scale-check-v1.png` and the same scaling in the local playtest. After owner approval, produce the four-frame courier driving cycle, followed by the obstacle wheel cycles. Do not produce animation frames until this scale gate is approved.
+Review `visual-references/vehicle-lane-scale-check-v2.png` and the same sizing in the local playtest. After owner approval, produce the four-frame courier driving cycle, followed by the obstacle wheel cycles. Do not produce animation frames until this corrected scale gate is approved.

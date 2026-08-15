@@ -1,4 +1,4 @@
-import { GAMEPLAY_RULES, LANE_CENTERS } from "../config";
+import { GAMEPLAY_RULES, LANE_BASELINES } from "../config";
 
 export type LaneIndex = 0 | 1 | 2;
 export type LaneDirection = -1 | 1;
@@ -57,7 +57,7 @@ export function moveLane(
 
   const nextLane = Math.max(
     0,
-    Math.min(LANE_CENTERS.length - 1, state.lane + direction),
+    Math.min(LANE_BASELINES.length - 1, state.lane + direction),
   ) as LaneIndex;
 
   if (nextLane === state.lane) {

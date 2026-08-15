@@ -4,16 +4,29 @@ import {
   DEMO_PRIZE_WEIGHTS,
   GAME_VIEWPORT,
   GAMEPLAY_RULES,
-  LANE_CENTERS,
-  LANE_SCALES,
+  LANE_BASELINES,
+  LANE_VISUAL_SCALES,
+  OBSTACLE_VISUAL_SCALE_MULTIPLIERS,
+  VEHICLE_COLLISION_TO_VISUAL_RATIO,
 } from "../src/game/config";
 
 describe("locked game configuration", () => {
-  it("keeps the approved portrait viewport and three-lane model", () => {
+  it("keeps the approved viewport, lane composition, and vehicle proportions", () => {
+    const minGreenToPinkVisualHeightRatio = 35 / 30;
+
     expect(GAME_VIEWPORT).toEqual({ width: 360, height: 640 });
-    expect(LANE_CENTERS).toHaveLength(3);
-    expect([...LANE_CENTERS]).toEqual([...LANE_CENTERS].sort((a, b) => a - b));
-    expect(LANE_SCALES).toEqual([0.88, 0.94, 1]);
+    expect(LANE_BASELINES).toHaveLength(3);
+    expect([...LANE_BASELINES]).toEqual(
+      [...LANE_BASELINES].sort((a, b) => a - b),
+    );
+    expect(LANE_VISUAL_SCALES).toEqual([1.12, 1.22, 1.32]);
+    expect(VEHICLE_COLLISION_TO_VISUAL_RATIO).toBe(0.84);
+    expect(
+      OBSTACLE_VISUAL_SCALE_MULTIPLIERS["green-wagon"],
+    ).toBeGreaterThanOrEqual(
+      minGreenToPinkVisualHeightRatio *
+        OBSTACLE_VISUAL_SCALE_MULTIPLIERS["pink-hatchback"],
+    );
   });
 
   it("keeps the approved lives, timing, and demo prize distribution", () => {
