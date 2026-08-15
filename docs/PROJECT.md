@@ -34,6 +34,7 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - Exactly three depth lanes.
 - One input moves the vehicle to one adjacent lane.
 - Traffic mixes single cars, parallel pairs, staggered pairs, same-lane convoys, and scattered groups instead of repeating one formation.
+- Final art follows `docs/ART_BIBLE.md`; asset production and approvals follow `docs/ASSET_MANIFEST.md`.
 - Lane transition: 180 ms with one buffered command.
 - Desktop controls: arrow keys; mobile controls: on-screen up/down buttons.
 - Successful session target: 45–60 seconds.
@@ -65,8 +66,11 @@ Working colors are concept colors, not an official brand book:
 | Vehicle shadow | `#008EAA` |
 | Deep outline | `#1E1D3E` |
 | Logo | `#111111` |
-| Pink accent | `#FF4F9B` |
-| Lime control | `#C8F000` |
+| Pink accent | `#FF4FAB` |
+| Official-site yellow control | `#FFEF5C` |
+| Purple heading/reward | `#982ADD` |
+| Sky cyan | `#54E0FF` |
+| Progress-only lime | `#C8F000` |
 | Road | `#4C4C6C` |
 | Cream highlight | `#FFF3DC` |
 
@@ -81,6 +85,6 @@ Working colors are concept colors, not an official brand book:
 
 ## Current phase
 
-The deterministic greybox is implemented. It includes three-lane movement, one buffered input, curated obstacle waves, collision, three lives, temporary invulnerability, delivery progress, victory, defeat, and unlimited retry.
+The deterministic greybox and varied traffic schedule are implemented. The Pixel Art Bible and Asset Manifest are specified from the approved references and stable traits observed on the official BeautyBomb site.
 
-The next phase is gameplay validation and tuning at the target viewport, followed by production of the approved pixel-art assets and animation set. Prize roulette and client-site integration remain outside the greybox.
+The next phase begins with one static near-lane courier-vehicle concept containing the pixel wordmark and horizontal Waterbomb tube. Animation, environment, and later asset batches start only after this hero silhouette is approved. Prize roulette and client-site integration remain later phases.

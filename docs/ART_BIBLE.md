@@ -1,0 +1,238 @@
+# BeautyBomb Delivery — Pixel Art Bible
+
+## Authority and scope
+
+This document governs final art, UI styling, parallax, and animation for the independent BeautyBomb Delivery portfolio concept. It does not grant brand approval or permission to reuse official campaign artwork.
+
+Authority order:
+
+1. Owner-approved product, logo, and selected gameplay references in `visual-references/`.
+2. Stable visual and verbal traits observed on the official BeautyBomb site on 2026-08-15.
+3. The rules in this document.
+4. Artist judgment that does not contradict the first three levels.
+
+Seasonal banners, collaboration characters, product photography, and site illustrations are analysis material only. They must not be copied into shipped game assets.
+
+## Brand analysis translated into game rules
+
+Observed on the official website:
+
+- white structural backgrounds with high-contrast black typography;
+- bold uppercase display lettering and Montserrat for supporting text;
+- yellow rounded actions (`#FFEF5C`) with near-black text;
+- recurring pink (`#FF4FAB`), purple (`#982ADD`), red (`#E30613`), and bright cyan (`#54E0FF`);
+- large collection-specific scenes, collage cutouts, stickers, brush marks, emojis, wavy edges, and deliberate visual surprise;
+- direct second-person voice focused on choice, experimentation, uniqueness, and current trends;
+- Waterbomb shown as a turquoise product on a pale lavender field with purple headings and black explanatory text.
+
+Pixel adaptation:
+
+- translate collage cutouts into crisp pixel stickers with stepped white borders and dark-violet shadows;
+- translate emojis into authored pixel icons; never use platform emoji inside the canvas;
+- translate brush marks and waves into blocky, tileable silhouettes;
+- preserve bold black/near-black lettering and high color commitment;
+- use expressive brand devices mainly on intro, victory, and prize screens; keep the road readable during active play;
+- treat the product tube and courier vehicle as the primary brand signature.
+
+## Art direction
+
+### Thesis
+
+An energetic BeautyBomb campaign has been compressed into a premium 16-bit delivery game: turquoise city, sticker-like UI, assertive black lettering, pink and yellow hits, and a hero Waterbomb product that remains recognizable at gameplay scale.
+
+### View and perspective
+
+- Logical viewport: `360 × 640`, portrait.
+- Camera: shallow 2.5D three-quarter side view.
+- Vehicles face right; the environment and traffic move right-to-left.
+- The courier stays near `x = 74–82` logical pixels.
+- Lane centers remain `326`, `400`, and `474`.
+- Depth scale targets: far lane `0.88`, middle lane `0.94`, near lane `1.00`.
+- Lane changes may interpolate scale and vertical position, but collision boxes remain simpler and slightly smaller than visible sprites.
+- Roofs, hoods, and top faces are visible; avoid a flat orthographic side view and avoid an isometric camera.
+
+### Pixel grid
+
+- One source pixel equals one logical canvas pixel at native game scale.
+- Draw, position, and export on integer coordinates only.
+- Runtime scaling uses nearest-neighbor filtering; no bilinear filtering.
+- Animated frames share an identical canvas, origin, baseline, and transparent padding.
+- No automatic vector-to-pixel conversion for the final logo or product; redraw them manually on the grid.
+- Shading uses discrete color ramps, never smooth gradients or airbrush texture.
+
+### Shape language
+
+- Main silhouettes are compact, slightly chunky, and readable before internal detail.
+- Exterior sprite outlines: usually `2 px`, deep violet; `1 px` only for controlled internal details.
+- UI panels resemble cut paper or stickers: stepped corners, `2–3 px` outline, optional `2 px` offset shadow.
+- Buttons use pixel-stepped rounded corners derived from the site's rounded yellow controls, not generic browser pills.
+- Wavy/scalloped edges are reserved for screen transitions, sky dividers, and Waterbomb-themed panels.
+- Gameplay obstacles must differ by roofline, hood, cabin, and length; color swaps alone are insufficient.
+
+## Palette
+
+These are concept tokens informed by the official site and supplied product reference, not an official brand book.
+
+| Token | Hex | Role |
+|---|---:|---|
+| `bb-ink` | `#1D1D1B` | Logo, primary UI text, strongest outlines |
+| `bb-deep-violet` | `#1E1D3E` | Sprite outlines, deep shadows, road contrast |
+| `bb-white` | `#FFFFFF` | Sticker fields, highlights, product label |
+| `bb-lavender` | `#EEF0FF` | Waterbomb panels and quiet UI fields |
+| `bb-water-cyan` | `#00B7D6` | Courier vehicle and Waterbomb body |
+| `bb-sky-cyan` | `#54E0FF` | Sky accents and bright collection fields |
+| `bb-pink` | `#FF4FAB` | Secondary actions, delight, reward emphasis |
+| `bb-purple` | `#982ADD` | Headings, prize and victory emphasis |
+| `bb-yellow` | `#FFEF5C` | Primary CTA and selected controls |
+| `bb-progress-lime` | `#C8F000` | Delivery progress only; not a general UI color |
+| `bb-danger` | `#E30613` | Collision/failure state only |
+| `road-base` | `#4C4C6C` | Road surface |
+
+Usage balance during gameplay:
+
+- cyan/turquoise environment and vehicle: `30–40%`;
+- road, ink, and deep violet: `25–35%`;
+- white/lavender breathing space: `15–25%`;
+- pink, purple, yellow, lime, and red combined: normally below `20%`.
+
+Never place yellow text on white, cyan text on sky cyan, or pink text on purple. Text must target WCAG AA contrast where practical; large decorative pixel headings must remain clearly legible at `360 × 640`.
+
+## Typography and iconography
+
+- The BeautyBomb wordmark is an image asset, not typeset text.
+- Produce a compact bitmap UI alphabet covering `А–Я`, `Ё`, `A–Z`, `0–9`, currency/percent signs, arrows, and punctuation.
+- Display labels: bold uppercase, tight line spacing, pixel-stepped geometry inspired by the site's assertive display type without copying a proprietary font file.
+- Supporting copy: a more open bitmap face with a minimum rendered cap height of `12 px` and normal body size of `14–16 px`.
+- Limit gameplay HUD to one line per metric and short Russian labels.
+- Icon family: heart, route/progress, sound, pause, arrow up/down, retry, home, parcel, star, and location pin.
+- Icons use the same pixel grid and outline weights as sprites; do not mix vector UI icons or OS emoji with pixel art.
+
+## Hero object rules
+
+### Courier vehicle
+
+- Turquoise/blue body, facing right.
+- Shallow three-quarter side view with visible roof and hood.
+- Pixel BeautyBomb wordmark on the side panel; prioritize the `BEAUTY`/`BOMB` contrast and overall lockup over tiny letter accuracy.
+- Waterbomb tube lies horizontally on the roof, cap facing left/back.
+- Product must be secured by a simple rack or straps so it does not look pasted onto the roof.
+- Silhouette must remain readable at all three lane scales.
+- Vehicle must not resemble an ice-cream truck or ambulance.
+
+### Waterbomb tube
+
+- Preserve the tall tapered tube silhouette when shown vertically and its taper when rotated horizontally.
+- Turquoise body, white cap, white BeautyBomb lockup, large vertical `WATERBOMB` hierarchy, and small controlled label blocks.
+- Gameplay version uses simplified label clusters; hero/intro version may carry more detail.
+- No invented claims or packaging copy.
+
+### Traffic
+
+- Minimum five silhouettes: compact hatchback, sedan, taxi-like box, small delivery van, and sporty coupe.
+- Every silhouette needs a distinct roofline and wheelbase.
+- Use brand-compatible colors but keep the courier uniquely turquoise.
+- Traffic can use pink, yellow, purple, coral, cream, and dark blue; avoid a second Waterbomb-cyan hero vehicle.
+
+## Environment and parallax
+
+Layer stack from back to front:
+
+| Layer | Relative speed | Content | Tile target |
+|---|---:|---|---:|
+| Sky | `0.00–0.05` | solid/two-tone cyan sky, block clouds | `512 × 180` |
+| Far skyline | `0.12–0.18` | simplified towers and antennas | `512 × 128` |
+| Mid city | `0.28–0.36` | readable buildings, windows, signs | `512 × 160` |
+| Near street | `0.50–0.62` | shops, trees, lamps, BeautyBomb-style sticker signage | `768 × 220` |
+| Road markings | `1.00` | lane marks, asphalt patches | `512 × 240` |
+| Foreground accents | `1.10–1.20` | occasional shrubs, railings, posts | modular props |
+
+Rules:
+
+- no official store facade or copied campaign banner;
+- repeated tiles must hide seams and avoid obvious landmark repetition within ten seconds;
+- near-layer props cannot cover controls, lives, or the courier collision area;
+- scenery contrast is lower than vehicle contrast;
+- Waterbomb references appear through palette and shapes, not repeated logos on every building.
+
+## UI screens
+
+### Intro
+
+- White or lavender sticker panel over a saturated cyan/pink city field.
+- One bold pixel title, one short explanation, one yellow primary button.
+- Show the courier vehicle and horizontal product tube at a larger scale.
+
+### Gameplay HUD
+
+- Hearts at top-left, progress bar across the upper safe area, remaining route/time at top-right.
+- Yellow touch buttons with deep-violet outlines; minimum interactive size `48 × 48`.
+- HUD uses solid fields and silhouettes; no translucent glass effects.
+
+### Defeat
+
+- Deep-violet overlay, red/pink collision accent, concise retry action.
+- Failure remains playful rather than punitive.
+
+### Delivery and victory
+
+- Vehicle reaches a small house/storefront where a girl waits.
+- Arrival uses product-focused framing before the future roulette transition.
+- Victory palette shifts toward lavender, purple, pink, yellow, and white.
+
+### Prize screen
+
+- Out of the current production batch, but the art system reserves a purple/pink sticker wheel with yellow selected states.
+- Demo rewards must remain explicitly fictional until a client-owned server exists.
+
+## Animation grammar
+
+| Motion | Target | Frames / duration | Rule |
+|---|---|---:|---|
+| Vehicle idle/drive | courier | `4 frames`, `8–10 fps` | wheel rotation plus restrained body bounce |
+| Lane change | courier | `180 ms` | position/scale tween plus one-frame lean; no blur |
+| Tube secondary motion | product | `4 frames` | `1–2 px` delayed bounce, straps remain attached |
+| Traffic drive | obstacles | `2–4 frames`, `6–8 fps` | wheel cycle; body mostly stable |
+| Hit | courier/UI | `300–450 ms` | outline/tint, short knock, particles; no rapid full-screen flash |
+| Invulnerability | courier | `1.1 s` | slow outline pulse or alternating tint at no more than `2 Hz` |
+| Arrival | courier/girl | `6–8 frames` | brake, settle, greeting gesture |
+| UI press | buttons | `80–120 ms` | `1–2 px` depression and shadow reduction |
+
+The current greybox alpha flicker must be replaced before visual completion because it flashes faster than the target motion-safety rule.
+
+Reduced-motion mode:
+
+- disables camera shake and foreground parallax;
+- replaces bounce with static poses;
+- keeps lane movement and obstacle motion because they convey gameplay state;
+- uses a solid outline/tint for invulnerability.
+
+## Export and runtime rules
+
+- Runtime sprites: transparent PNG or lossless WebP only after visual comparison proves no degradation.
+- Keep editable masters outside the runtime atlas; export files contain no guides or reference layers.
+- Animated frames are not trimmed or rotated by the atlas packer.
+- Minimum `2 px` transparent padding around frames and `4 px` between atlas regions.
+- Prefer atlases no larger than `1024 × 1024`; hard ceiling `2048 × 2048`.
+- Critical gameplay art target: below `900 KB` compressed; all first-load critical assets remain below the existing `1.5 MB` budget.
+- Separate intro/victory/prize art so it can load after the first playable screen.
+- File names use lowercase kebab case and stable asset IDs from `docs/ASSET_MANIFEST.md`.
+
+## Acceptance criteria
+
+Art is ready for integration only when:
+
+- vehicle, tube, and wordmark remain recognizable at `360 × 640`;
+- all traffic silhouettes can be distinguished in grayscale;
+- all three lane scales share one perspective and baseline system;
+- animation frames do not jitter because of changing bounds or origins;
+- parallax tiles loop without visible seams;
+- HUD remains readable over every environment layer;
+- no platform emoji, smooth-gradient substitute, copied site art, or unofficial campaign claim appears;
+- assets pass a native-size review and a final in-game screenshot review.
+
+## Sources reviewed
+
+- Official homepage: <https://beautybomb.ru/>.
+- Official brand page: <https://beautybomb.ru/about/>.
+- Official Waterbomb product page: <https://beautybomb.ru/catalog/sos-maska-dlya-litsa-waterbomb/>.
+- Review date: 2026-08-15.

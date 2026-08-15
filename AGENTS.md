@@ -8,10 +8,12 @@ This repository contains an independent portfolio concept for a BeautyBomb promo
 
 Read these files before non-trivial work:
 
-1. `docs/PROJECT.md` for product behavior and locked visual decisions.
-2. `docs/ARCHITECTURE.md` for module boundaries and integration rules.
-3. `docs/DECISIONS.md` for the current phase and accepted decisions.
-4. `program.md` for the iteration loop.
+1. `PRODUCT.md` for durable product context and non-negotiable constraints.
+2. `docs/PROJECT.md` for detailed product behavior and locked visual decisions.
+3. `docs/ART_BIBLE.md` and `docs/ASSET_MANIFEST.md` for visual or asset work.
+4. `docs/ARCHITECTURE.md` for module boundaries and integration rules.
+5. `docs/DECISIONS.md` for the current phase and accepted decisions.
+6. `program.md` for the iteration loop.
 
 When documents conflict, stop and report the conflict. Do not silently choose the most convenient version.
 

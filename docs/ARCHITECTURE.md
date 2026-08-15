@@ -99,6 +99,14 @@ The standalone portfolio demo uses the same interface with a local adapter.
 - Target: stable 60 FPS, graceful 30 FPS on slower mobile devices.
 - Initial budgets are targets, not release claims: JavaScript under 350 KB gzip excluding lazy audio, initial critical assets under 1.5 MB, no layout shift on the host page.
 
+## Art asset contract
+
+- `docs/ART_BIBLE.md` owns perspective, pixel grid, palette, shape, UI, parallax, animation, and export rules.
+- `docs/ASSET_MANIFEST.md` owns stable asset IDs, production batches, native canvases, status, and handoff requirements.
+- Editable masters do not belong in runtime atlases.
+- Runtime asset directories are created only when their first approved export exists.
+- Animated frames keep fixed bounds and origins; Phaser must not compensate for inconsistent art at runtime.
+
 ## Verification strategy
 
 - Pure domain rules: unit tests.
