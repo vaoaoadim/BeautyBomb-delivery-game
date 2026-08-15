@@ -10,10 +10,10 @@ This is the next production batch and the visual quality gate for all later art.
 
 | ID | Asset | Native canvas / frames | Deliverables | Status |
 |---|---|---:|---|---|
-| `BRD-001` | Pixel BeautyBomb wordmark | `64 × 18`, static | master PNG, gameplay PNG | specified |
-| `PRD-001` | Waterbomb tube, horizontal | `72 × 24`, static | gameplay PNG, roof-aligned origin guide | specified |
+| `BRD-001` | Pixel BeautyBomb wordmark | `64 × 18`, static | master PNG, gameplay PNG | concept |
+| `PRD-001` | Waterbomb tube, horizontal | `72 × 24`, static | gameplay PNG, roof-aligned origin guide | concept |
 | `PRD-002` | Waterbomb tube, hero | `128 × 192`, static | detailed transparent PNG | specified |
-| `VEH-001` | Courier van driving | `104 × 80`, `4` frames | sprite sheet, origin/collision guide | specified |
+| `VEH-001` | Courier van driving | `104 × 80`, `4` frames | sprite sheet, origin/collision guide | concept |
 | `VEH-002` | Courier van hit | `104 × 80`, `4` frames | sprite sheet | specified |
 | `VEH-003` | Courier van arrival | `104 × 80`, `6–8` frames | sprite sheet | specified |
 | `VFX-001` | Hit particles | `32 × 32`, `4` frames | sprite sheet | specified |
@@ -25,6 +25,8 @@ Batch A gate:
 - first approve one static near-lane courier pose with logo and product;
 - then approve one far-lane scale check beside both obstacle silhouettes;
 - only then produce the animation frames.
+
+Current review master: `visual-references/veh-001-courier-near-concept-v1.png`. It is a high-resolution concept, not a runtime sprite export.
 
 ## Batch B — complete traffic set
 
