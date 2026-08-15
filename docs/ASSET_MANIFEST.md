@@ -26,7 +26,7 @@ Batch A gate:
 - then approve one far-lane scale check beside both obstacle silhouettes;
 - only then produce the animation frames.
 
-Current design candidate: `visual-references/veh-001-courier-side-concept-v2.png`. It replaces the front-heavy perspective of `v1` with an `85–90%` side profile suitable for left-to-right movement. It is a high-resolution concept, not a runtime sprite export.
+Current design candidate: `visual-references/veh-001-courier-side-tapered-tube-concept-v3.png`. It keeps the `85–90%` side profile from `v2` and corrects the Waterbomb silhouette so the horizontal tube widens gradually from the white cap toward the sealed end. It is a high-resolution concept, not a runtime sprite export.
 
 ## Batch B — complete traffic set
 

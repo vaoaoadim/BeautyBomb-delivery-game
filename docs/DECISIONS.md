@@ -18,7 +18,7 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: Batch A courier perspective revision; awaiting approval of the side-profile `v2` before native sprite production.
+- Current phase: Batch A courier design revision; awaiting approval of the side-profile, tapered-tube `v3` before native sprite production.
 - Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
 
 ## Accepted decisions
