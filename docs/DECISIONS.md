@@ -18,7 +18,7 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: Batch A courier design approved; preparing the native sprite and lane-scale check.
+- Current phase: Batch A courier perspective revision; awaiting approval of the side-profile `v2` before native sprite production.
 - Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
 
 ## Accepted decisions
@@ -38,6 +38,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-011 | Extend stable BeautyBomb site traits through an original pixel-art system rather than copying seasonal campaign artwork. | Keeps the concept recognizably aligned with the brand while avoiding dependence on temporary collaborations and unlicensed page art. |
 | D-012 | Approve one static courier hero pose before producing animations or the full atlas. | Locks perspective, silhouette, product placement, and logo simplification before expensive downstream asset work. |
 | D-013 | Approve `veh-001-courier-near-concept-v1.png` as the courier design master. | The owner accepted the light-blue van, right-facing perspective, horizontal Waterbomb tube, and pixel BeautyBomb wordmark on 2026-08-15. |
+| D-014 | Replace the front-heavy `v1` perspective with the side-profile `veh-001-courier-side-concept-v2.png`. | A horizontal left-to-right runner needs the long side plane to dominate; the new candidate uses an `85–90%` side view and only a narrow front plane. |
 
 ## Open production questions
 
