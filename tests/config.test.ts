@@ -18,6 +18,7 @@ describe("locked game configuration", () => {
     expect(GAMEPLAY_RULES.startingLives).toBe(3);
     expect(GAMEPLAY_RULES.laneSwitchMs).toBe(180);
     expect(GAMEPLAY_RULES.invulnerabilityMs).toBe(1_100);
+    expect(GAMEPLAY_RULES.greyboxRunDurationMs).toBe(45_000);
     expect(DEMO_PRIZE_WEIGHTS.reduce((sum, prize) => sum + prize.weight, 0)).toBe(100);
   });
 });

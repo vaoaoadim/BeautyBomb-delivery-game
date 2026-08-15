@@ -9,6 +9,8 @@ export const GAMEPLAY_RULES = Object.freeze({
   startingLives: 3,
   laneSwitchMs: 180,
   invulnerabilityMs: 1_100,
+  greyboxRunDurationMs: 45_000,
+  obstacleSpeedPxPerSecond: 172,
   runDurationSeconds: {
     min: 45,
     max: 60,
@@ -21,4 +23,3 @@ export const DEMO_PRIZE_WEIGHTS = Object.freeze([
   { discountPercent: 30, weight: 15 },
   { discountPercent: 35, weight: 5 },
 ] as const);
-

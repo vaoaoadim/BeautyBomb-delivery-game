@@ -4,19 +4,20 @@ Keep this file short. Record only decisions that change product behavior, archit
 
 ## Current phase
 
-- Completed phase: environment and architecture.
+- Completed phases: environment, architecture, and deterministic greybox.
 - Completed on: 2026-08-15.
 - Evidence:
-  - Git repository initialized on \`main\`;
+  - Git repository initialized on `main`;
   - source-of-truth documents and lean agent instructions added;
-  - 360 × 640 Phaser canvas bootstrap added;
+  - 360 × 640 Phaser canvas and interactive greybox added;
+  - pure run-state transitions and deterministic obstacle waves added;
   - TypeScript check passed;
-  - 2 configuration tests passed;
+  - 9 domain and configuration tests passed;
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: ready for deterministic greybox.
-- Greybox entry condition: owner approves starting implementation.
+- Current phase: greybox review and gameplay tuning.
+- Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
 
 ## Accepted decisions
 
@@ -31,6 +32,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-007 | Use the selected concept with a turquoise vehicle, horizontal Water Bomb tube, and pixel BeautyBomb logo. | Captures the approved visual direction and later correction. |
 | D-008 | Do not copy the portfolio project's large skill collection or automatic design hooks. | They add context and maintenance cost before this game needs them. |
 | D-009 | Adapt Karpathy's baseline/measure/keep-discard loop without an infinite run or destructive reset. | Preserves measurable iteration while remaining safe for a product repository. |
+| D-010 | Use a fixed 45-second greybox route with curated, deterministic two-lane obstacle waves. | Makes difficulty reproducible and keeps one readable safe lane in every wave. |
 
 ## Open production questions
 

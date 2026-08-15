@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 import { GAME_VIEWPORT } from "../game/config";
-import { EnvironmentScene } from "../game/scenes/EnvironmentScene";
+import { GreyboxScene } from "../game/scenes/GreyboxScene";
 
 export function createGame(parent: HTMLElement): Phaser.Game {
   return new Phaser.Game({
@@ -23,7 +23,6 @@ export function createGame(parent: HTMLElement): Phaser.Game {
       width: GAME_VIEWPORT.width,
       height: GAME_VIEWPORT.height,
     },
-    scene: [EnvironmentScene],
+    scene: [GreyboxScene],
   });
 }
-

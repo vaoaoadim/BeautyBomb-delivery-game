@@ -21,7 +21,7 @@ Phaser 3 is selected instead of Phaser 4 for the first version because its API a
 
 ## Target structure
 
-\`\`\`text
+```text
 src/
   app/                 application bootstrap and lifecycle
   game/
@@ -39,13 +39,13 @@ public/assets/
   game/
   audio/
 tests/
-\`\`\`
+```
 
 Create a folder only when its first real module is added; the tree above is a boundary map, not a requirement to produce empty abstractions.
 
 ## Runtime flow
 
-\`\`\`text
+```text
 Host or standalone page
         |
         v
@@ -60,18 +60,18 @@ Integration adapter
         +---- demo prize provider (local, fictional)
         |
         +---- production prize API (future, client-owned)
-\`\`\`
+```
 
 ## Game states
 
-\`boot -> preload -> intro -> playing -> paused | defeated | delivered -> prize -> complete\`
+`boot -> preload -> intro -> playing -> paused | defeated | delivered -> prize -> complete`
 
 Rules:
 
-- only \`playing\` advances delivery progress;
+- only `playing` advances delivery progress;
 - losing a life enters temporary invulnerability;
-- zero lives enters \`defeated\`;
-- reaching full progress enters \`delivered\`;
+- zero lives enters `defeated`;
+- reaching full progress enters `delivered`;
 - a prize request can occur once per completed run;
 - restarting creates a fresh run state.
 
@@ -90,7 +90,7 @@ The standalone portfolio demo uses the same interface with a local adapter.
 
 ## Rendering and performance
 
-- Logical canvas: \`360 × 640\`.
+- Logical canvas: `360 × 640`.
 - Scale mode: fit and center.
 - Pixel art and rounded pixels enabled.
 - Image smoothing disabled.
@@ -104,6 +104,5 @@ The standalone portfolio demo uses the same interface with a local adapter.
 - Pure domain rules: unit tests.
 - Phaser scene wiring: focused integration tests or manual greybox checks.
 - Responsive/iframe behavior: one browser smoke pass when integration exists.
-- Visual fidelity: compare at \`360 × 640\` against the selected concept.
+- Visual fidelity: compare at `360 × 640` against the selected concept.
 - Full build: phase completion and build/configuration changes only.
-

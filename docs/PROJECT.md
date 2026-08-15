@@ -28,7 +28,7 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 
 ## Locked gameplay decisions
 
-- Portrait logical viewport: \`360 × 640\`.
+- Portrait logical viewport: `360 × 640`.
 - Camera: horizontal 2D/2.5D three-quarter side view.
 - Vehicle stays near the left side; the road and environment scroll right-to-left.
 - Exactly three depth lanes.
@@ -51,23 +51,23 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - Water Bomb tube matches the supplied product reference in silhouette, turquoise body, white cap, and label hierarchy.
 - The tube is mounted horizontally on the roof, cap facing backward by default.
 - Fine packaging copy becomes controlled pixel blocks at gameplay scale; a separate large product asset may retain more detail.
-- Selected concept reference: \`visual-references/selected-gameplay-concept-v1.png\`.
-- Product reference: \`visual-references/beautybomb-water-bomb-reference.png\`.
-- Logo reference: \`visual-references/beautybomb-logo-reference.png\`.
+- Selected concept reference: `visual-references/selected-gameplay-concept-v1.png`.
+- Product reference: `visual-references/beautybomb-water-bomb-reference.png`.
+- Logo reference: `visual-references/beautybomb-logo-reference.png`.
 
 Working colors are concept colors, not an official brand book:
 
 | Role | Value |
 |---|---|
-| Vehicle primary | \`#00B7D6\` |
-| Vehicle highlight | \`#00CDE9\` |
-| Vehicle shadow | \`#008EAA\` |
-| Deep outline | \`#1E1D3E\` |
-| Logo | \`#111111\` |
-| Pink accent | \`#FF4F9B\` |
-| Lime control | \`#C8F000\` |
-| Road | \`#4C4C6C\` |
-| Cream highlight | \`#FFF3DC\` |
+| Vehicle primary | `#00B7D6` |
+| Vehicle highlight | `#00CDE9` |
+| Vehicle shadow | `#008EAA` |
+| Deep outline | `#1E1D3E` |
+| Logo | `#111111` |
+| Pink accent | `#FF4F9B` |
+| Lime control | `#C8F000` |
+| Road | `#4C4C6C` |
+| Cream highlight | `#FFF3DC` |
 
 ## Non-goals for the first demo
 
@@ -80,5 +80,6 @@ Working colors are concept colors, not an official brand book:
 
 ## Current phase
 
-Development environment and architecture are being established. The next implementation phase is the deterministic greybox of lane movement, collision, lives, progress, victory, and retry.
+The deterministic greybox is implemented. It includes three-lane movement, one buffered input, curated obstacle waves, collision, three lives, temporary invulnerability, delivery progress, victory, defeat, and unlimited retry.
 
+The next phase is gameplay validation and tuning at the target viewport, followed by production of the approved pixel-art assets and animation set. Prize roulette and client-site integration remain outside the greybox.
