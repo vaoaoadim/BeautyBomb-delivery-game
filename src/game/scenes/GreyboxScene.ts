@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import { GAME_VIEWPORT, GAMEPLAY_RULES, LANE_CENTERS } from "../config";
 import {
   createTrafficSchedule,
+  type ObstacleKind,
   type ObstacleSpawn,
 } from "../content/trafficSchedule";
 import {
@@ -19,8 +20,25 @@ import {
 } from "../domain/runState";
 
 interface ActiveObstacle {
-  readonly body: Phaser.GameObjects.Rectangle;
+  readonly sprite: Phaser.GameObjects.Image;
   readonly lane: number;
+  readonly originPixelX: number;
+  readonly originPixelY: number;
+  readonly collision: Readonly<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>;
+}
+
+interface ObstacleAssetSpec {
+  readonly textureKey: string;
+  readonly path: string;
+  readonly canvasHeight: number;
+  readonly originPixelX: number;
+  readonly originPixelY: number;
+  readonly collision: ActiveObstacle["collision"];
 }
 
 const COLORS = Object.freeze({
@@ -41,6 +59,33 @@ const ROAD_TOP = 282;
 const ROAD_BOTTOM = 522;
 const PLAYER_X = 74;
 const OBSTACLE_SPAWN_X = GAME_VIEWPORT.width + 42;
+
+const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
+  "pink-hatchback": {
+    textureKey: "obstacle-pink-hatchback",
+    path: "/assets/game/vehicles/obs-001-pink-hatchback-static-v1.png",
+    canvasHeight: 56,
+    originPixelX: 40,
+    originPixelY: 52,
+    collision: { x: 6, y: 27, width: 68, height: 24 },
+  },
+  "yellow-sedan": {
+    textureKey: "obstacle-yellow-sedan",
+    path: "/assets/game/vehicles/obs-002-yellow-sedan-static-v1.png",
+    canvasHeight: 56,
+    originPixelX: 44,
+    originPixelY: 52,
+    collision: { x: 6, y: 30, width: 76, height: 21 },
+  },
+  "green-wagon": {
+    textureKey: "obstacle-green-wagon",
+    path: "/assets/game/vehicles/obs-003-green-wagon-static-v1.png",
+    canvasHeight: 58,
+    originPixelX: 42,
+    originPixelY: 54,
+    collision: { x: 6, y: 29, width: 72, height: 24 },
+  },
+};
 
 export class GreyboxScene extends Phaser.Scene {
   private runState: RunState = createRunState();
@@ -63,6 +108,12 @@ export class GreyboxScene extends Phaser.Scene {
 
   public constructor() {
     super("greybox");
+  }
+
+  public preload(): void {
+    for (const asset of Object.values(OBSTACLE_ASSETS)) {
+      this.load.image(asset.textureKey, asset.path);
+    }
   }
 
   public create(): void {
@@ -382,17 +433,21 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private spawnObstacle(obstacle: ObstacleSpawn): void {
-    const body = this.add.rectangle(
+    const asset = OBSTACLE_ASSETS[obstacle.kind];
+    const sprite = this.add.image(
       OBSTACLE_SPAWN_X,
       LANE_CENTERS[obstacle.lane],
-      62,
-      42,
-      obstacle.id % 2 === 0 ? COLORS.pink : COLORS.lime,
-      1,
+      asset.textureKey,
     );
-    body.setStrokeStyle(3, COLORS.navy, 1);
-    body.setDepth(18);
-    this.obstacles.push({ body, lane: obstacle.lane });
+    sprite.setOrigin(0.5, asset.originPixelY / asset.canvasHeight);
+    sprite.setDepth(18 + obstacle.lane);
+    this.obstacles.push({
+      sprite,
+      lane: obstacle.lane,
+      originPixelX: asset.originPixelX,
+      originPixelY: asset.originPixelY,
+      collision: asset.collision,
+    });
   }
 
   private moveObstacles(delta: number): void {
@@ -401,9 +456,9 @@ export class GreyboxScene extends Phaser.Scene {
     const remaining: ActiveObstacle[] = [];
 
     for (const obstacle of this.obstacles) {
-      obstacle.body.x -= distance;
-      if (obstacle.body.x < -48) {
-        obstacle.body.destroy();
+      obstacle.sprite.x -= distance;
+      if (obstacle.sprite.x < -48) {
+        obstacle.sprite.destroy();
       } else {
         remaining.push(obstacle);
       }
@@ -421,7 +476,16 @@ export class GreyboxScene extends Phaser.Scene {
     const collidedIndex = this.obstacles.findIndex((obstacle) =>
       Phaser.Geom.Intersects.RectangleToRectangle(
         playerBounds,
-        obstacle.body.getBounds(),
+        new Phaser.Geom.Rectangle(
+          obstacle.sprite.x +
+            (obstacle.collision.x - obstacle.originPixelX) *
+              obstacle.sprite.scaleX,
+          obstacle.sprite.y +
+            (obstacle.collision.y - obstacle.originPixelY) *
+              obstacle.sprite.scaleY,
+          obstacle.collision.width * obstacle.sprite.scaleX,
+          obstacle.collision.height * obstacle.sprite.scaleY,
+        ),
       ),
     );
 
@@ -433,7 +497,7 @@ export class GreyboxScene extends Phaser.Scene {
     if (!collided) {
       return;
     }
-    collided.body.destroy();
+    collided.sprite.destroy();
     this.runState = registerHit(this.runState);
     this.cameras.main.shake(110, 0.008);
     this.updateHud();
@@ -495,7 +559,7 @@ export class GreyboxScene extends Phaser.Scene {
 
   private clearObstacles(): void {
     for (const obstacle of this.obstacles) {
-      obstacle.body.destroy();
+      obstacle.sprite.destroy();
     }
     this.obstacles = [];
   }

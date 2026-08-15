@@ -2,9 +2,13 @@ import { describe, expect, it } from "vitest";
 
 import {
   createTrafficSchedule,
+  TRAFFIC_SAFETY_WINDOW_MS,
   type ObstacleSpawn,
+  type ObstacleKind,
   type TrafficPattern,
 } from "../src/game/content/trafficSchedule";
+import { GAMEPLAY_RULES } from "../src/game/config";
+import type { LaneIndex } from "../src/game/domain/runState";
 
 function groupById(
   schedule: readonly ObstacleSpawn[],
@@ -40,6 +44,16 @@ describe("deterministic traffic schedule", () => {
         "convoy",
         "scattered",
       ]),
+    );
+  });
+
+  it("cycles through all three obstacle vehicle kinds", () => {
+    const kinds = new Set<ObstacleKind>(
+      createTrafficSchedule(45_000).map((obstacle) => obstacle.kind),
+    );
+
+    expect(kinds).toEqual(
+      new Set(["pink-hatchback", "yellow-sedan", "green-wagon"]),
     );
   });
 
@@ -86,22 +100,66 @@ describe("deterministic traffic schedule", () => {
     }
   });
 
+  it("never emits more than two obstacles in one formation", () => {
+    const groups = [...groupById(createTrafficSchedule(45_000)).values()];
+
+    for (const group of groups) {
+      expect(group.length).toBeLessThanOrEqual(2);
+    }
+  });
+
   it("keeps a safe lane throughout each collision window", () => {
     const schedule = createTrafficSchedule(45_000);
-    const collisionWindowMs = 850;
-
     for (const obstacle of schedule) {
       const activeLanes = new Set(
         schedule
           .filter(
             (candidate) =>
               candidate.spawnAtMs <= obstacle.spawnAtMs &&
-              candidate.spawnAtMs >= obstacle.spawnAtMs - collisionWindowMs,
+              candidate.spawnAtMs >=
+                obstacle.spawnAtMs - TRAFFIC_SAFETY_WINDOW_MS,
           )
           .map((candidate) => candidate.lane),
       );
 
       expect(activeLanes.size).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it("keeps at least one escape lane reachable from the previous state", () => {
+    const schedule = createTrafficSchedule(45_000);
+    const eventTimes = [...new Set(schedule.map(({ spawnAtMs }) => spawnAtMs))];
+    const laneIndexes: readonly LaneIndex[] = [0, 1, 2];
+    let reachableLanes = new Set<LaneIndex>([1]);
+    let previousEventAtMs = 0;
+
+    for (const eventAtMs of eventTimes) {
+      const blockedLanes = new Set(
+        schedule
+          .filter(
+            ({ spawnAtMs }) =>
+              spawnAtMs <= eventAtMs &&
+              spawnAtMs >= eventAtMs - TRAFFIC_SAFETY_WINDOW_MS,
+          )
+          .map(({ lane }) => lane),
+      );
+      const availableLaneSteps = Math.floor(
+        (eventAtMs - previousEventAtMs) / GAMEPLAY_RULES.laneSwitchMs,
+      );
+      const nextReachableLanes = new Set(
+        laneIndexes.filter(
+          (lane) =>
+            !blockedLanes.has(lane) &&
+            [...reachableLanes].some(
+              (previousLane) =>
+                Math.abs(lane - previousLane) <= availableLaneSteps,
+            ),
+        ),
+      );
+
+      expect(nextReachableLanes.size).toBeGreaterThan(0);
+      reachableLanes = nextReachableLanes;
+      previousEventAtMs = eventAtMs;
     }
   });
 

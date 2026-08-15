@@ -7,12 +7,20 @@ export type TrafficPattern =
   | "convoy"
   | "scattered";
 
+export type ObstacleKind =
+  | "pink-hatchback"
+  | "yellow-sedan"
+  | "green-wagon";
+
+export const TRAFFIC_SAFETY_WINDOW_MS = 1_200;
+
 export interface ObstacleSpawn {
   readonly id: number;
   readonly groupId: number;
   readonly pattern: TrafficPattern;
   readonly spawnAtMs: number;
   readonly lane: LaneIndex;
+  readonly kind: ObstacleKind;
 }
 
 interface TrafficTemplate {
@@ -59,16 +67,41 @@ const TRAFFIC_TEMPLATES: readonly TrafficTemplate[] = [
     nextGroupDelayMs: 2_550,
     obstacles: [
       { lane: 1, offsetMs: 0 },
-      { lane: 0, offsetMs: 520 },
-      { lane: 2, offsetMs: 1_120 },
+      { lane: 0, offsetMs: 780 },
     ],
   },
 ] as const;
 
 const GROUP_DELAY_JITTER_MS = [0, 170, -110, 90, -140, 60] as const;
+const OBSTACLE_KINDS: readonly ObstacleKind[] = [
+  "pink-hatchback",
+  "yellow-sedan",
+  "green-wagon",
+];
 
 function rotateLane(lane: LaneIndex, rotation: number): LaneIndex {
   return ((lane + rotation) % 3) as LaneIndex;
+}
+
+function assertEscapeLane(schedule: readonly ObstacleSpawn[]): void {
+  for (const obstacle of schedule) {
+    const blockedLanes = new Set(
+      schedule
+        .filter(
+          (candidate) =>
+            candidate.spawnAtMs <= obstacle.spawnAtMs &&
+            candidate.spawnAtMs >=
+              obstacle.spawnAtMs - TRAFFIC_SAFETY_WINDOW_MS,
+        )
+        .map((candidate) => candidate.lane),
+    );
+
+    if (blockedLanes.size === 3) {
+      throw new Error(
+        `Unsafe traffic schedule near ${obstacle.spawnAtMs}ms: all lanes are blocked.`,
+      );
+    }
+  }
 }
 
 export function createTrafficSchedule(
@@ -100,6 +133,7 @@ export function createTrafficSchedule(
         pattern: template.pattern,
         spawnAtMs,
         lane: rotateLane(obstacle.lane, rotation),
+        kind: OBSTACLE_KINDS[spawnId % OBSTACLE_KINDS.length]!,
       });
       spawnId += 1;
     }
@@ -110,9 +144,12 @@ export function createTrafficSchedule(
     groupId += 1;
   }
 
-  return schedule.sort((left, right) =>
+  const sortedSchedule = schedule.sort((left, right) =>
     left.spawnAtMs === right.spawnAtMs
       ? left.lane - right.lane
       : left.spawnAtMs - right.spawnAtMs,
   );
+
+  assertEscapeLane(sortedSchedule);
+  return sortedSchedule;
 }

@@ -131,7 +131,8 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 - Minimum five silhouettes: compact hatchback, sedan, taxi-like box, small delivery van, and sporty coupe.
 - Every silhouette needs a distinct roofline and wheelbase.
 - Use brand-compatible colors but keep the courier uniquely turquoise.
-- Traffic can use pink, yellow, purple, coral, cream, and dark blue; avoid a second Waterbomb-cyan hero vehicle.
+- Traffic can use pink, yellow, green, purple, coral, cream, and dark blue; avoid a second Waterbomb-cyan hero vehicle.
+- The first playable trio is a pink compact hatchback, yellow sedan, and green boxy wagon, all facing left against the courier.
 
 ## Environment and parallax
 

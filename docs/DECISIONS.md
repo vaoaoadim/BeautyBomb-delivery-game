@@ -14,12 +14,12 @@ Keep this file short. Record only decisions that change product behavior, archit
   - official BeautyBomb homepage, brand page, and Waterbomb product page reviewed on 2026-08-15;
   - Pixel Art Bible and batched Asset Manifest added;
   - TypeScript check passed;
-  - 13 domain and configuration tests passed;
+  - 16 domain and configuration tests passed;
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: Batch A courier design and native static proof approved; next are two obstacle silhouettes and the three-lane scale check.
-- Browser automation could not launch local Chrome or Edge; the Vite server returned HTTP 200 with the expected game root, and the limitation is environmental rather than a claimed visual pass.
+- Current phase: three static obstacle candidates integrated and the traffic trap fixed; next is owner playtest approval and the three-lane scale check.
+- The in-app browser smoke test on 2026-08-15 confirmed that the local Phaser scene loads and renders the new obstacle sprites; full-route feel remains an owner playtest gate.
 
 ## Accepted decisions
 
@@ -40,6 +40,8 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-013 | Approve `veh-001-courier-near-concept-v1.png` as the courier design master. | The owner accepted the light-blue van, right-facing perspective, horizontal Waterbomb tube, and pixel BeautyBomb wordmark on 2026-08-15. |
 | D-014 | Replace the front-heavy `v1` perspective with the side-profile `veh-001-courier-side-concept-v2.png`. | A horizontal left-to-right runner needs the long side plane to dominate; the new candidate uses an `85–90%` side view and only a narrow front plane. |
 | D-015 | Approve `veh-001-courier-side-tapered-tube-concept-v3.png` as the courier design master. | The owner accepted the side-profile van and corrected tube taper on 2026-08-15; runtime production can use this version as its visual source. |
+| D-016 | Limit each traffic formation to two vehicles and require an open lane within every `1,200 ms` spawn window. | Prevents the scattered three-car sequence and neighboring groups from creating an unfair full-road trap. |
+| D-017 | Use a pink hatchback, yellow sedan, and green boxy wagon as the first playable traffic trio. | Distinct color, roofline, and wheelbase make obstacle recognition faster without competing with the turquoise courier. |
 
 ## Open production questions
 

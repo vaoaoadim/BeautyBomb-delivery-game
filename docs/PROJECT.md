@@ -33,7 +33,9 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - Vehicle stays near the left side; the road and environment scroll right-to-left.
 - Exactly three depth lanes.
 - One input moves the vehicle to one adjacent lane.
-- Traffic mixes single cars, parallel pairs, staggered pairs, same-lane convoys, and scattered groups instead of repeating one formation.
+- Traffic mixes single cars, parallel pairs, staggered pairs, same-lane convoys, and scattered pairs instead of repeating one formation.
+- A formation contains at most two cars, and a `1,200 ms` safety window must always leave at least one lane open.
+- The first obstacle set cycles through a pink hatchback, yellow sedan, and green boxy wagon.
 - Final art follows `docs/ART_BIBLE.md`; asset production and approvals follow `docs/ASSET_MANIFEST.md`.
 - Lane transition: 180 ms with one buffered command.
 - Desktop controls: arrow keys; mobile controls: on-screen up/down buttons.
@@ -87,4 +89,4 @@ Working colors are concept colors, not an official brand book:
 
 The deterministic greybox and varied traffic schedule are implemented. The Pixel Art Bible and Asset Manifest are specified from the approved references and stable traits observed on the official BeautyBomb site.
 
-The approved courier design now has a transparent static `104 × 80` scale proof with documented origin and collision bounds. The next gate adds one compact hatchback and one sedan silhouette, then compares all three lane scales before courier or traffic animation begins. Prize roulette and client-site integration remain later phases.
+The approved courier design now has a transparent static `104 × 80` scale proof with documented origin and collision bounds. Three static obstacle candidates are integrated for playtesting, and the schedule now guarantees an escape lane. The next gate reviews these silhouettes and compares all three lane scales before courier or traffic animation begins. Prize roulette and client-site integration remain later phases.

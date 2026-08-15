@@ -17,24 +17,26 @@ This is the next production batch and the visual quality gate for all later art.
 | `VEH-002` | Courier van hit | `104 × 80`, `4` frames | sprite sheet | specified |
 | `VEH-003` | Courier van arrival | `104 × 80`, `6–8` frames | sprite sheet | specified |
 | `VFX-001` | Hit particles | `32 × 32`, `4` frames | sprite sheet | specified |
-| `OBS-001` | Compact hatchback | `80 × 56`, `2–4` frames | sprite sheet, collision guide | specified |
-| `OBS-002` | Sedan | `88 × 56`, `2–4` frames | sprite sheet, collision guide | specified |
+| `OBS-001` | Pink compact hatchback | `80 × 56`, `2–4` frames | sprite sheet, collision guide | concept |
+| `OBS-002` | Yellow sedan | `88 × 56`, `2–4` frames | sprite sheet, collision guide | concept |
+| `OBS-003` | Green boxy wagon | `84 × 58`, `2–4` frames | sprite sheet, collision guide | concept |
 
 Batch A gate:
 
 - first approve one static near-lane courier pose with logo and product;
-- then approve one far-lane scale check beside both obstacle silhouettes;
+- then approve one far-lane scale check beside all three obstacle silhouettes;
 - only then produce the animation frames.
 
 Approved design master: `visual-references/veh-001-courier-side-tapered-tube-concept-v3.png`. It keeps the `85–90%` side profile from `v2` and corrects the Waterbomb silhouette so the horizontal tube widens gradually from the white cap toward the sealed end.
 
 Native static scale proof: `public/assets/game/vehicles/veh-001-courier-static-v1.png` with metadata in `veh-001-courier-static-v1.json`. Review guides: `visual-references/veh-001-courier-static-v1-preview-8x.png` and `visual-references/veh-001-courier-static-v1-guide-8x.png`. This is the approved static pose and scale source, not the final four-frame driving sheet.
 
+Integrated obstacle review candidates: `obs-001-pink-hatchback-static-v1.png`, `obs-002-yellow-sedan-static-v1.png`, and `obs-003-green-wagon-static-v1.png`, each with adjacent JSON collision metadata. Combined review sheet: `visual-references/obstacle-vehicles-static-v1-preview-4x.png`. They remain `concept` until owner visual approval; their static versions are integrated only for the current playtest.
+
 ## Batch B — complete traffic set
 
 | ID | Asset | Native canvas / frames | Status |
 |---|---|---:|---|
-| `OBS-003` | Taxi-like box car | `82 × 58`, `2–4` frames | specified |
 | `OBS-004` | Small delivery van | `92 × 62`, `2–4` frames | specified |
 | `OBS-005` | Sporty coupe | `86 × 52`, `2–4` frames | specified |
 | `OBS-006` | Traffic color variants | existing silhouettes, max `2` variants each | specified |
@@ -120,4 +122,4 @@ Do not create these directories until their first approved exported asset exists
 
 ## Immediate next action
 
-Produce one static silhouette each for `OBS-001` and `OBS-002`, then verify the courier at near (`1.0`), middle (`0.94`), and far (`0.88`) lane scales beside both obstacles. Do not produce animation frames until the scale check is approved.
+Review the three integrated obstacle silhouettes and the corrected traffic schedule in play. After approval, verify the courier at near (`1.0`), middle (`0.94`), and far (`0.88`) lane scales beside all three obstacles. Do not produce animation frames until the scale check is approved.

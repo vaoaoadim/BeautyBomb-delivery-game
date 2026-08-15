@@ -1,0 +1,10 @@
+{
+  "id": "OBS-003",
+  "version": 1,
+  "kind": "green-wagon",
+  "texture": "obs-003-green-wagon-static-v1.png",
+  "canvas": { "width": 84, "height": 58 },
+  "visibleBounds": { "x": 2, "y": 24, "width": 80, "height": 30 },
+  "origin": { "normalizedX": 0.5, "normalizedY": 0.931, "pixelX": 42, "pixelY": 54 },
+  "collision": { "x": 6, "y": 29, "width": 72, "height": 24 }
+}
