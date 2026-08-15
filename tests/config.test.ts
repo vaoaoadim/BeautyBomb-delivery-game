@@ -5,6 +5,7 @@ import {
   GAME_VIEWPORT,
   GAMEPLAY_RULES,
   LANE_CENTERS,
+  LANE_SCALES,
 } from "../src/game/config";
 
 describe("locked game configuration", () => {
@@ -12,6 +13,7 @@ describe("locked game configuration", () => {
     expect(GAME_VIEWPORT).toEqual({ width: 360, height: 640 });
     expect(LANE_CENTERS).toHaveLength(3);
     expect([...LANE_CENTERS]).toEqual([...LANE_CENTERS].sort((a, b) => a - b));
+    expect(LANE_SCALES).toEqual([0.88, 0.94, 1]);
   });
 
   it("keeps the approved lives, timing, and demo prize distribution", () => {

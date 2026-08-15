@@ -18,8 +18,8 @@ Keep this file short. Record only decisions that change product behavior, archit
   - Vite production build passed;
   - npm audit reported 0 vulnerabilities;
   - no hooks, lint stack, UI framework, backend, or agent packs installed.
-- Current phase: three static obstacle candidates integrated and the traffic trap fixed; next is owner playtest approval and the three-lane scale check.
-- The in-app browser smoke test on 2026-08-15 confirmed that the local Phaser scene loads and renders the new obstacle sprites; full-route feel remains an owner playtest gate.
+- Current phase: the approved static courier and three obstacle candidates are integrated; the traffic trap is fixed and the three-lane scale check is implemented. Next is owner approval of the scale gate before animation production.
+- The in-app browser smoke test on 2026-08-15 confirmed that the local Phaser scene loads the courier and obstacle PNGs, interpolates lane position and scale, and renders the far and near lane states correctly; full-route feel remains an owner playtest gate.
 
 ## Accepted decisions
 
@@ -42,6 +42,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-015 | Approve `veh-001-courier-side-tapered-tube-concept-v3.png` as the courier design master. | The owner accepted the side-profile van and corrected tube taper on 2026-08-15; runtime production can use this version as its visual source. |
 | D-016 | Limit each traffic formation to two vehicles and require an open lane within every `1,200 ms` spawn window. | Prevents the scattered three-car sequence and neighboring groups from creating an unfair full-road trap. |
 | D-017 | Use a pink hatchback, yellow sedan, and green boxy wagon as the first playable traffic trio. | Distinct color, roofline, and wheelbase make obstacle recognition faster without competing with the turquoise courier. |
+| D-018 | Use shared lane scale factors `0.88`, `0.94`, and `1.00` for vehicle visuals and collision rectangles. | Keeps the shallow 2.5D depth cue readable without allowing visible art and gameplay hitboxes to drift apart. |
 
 ## Open production questions
 

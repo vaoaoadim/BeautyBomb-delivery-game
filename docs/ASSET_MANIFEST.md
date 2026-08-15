@@ -33,6 +33,8 @@ Native static scale proof: `public/assets/game/vehicles/veh-001-courier-static-v
 
 Integrated obstacle review candidates: `obs-001-pink-hatchback-static-v1.png`, `obs-002-yellow-sedan-static-v1.png`, and `obs-003-green-wagon-static-v1.png`, each with adjacent JSON collision metadata. Combined review sheet: `visual-references/obstacle-vehicles-static-v1-preview-4x.png`. They remain `concept` until owner visual approval; their static versions are integrated only for the current playtest.
 
+Three-lane scale proof: `visual-references/vehicle-lane-scale-check-v1.png`. The runtime now uses the shared far/middle/near factors `0.88`, `0.94`, and `1.00` for both vehicle rendering and the documented body collision rectangles. The Waterbomb tube remains visible but is intentionally excluded from the courier collision area.
+
 ## Batch B — complete traffic set
 
 | ID | Asset | Native canvas / frames | Status |
@@ -122,4 +124,4 @@ Do not create these directories until their first approved exported asset exists
 
 ## Immediate next action
 
-Review the three integrated obstacle silhouettes and the corrected traffic schedule in play. After approval, verify the courier at near (`1.0`), middle (`0.94`), and far (`0.88`) lane scales beside all three obstacles. Do not produce animation frames until the scale check is approved.
+Review `visual-references/vehicle-lane-scale-check-v1.png` and the same scaling in the local playtest. After owner approval, produce the four-frame courier driving cycle, followed by the obstacle wheel cycles. Do not produce animation frames until this scale gate is approved.

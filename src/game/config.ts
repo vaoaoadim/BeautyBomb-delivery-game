@@ -4,6 +4,7 @@ export const GAME_VIEWPORT = Object.freeze({
 });
 
 export const LANE_CENTERS = [326, 400, 474] as const;
+export const LANE_SCALES = [0.88, 0.94, 1] as const;
 
 export const GAMEPLAY_RULES = Object.freeze({
   startingLives: 3,
