@@ -133,6 +133,7 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 - Use brand-compatible colors but keep the courier uniquely turquoise.
 - Traffic can use pink, yellow, green, purple, coral, cream, and dark blue; avoid a second Waterbomb-cyan hero vehicle.
 - The first playable trio is a pink compact hatchback, yellow sedan, and green boxy wagon, all facing left against the courier.
+- Same-lane traffic silhouettes must keep at least `16 px` of visible horizontal clearance at runtime; body pixels may not overlap while driving at one speed.
 
 ## Environment and parallax
 

@@ -35,6 +35,7 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - One input moves the vehicle to one adjacent lane.
 - Traffic mixes single cars, parallel pairs, staggered pairs, same-lane convoys, and scattered pairs instead of repeating one formation.
 - A formation contains at most two cars, and a `1,200 ms` safety window must always leave at least one lane open.
+- Same-lane convoy cars use a `750 ms` spawn interval and retain at least `16 px` of visible space at the largest approved vehicle scale.
 - The first obstacle set cycles through a pink hatchback, yellow sedan, and green boxy wagon.
 - Final art follows `docs/ART_BIBLE.md`; asset production and approvals follow `docs/ASSET_MANIFEST.md`.
 - Lane transition: 180 ms with one buffered command.

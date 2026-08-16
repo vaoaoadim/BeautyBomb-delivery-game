@@ -13,6 +13,8 @@ export type ObstacleKind =
   | "green-wagon";
 
 export const TRAFFIC_SAFETY_WINDOW_MS = 1_200;
+export const CONVOY_SPAWN_GAP_MS = 750;
+export const TRAFFIC_MIN_VISUAL_GAP_PX = 16;
 
 export interface ObstacleSpawn {
   readonly id: number;
@@ -59,7 +61,7 @@ const TRAFFIC_TEMPLATES: readonly TrafficTemplate[] = [
     nextGroupDelayMs: 2_100,
     obstacles: [
       { lane: 2, offsetMs: 0 },
-      { lane: 2, offsetMs: 650 },
+      { lane: 2, offsetMs: CONVOY_SPAWN_GAP_MS },
     ],
   },
   {

@@ -1,14 +1,29 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CONVOY_SPAWN_GAP_MS,
   createTrafficSchedule,
+  TRAFFIC_MIN_VISUAL_GAP_PX,
   TRAFFIC_SAFETY_WINDOW_MS,
   type ObstacleSpawn,
   type ObstacleKind,
   type TrafficPattern,
 } from "../src/game/content/trafficSchedule";
-import { GAMEPLAY_RULES } from "../src/game/config";
+import {
+  GAMEPLAY_RULES,
+  LANE_VISUAL_SCALES,
+  OBSTACLE_VISUAL_SCALE_MULTIPLIERS,
+} from "../src/game/config";
 import type { LaneIndex } from "../src/game/domain/runState";
+import greenWagonAsset from "../public/assets/game/vehicles/obs-003-green-wagon-static-v1.json";
+import pinkHatchbackAsset from "../public/assets/game/vehicles/obs-001-pink-hatchback-static-v1.json";
+import yellowSedanAsset from "../public/assets/game/vehicles/obs-002-yellow-sedan-static-v1.json";
+
+const OBSTACLE_VISIBLE_WIDTHS: Readonly<Record<ObstacleKind, number>> = {
+  "pink-hatchback": pinkHatchbackAsset.visibleBounds.width,
+  "yellow-sedan": yellowSedanAsset.visibleBounds.width,
+  "green-wagon": greenWagonAsset.visibleBounds.width,
+};
 
 function groupById(
   schedule: readonly ObstacleSpawn[],
@@ -84,6 +99,49 @@ describe("deterministic traffic schedule", () => {
           group[0]?.spawnAtMs !== group[1]?.spawnAtMs,
       ),
     ).toBe(true);
+  });
+
+  it("keeps same-lane convoy sprites visually separated", () => {
+    const convoyGroups = [
+      ...groupById(createTrafficSchedule(45_000)).values(),
+    ].filter(
+      (group) =>
+        group.length === 2 &&
+        group[0]?.pattern === "convoy" &&
+        group[0]?.lane === group[1]?.lane,
+    );
+
+    expect(convoyGroups.length).toBeGreaterThan(0);
+
+    for (const group of convoyGroups) {
+      const [first, second] = [...group].sort(
+        (left, right) => left.spawnAtMs - right.spawnAtMs,
+      );
+      expect(first).toBeDefined();
+      expect(second).toBeDefined();
+      if (!first || !second) {
+        continue;
+      }
+
+      const laneScale = LANE_VISUAL_SCALES[first.lane];
+      const firstWidth =
+        OBSTACLE_VISIBLE_WIDTHS[first.kind] *
+        OBSTACLE_VISUAL_SCALE_MULTIPLIERS[first.kind] *
+        laneScale;
+      const secondWidth =
+        OBSTACLE_VISIBLE_WIDTHS[second.kind] *
+        OBSTACLE_VISUAL_SCALE_MULTIPLIERS[second.kind] *
+        laneScale;
+      const centerDistance =
+        ((second.spawnAtMs - first.spawnAtMs) / 1_000) *
+        GAMEPLAY_RULES.obstacleSpeedPxPerSecond;
+      const visibleGap = centerDistance - (firstWidth + secondWidth) / 2;
+
+      expect(second.spawnAtMs - first.spawnAtMs).toBeGreaterThanOrEqual(
+        CONVOY_SPAWN_GAP_MS,
+      );
+      expect(visibleGap).toBeGreaterThanOrEqual(TRAFFIC_MIN_VISUAL_GAP_PX);
+    }
   });
 
   it("never blocks all three lanes at one spawn position", () => {
