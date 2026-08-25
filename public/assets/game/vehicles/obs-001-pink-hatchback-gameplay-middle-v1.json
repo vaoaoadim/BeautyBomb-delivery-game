@@ -1,0 +1,54 @@
+{
+  "assetId": "OBS-001",
+  "version": "v1",
+  "lod": "middle",
+  "status": "integrated-gameplay-pixel-master",
+  "texture": "obs-001-pink-hatchback-gameplay-middle-v1.png",
+  "driveTexture": "obs-001-pink-hatchback-gameplay-middle-drive-v1.png",
+  "canvas": {
+    "width": 98,
+    "height": 68
+  },
+  "visibleBounds": {
+    "x": 3,
+    "y": 17,
+    "width": 92,
+    "height": 46
+  },
+  "origin": {
+    "pixelX": 49,
+    "pixelY": 63
+  },
+  "collision": {
+    "x": 14.1568,
+    "y": 34.8424,
+    "width": 69.6864,
+    "height": 24.5952
+  },
+  "animation": {
+    "frameWidth": 98,
+    "frameHeight": 68,
+    "frameCount": 4,
+    "frameRate": 7,
+    "loop": true,
+    "firstFrameMatchesStaticByteForByte": true,
+    "motion": "wheel hub phase only; body, canvas, origin, baseline and collider remain fixed"
+  },
+  "production": {
+    "approvedHighResolutionMaster": "visual-references/obs-001-pink-hatchback-concept-v2.png",
+    "approvedHighResolutionMasterSha256": "a4a73a07f39ba1214a4f85405cbb17b389e4013af75346651615c569f773ac2a",
+    "independentLodSource": "visual-references/obs-001-pink-hatchback-gameplay-lod-source-v1.png",
+    "independentLodSourceSha256": "b35d86901bbc3bb28b9cf8e29991be772ce2bdc9a555a9cf8dcb49f51fa76eef",
+    "gameplayPixelMaster": "visual-references/gameplay-masters/obs-001-pink-hatchback-gameplay-middle-v1-pixel-master.png",
+    "gameplayPixelMasterSha256": "46aa992617d4e75bf7339554cf8c49c14b62ed140b7b40b1858d212ca0d7b646",
+    "runtimeStaticSha256": "46aa992617d4e75bf7339554cf8c49c14b62ed140b7b40b1858d212ca0d7b646",
+    "runtimeDriveSha256": "31c2a3f84bfa989760fc5bd9d5628c136648215df3d897a3c8a54272aa51b50e",
+    "buildScript": "scripts/build_vehicle_gameplay_lod_v1.py",
+    "lodMethod": "independently authored near/middle/far source adaptations; each exported once to its own final pixel budget",
+    "runtimeResizeCount": 0,
+    "phaserScale": 1,
+    "phaserTextureFilter": "nearest",
+    "antialiasing": false,
+    "subpixelPlacement": false
+  }
+}

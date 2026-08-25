@@ -1,0 +1,73 @@
+{
+  "assetId": "UI-013",
+  "version": "v1",
+  "status": "produced-awaiting-integration",
+  "texture": "ui-013-intro-callout-v1.png",
+  "canvas": {
+    "width": 332,
+    "height": 207
+  },
+  "frame": {
+    "width": 332,
+    "height": 207,
+    "count": 1
+  },
+  "copy": [
+    "ПОМОГИ КУРЬЕРУ",
+    "ДОСТАВИТЬ КРЕМ!",
+    "В ФИНАЛЕ ВАС",
+    "НАГРАДЯТ КУПОНОМ.",
+    "ЖМИ КНОПКИ СНИЗУ",
+    "ИЛИ СТРЕЛКИ",
+    "НА КЛАВИАТУРЕ.",
+    "СЧАСТЛИВОГО ПУТИ!"
+  ],
+  "font": {
+    "family": "Press Start 2P",
+    "sizePx": 16
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "violet": "#1e1d3e",
+    "purple": "#982add",
+    "lavender": "#eef0ff",
+    "white": "#ffffff",
+    "cyan": "#00b7d6",
+    "cyan_light": "#54e0ff",
+    "pink": "#ff4fab",
+    "yellow": "#ffef5c"
+  },
+  "production": {
+    "buildScript": "scripts/build_intro_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "layoutMaster": "visual-references/ui-005-intro-composition-v1.png",
+    "layoutMasterSha256": "556aeffae26052aef844e4ed252189ccbb070c679df65da0214279722d86630e",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "fontLicense": "visual-references/fonts/press-start-2p/OFL.txt",
+    "fontLicenseId": "SIL-OFL-1.1",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "textMaskThreshold": 128,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "36e14b8532651c4d9cb0e10fd06c03db9a4542207175f58ac8449a0e425e16bb",
+    "runtimePixelSha256": "c6ef22dc1a4eb48f499fab0f16c1b3c9fc96d20c21cc371121c8f0060d021bb9"
+  },
+  "runtime": {
+    "position": {
+      "x": 16,
+      "y": 154
+    },
+    "origin": {
+      "x": 0,
+      "y": 0
+    },
+    "transparentPaddingPx": 2,
+    "tailTip": {
+      "x": 86,
+      "y": 354
+    },
+    "fixedToCamera": true
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-004",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-004-near-street-a-v1.png",
+    "canvas": {
+      "width": 768,
+      "height": 220
+    },
+    "sha256": "e0b30d0319e3c79843a38e111b376498b78a8070a26a699f72693666913254ed"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      468,
+      941,
+      737
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-near-street-a-v1",
+    "layer": "near-street",
+    "position": {
+      "x": 0,
+      "y": 179
+    },
+    "scale": {
+      "x": 0.46875,
+      "y": 0.46875
+    },
+    "scrollPixelsPerSecond": 1.2
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "assetId": "ENV-SCENE-001",
+  "version": "v4",
+  "status": "approved-master",
+  "approvedAt": "2026-08-21",
+  "canvas": { "width": 2172, "height": 724 },
+  "segments": {
+    "order": ["A", "B", "C"],
+    "sourceWidthPx": 724,
+    "transitions": ["A->B", "B->C", "C->A"]
+  },
+  "runtimeViewport": { "width": 360, "height": 640 },
+  "runtimeBandGuides": {
+    "roadTop": 282,
+    "roadBottom": 522,
+    "laneSeparators": [363, 437]
+  },
+  "production": {
+    "approvedCandidate": "visual-references/env-001-parallax-coherent-v4-candidate.png",
+    "usage": "Immutable coherent-city master. Derive one unified skyline-to-sidewalk runtime city layer through scripts/build_environment_parallax_v4.py; never split the approved flat city composition into independently scrolling depth planes."
+  },
+  "seamDesign": {
+    "sequence": "A->B->C->A",
+    "review": "visual-references/env-001-parallax-coherent-v4-transition-review.png",
+    "noMirroredForegroundObjects": true,
+    "noEmptySafeGutters": true
+  },
+  "sha256": "4cbb281360a8acc6cafd574ca1a415f165b9e8fe28003dd95208204953f6c57c"
+}

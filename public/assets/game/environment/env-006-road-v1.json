@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-006",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-006-road-v1.png",
+    "canvas": {
+      "width": 512,
+      "height": 240
+    },
+    "sha256": "dd7c2f968c89e44e9759c5eee510a16d2869ac13caefeeac15a12b8f5d2b762a"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      737,
+      941,
+      1364
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-road-v1",
+    "layer": "road",
+    "position": {
+      "x": 0,
+      "y": 282
+    },
+    "scale": {
+      "x": 0.703125,
+      "y": 1.0
+    },
+    "scrollPixelsPerSecond": 4.0
+  }
+}

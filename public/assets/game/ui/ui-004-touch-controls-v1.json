@@ -1,0 +1,63 @@
+{
+  "assetId": "UI-004",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ui-004-touch-controls-v1.png",
+  "canvas": {
+    "width": 76,
+    "height": 192
+  },
+  "frame": {
+    "width": 76,
+    "height": 48,
+    "count": 4,
+    "states": [
+      "up",
+      "up-pressed",
+      "down",
+      "down-pressed"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "violet": "#1e1d3e",
+    "purple": "#982add",
+    "lavender": "#eef0ff",
+    "lavender_shadow": "#cfcced",
+    "cream": "#fff3dc",
+    "white": "#ffffff",
+    "cyan": "#00b7d6",
+    "cyan_light": "#54e0ff",
+    "pink": "#ff4fab",
+    "pink_shadow": "#d22b85",
+    "yellow": "#ffef5c",
+    "yellow_pressed": "#dad73d"
+  },
+  "production": {
+    "buildScript": "scripts/build_hud_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "34e0f4893e1606c21ee015bc394c3f3d74fa3d211fa9fa7451eb2b83fecff226"
+  },
+  "runtime": {
+    "centers": [
+      {
+        "x": 111,
+        "y": 572
+      },
+      {
+        "x": 249,
+        "y": 572
+      }
+    ],
+    "displayScale": 1.5,
+    "hitArea": {
+      "width": 114,
+      "height": 72
+    },
+    "bottomClearancePx": 32
+  }
+}

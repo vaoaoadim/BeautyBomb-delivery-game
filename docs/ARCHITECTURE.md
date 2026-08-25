@@ -90,11 +90,13 @@ The standalone portfolio demo uses the same interface with a local adapter.
 
 ## Rendering and performance
 
-- Logical canvas: `360 × 640`.
-- Scale mode: fit and center.
-- Pixel art and rounded pixels enabled.
-- Image smoothing disabled.
+- Logical scene coordinates remain `360 × 640`; gameplay, collision, layout, and asset manifests use this coordinate space.
+- The renderer uses a `2×` backing canvas (`720 × 1280`) and a matching camera zoom with a top-left origin. CSS presents it at the existing portrait size, so the game gains two physical samples per logical pixel without changing gameplay geometry or pointer mapping.
+- Scale mode remains fit and center. The final canvas uses normal browser resampling instead of forcing a second nearest-neighbor pass over the whole composed frame.
+- Authored pixel textures keep explicit `NEAREST` filtering. A texture that is deliberately animated with fractional scale may use `LINEAR` only after an in-browser comparison proves that it removes stroke crawling without changing its approved silhouette; `UI-014` is the first documented exception.
+- Pixel art and rounded camera pixels remain enabled; mipmaps are not introduced.
 - Parallax layers reuse tileable textures.
+- In Phaser 3.90, cyclic `TileSprite` assets use power-of-two runtime canvases, explicit useful-content bounds, and a finite texture-space repeat period; the Scene renders viewport-sized TileSprites and scrolls them through `tilePositionX`.
 - Collision boxes are simpler than visible sprites.
 - Target: stable 60 FPS, graceful 30 FPS on slower mobile devices.
 - Initial budgets are targets, not release claims: JavaScript under 350 KB gzip excluding lazy audio, initial critical assets under 1.5 MB, no layout shift on the host page.
@@ -106,6 +108,37 @@ The standalone portfolio demo uses the same interface with a local adapter.
 - Editable masters do not belong in runtime atlases.
 - Runtime asset directories are created only when their first approved export exists.
 - Animated frames keep fixed bounds and origins; Phaser must not compensate for inconsistent art at runtime.
+
+### Approved-master pipeline
+
+An owner-approved visual master is immutable and is the visual source of truth for that asset version. Approval authorizes deterministic export; it does not authorize a new generative variation, a redraw from memory, or replacement geometry. A design change requires a new master version and a recorded decision before runtime work resumes.
+
+The only valid production path is:
+
+```text
+approved master
+  -> deterministic background/alpha extraction when needed
+  -> one production resize/export
+  -> lossless runtime texture plus metadata
+  -> explicit Phaser preload and texture filter
+  -> documented lane/runtime scale
+  -> in-game review at the 360 x 640 viewport
+```
+
+Rules:
+
+- previews, guide sheets, screenshots, and already-downscaled runtime files are review evidence only and must never become export inputs;
+- deterministic code-authored pixel UI may be produced directly on its final runtime grid with zero resize and no antialiasing while it is a review candidate; owner approval freezes that version's runtime hashes, and later visual edits require a new version rather than overwriting the approved files;
+- preserve source aspect ratio, silhouette, palette, component placement, and alpha bounds; palette quantization or geometry simplification requires separate owner approval;
+- perform at most one offline resize from the approved master to the runtime texture; never chain downscale/upscale operations;
+- classify the asset before export as either authored low-resolution pixel art or high-detail pixel-style raster, and record that mode, native dimensions, resize filter, runtime scale, origin, baseline, collider, source path, and export script in adjacent metadata;
+- set the concrete Phaser texture filter explicitly. `NEAREST` is required for authored pixel art and for the current courier candidate; a different filter requires a visual comparison and a recorded decision;
+- cyclic environment assets may construct a seam-safe period from approved pixels only when the construction is deterministic, versioned, documented in adjacent metadata, and does not add generated geometry or a second resize; foreground landmarks must remain a direct panorama, while mirroring is permitted only inside a documented object-free edge gutter;
+- environment alpha extraction must classify removable background by connectivity to the master boundary or use an explicit versioned matte; broad color deletion and vertically filled skyline profiles are forbidden when clouds and cyan architecture share the source image;
+- a flat coherent-city master remains one skyline-to-sidewalk runtime layer unless the owner approves true alpha-native depth planes; do not simulate depth by splitting connected towers, facades, trees, lamps, or sidewalks into independently scrolling masks, and never use global RGB/chroma-key deletion;
+- keep visual scaling independent from collision authority. Roof products, shadows, and other non-body decoration do not enter a body collider unless gameplay explicitly requires it;
+- an asset is not `verified` until a comparison sheet shows the master, prior runtime when one exists, new native runtime, nearest-neighbor preview, and real Phaser screenshots at every required lane scale with no crop, halo, bleeding, blur, or console error;
+- approve one static frame before producing animation. Animation frames must derive from that approved static design and preserve fixed bounds, origin, baseline, and collider guides.
 
 ## Verification strategy
 

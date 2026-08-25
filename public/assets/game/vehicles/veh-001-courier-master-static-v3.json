@@ -1,0 +1,50 @@
+{
+  "id": "VEH-001",
+  "version": 3,
+  "texture": "veh-001-courier-master-static-v3.png",
+  "canvas": {
+    "width": 208,
+    "height": 160
+  },
+  "visibleBounds": {
+    "x": 4,
+    "y": 21,
+    "width": 200,
+    "height": 131
+  },
+  "runtimeScale": 0.5,
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.95,
+    "pixelX": 104,
+    "pixelY": 152
+  },
+  "collision": {
+    "x": 16,
+    "y": 76,
+    "width": 176,
+    "height": 68,
+    "includesRoofProduct": false
+  },
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-clean-tube-concept-v5.png",
+    "designMasterSha256": "5031044f41696948b73fb4287806595997cda8e99ed1bcd712af984c93d8230e",
+    "shapeReference": "visual-references/beautybomb-water-bomb-reference.png",
+    "buildScript": "scripts/build_courier_clean_sprite.py",
+    "exportMethod": "connected-background extraction plus one production resize",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "visibleColors": 6003,
+    "phaserTextureFilter": "nearest",
+    "laneTextureScales": [
+      0.56,
+      0.61,
+      0.66
+    ],
+    "runtimeSha256": "e12f0e88a1b60d7ca8aace7712e3ac1ef7188682bd4ec79b27223fdb2cf0580c",
+    "animationFrames": 1,
+    "status": "master-derived-static-review-candidate"
+  }
+}

@@ -32,14 +32,14 @@ The case demonstrates a complete playable promotional mechanic, including a cred
 
 - TypeScript, Vite, Phaser 3, and Vitest.
 - Final visual language is crisp premium pixel art; current geometry is a greybox.
-- The courier vehicle is turquoise, faces right, carries a horizontal Waterbomb tube with its cap toward the rear, and uses a simplified pixel BeautyBomb logo.
+- The courier vehicle is turquoise, faces right, and carries a broad horizontal turquoise face-cream tube with its ribbed white cap toward the rear. The integrated van body and tube are intentionally clean, with no text, logos, or decorative prints.
 - No real promo codes, personal data, checkout, payment, or official campaign claim in the portfolio demo.
 - Art must remain readable in three depth lanes and performant on ordinary mobile devices.
 
 ## Brand Commitments
 
-- Preserve the supplied Waterbomb product silhouette, turquoise body, white cap, and label hierarchy.
-- Preserve the supplied BeautyBomb wordmark proportions when creating the small pixel adaptation.
+- Preserve the supplied tube silhouette, turquoise body, and broad ribbed white cap. Keep the integrated courier body and tube free of text, logos, icons, and decorative prints unless the owner explicitly approves a new version.
+- If the supplied BeautyBomb wordmark is reused outside the vehicle sprite, preserve its proportions in the pixel adaptation.
 - Extend stable traits observed on the official BeautyBomb site: high-energy color, black display lettering, yellow rounded actions, collage/sticker composition, playful direct voice, and strong collection-specific worlds.
 - Do not copy seasonal campaign art or third-party collaboration characters into the game.
 

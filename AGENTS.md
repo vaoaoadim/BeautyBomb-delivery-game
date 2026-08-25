@@ -37,6 +37,7 @@ When documents conflict, stop and report the conflict. Do not silently choose th
 - Keep campaign content and tunable values in `src/game/content/` once that module is introduced.
 - Demo rewards may be local and visibly marked as demonstrations. Production rewards must be issued by a server owned or approved by the client.
 - The logical viewport remains portrait `360 × 640` unless the owner changes the product decision.
+- After the owner approves a visual master, treat that exact file as immutable. Derive runtime art through the deterministic pipeline in `docs/ARCHITECTURE.md`; never regenerate it, redraw it from memory, use a preview as an export source, or introduce an undocumented second resize.
 
 ## Verification
 

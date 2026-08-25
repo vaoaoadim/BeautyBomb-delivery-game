@@ -1,0 +1,73 @@
+{
+  "id": "VEH-001",
+  "variant": "intro-idle-no-wheel-rotation",
+  "version": 1,
+  "texture": "veh-001-courier-clean-intro-idle-v1.png",
+  "frame": {
+    "width": 208,
+    "height": 160,
+    "count": 4
+  },
+  "frameVisibleBounds": [
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    }
+  ],
+  "runtimeScale": 0.5,
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.95,
+    "pixelX": 104,
+    "pixelY": 152
+  },
+  "collision": {
+    "x": 16,
+    "y": 76,
+    "width": 176,
+    "height": 68,
+    "includesRoofProduct": false
+  },
+  "animation": {
+    "frameRate": 9,
+    "loop": true,
+    "bodyAndTubeMotion": "matches-drive-v6",
+    "wheelHubs": "frozen-from-approved-static-frame",
+    "firstFrameMatchesApprovedStatic": true
+  },
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-clean-concept-v7.png",
+    "designMasterSha256": "9803444fd2a084d6f3ea413ce4abdcc69ebebf0022ab1e5456bd73e1dc8b2408",
+    "approvedStaticTexture": "veh-001-courier-clean-static-v5.png",
+    "approvedStaticRuntimeSha256": "0db9dfb7a5aba4e481b47491f3ebd8e73f3760f21994882f3c239f93f9fade01",
+    "buildScript": "scripts/build_courier_clean_asset.py",
+    "exportMethod": "master-component drive motion with static source wheel hubs plus one production resize per frame",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCountPerFrame": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "0b7654fde0bc259ff3b3295d8277c83fa5cd958fc3a60e2b80a00b1109768c12",
+    "status": "produced-intro-idle"
+  }
+}

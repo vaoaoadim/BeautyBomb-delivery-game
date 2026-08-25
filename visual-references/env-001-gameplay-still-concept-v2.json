@@ -1,0 +1,29 @@
+{
+  "assetId": "ENV-SCENE-001",
+  "version": "v2",
+  "status": "approved-master",
+  "approvedOn": "2026-08-20",
+  "path": "visual-references/env-001-gameplay-still-concept-v2.png",
+  "canvas": {
+    "width": 941,
+    "height": 1672
+  },
+  "runtimeViewport": {
+    "width": 360,
+    "height": 640
+  },
+  "runtimeBandGuides": {
+    "roadTop": 282,
+    "roadBottom": 522,
+    "laneSeparators": [
+      363,
+      437
+    ]
+  },
+  "sha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+  "provenance": {
+    "generatedCandidate": "visual-references/env-001-gameplay-still-concept-v1.png",
+    "compositionScript": "scripts/build_environment_still_candidate.py",
+    "note": "The owner approved this exact v2 composition as the immutable visual master."
+  }
+}

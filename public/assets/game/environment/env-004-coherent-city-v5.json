@@ -1,0 +1,86 @@
+{
+  "assetId": "ENV-004",
+  "version": "v5",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-004-coherent-city-v5.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 512
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 2048,
+      "height": 512
+    },
+    "loopPeriodTexturePx": 2048,
+    "displayPeriodPx": 737.28,
+    "sha256": "8fd495b643a02768906736c8e49fa59d8ffc6768ad7096536b750cc928d8c61f"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v5.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-parallax-coherent-v4-candidate.png",
+    "approvedMasterSha256": "4cbb281360a8acc6cafd574ca1a415f165b9e8fe28003dd95208204953f6c57c",
+    "sourceBox": [
+      0,
+      0,
+      2172,
+      512
+    ],
+    "alphaExtraction": "boundary-connected-city",
+    "maskMethod": "boundary-connected adaptive sky flood; inverse anchor-connected city matte",
+    "maskStats": {
+      "boundaryConnectedSkyPixels": 426489,
+      "retainedComponents": 1,
+      "retainedPixels": 658658,
+      "discardedDetachedComponents": 34,
+      "discardedDetachedPixels": 26917
+    },
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "direct-approved-loop"
+  },
+  "maskContract": {
+    "sharedSourceCoordinates": true,
+    "segmentOrder": [
+      "A",
+      "B",
+      "C"
+    ],
+    "segmentSourceWidthPx": 724,
+    "cityComposition": "unified-skyline-to-sidewalk",
+    "colorDeletion": "boundary-connected only; enclosed cyan is preserved",
+    "detachedCloudsRetained": false,
+    "review": "visual-references/environment-parallax-v5-alpha-review.png"
+  },
+  "seamContract": {
+    "mode": "direct-approved-loop",
+    "safeGutterTexturePx": 0,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v5-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-coherent-city-v5",
+    "layer": "coherent-city",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "tileScale": {
+      "x": 0.36,
+      "y": 0.55078125
+    },
+    "displaySpeedPxPerSecond": 40.32000000000001,
+    "textureScrollPixelsPerSecond": 112.00000000000003,
+    "fullCycleSeconds": 18.28571428571428,
+    "depth": 1,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

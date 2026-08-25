@@ -3,6 +3,8 @@ export const GAME_VIEWPORT = Object.freeze({
   height: 640,
 });
 
+export const GAME_RENDER_SCALE = 2;
+
 export const LANE_BASELINES = [350, 424, 508] as const;
 export const LANE_VISUAL_SCALES = [1.12, 1.22, 1.32] as const;
 export const VEHICLE_COLLISION_TO_VISUAL_RATIO = 0.84;

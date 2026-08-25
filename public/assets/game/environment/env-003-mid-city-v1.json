@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-003",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-003-mid-city-v1.png",
+    "canvas": {
+      "width": 512,
+      "height": 160
+    },
+    "sha256": "ebe77ef0dd72811d6969c0b84c881e2022e5d2d90ccea689cf2f80c846df4b69"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      387,
+      941,
+      681
+    ],
+    "alphaExtraction": "remove-cyan-sky",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-mid-city-v1",
+    "layer": "mid-city",
+    "position": {
+      "x": 0,
+      "y": 148
+    },
+    "scale": {
+      "x": 0.703125,
+      "y": 0.703125
+    },
+    "scrollPixelsPerSecond": 0.8
+  }
+}

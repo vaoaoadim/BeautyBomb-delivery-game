@@ -51,11 +51,12 @@ An energetic BeautyBomb campaign has been compressed into a premium 16-bit deliv
 - Lane changes interpolate visual scale and baseline position. Collision rectangles use the authored body guides at `84%` of visual scale so the larger art remains readable without making avoidance unfair.
 - Roofs, hoods, and top faces are visible; avoid a flat orthographic side view and avoid an isometric camera.
 
-### Pixel grid
+### Pixel grid and master-derived exception
 
-- One source pixel equals one logical canvas pixel at native game scale.
-- Draw, position, and export on integer coordinates only.
-- Runtime scaling uses nearest-neighbor filtering; no bilinear filtering.
+- Authored low-resolution pixel art uses one source pixel per logical canvas pixel at native game scale.
+- Draw, position, and export authored low-resolution assets on integer coordinates only.
+- `VEH-001` static `v4` is the approved fidelity-first master frame: a `208 × 160` pixel-style raster exported directly from the approved `v6` alpha master and rendered at `0.5` base texture scale. Do not describe it as a hand-authored `104 × 80` sprite. Drive sheet `v5` derives all four frames from that same master with one nearest-neighbor resize per frame; frame zero is byte-identical to `v4`.
+- Runtime scaling uses nearest-neighbor filtering; no bilinear filtering. The courier's documented lane scales are the only scaling after the single production export.
 - Animated frames share an identical canvas, origin, baseline, and transparent padding.
 - No automatic vector-to-pixel conversion for the final logo or product; redraw them manually on the grid.
 - Shading uses discrete color ramps, never smooth gradients or airbrush texture.
@@ -112,18 +113,19 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 ### Courier vehicle
 
 - Turquoise/blue body, facing right.
-- Shallow three-quarter side view with visible roof and hood.
-- Pixel BeautyBomb wordmark on the side panel; prioritize the `BEAUTY`/`BOMB` contrast and overall lockup over tiny letter accuracy.
-- Waterbomb tube lies horizontally on the roof, cap facing left/back.
+- Near side profile with only a narrow front plane, keeping the long side panel dominant.
+- Use only the specified two-line `BEAUTY BOMB` side treatment: acid-yellow lettering (`#FFEF5C`) with a deep-violet outline (`#1E1D3E`) and, if retained by the review candidate, a restrained pink shadow. Do not add flowers, further lettering, or replacement symbols.
+- Waterbomb tube lies horizontally on the roof, cap facing left/back, with no intermediate neck between the cap and body.
+- Each wheel uses one small triangular pale highlight as a rotation phase marker.
 - Product must be secured by a simple rack or straps so it does not look pasted onto the roof.
 - Silhouette must remain readable at all three lane scales.
 - Vehicle must not resemble an ice-cream truck or ambulance.
 
 ### Waterbomb tube
 
-- Preserve the tall tapered tube silhouette when shown vertically and its taper when rotated horizontally.
-- Turquoise body, white cap, white BeautyBomb lockup, large vertical `WATERBOMB` hierarchy, and small controlled label blocks.
-- Gameplay version uses simplified label clusters; hero/intro version may carry more detail.
+- Preserve the reference tube silhouette when shown vertically; in the horizontal gameplay version, use a broad turquoise face-cream body, a wide ribbed white cap, a direct cap-to-body seam, and full-length gradual widening with no toothpaste-like narrow neck or sudden shoulder.
+- `VEH-001 v6` may retain the reference-derived `WATERBOMB` / `BEAUTY BOMB` package hierarchy because it is part of the owner-requested review candidate. A later standalone hero product still requires its own approval gate.
+- Do not invent claims or packaging copy beyond the approved reference-derived hierarchy.
 - No invented claims or packaging copy.
 
 ### Traffic
@@ -139,19 +141,21 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 
 Layer stack from back to front:
 
-| Layer | Relative speed | Content | Tile target |
+| Layer | Relative speed | Content | Runtime tile contract |
 |---|---:|---|---:|
-| Sky | `0.00–0.05` | solid/two-tone cyan sky, block clouds | `512 × 180` |
-| Far skyline | `0.12–0.18` | simplified towers and antennas | `512 × 128` |
-| Mid city | `0.28–0.36` | readable buildings, windows, signs | `512 × 160` |
-| Near street | `0.50–0.62` | shops, trees, lamps, BeautyBomb-style sticker signage | `768 × 220` |
-| Road markings | `1.00` | lane marks, asphalt patches | `512 × 240` |
-| Foreground accents | `1.10–1.20` | occasional shrubs, railings, posts | modular props |
+| Sky | `0.03` | reconstructed cyan sky and source clouds | `2048 × 512` direct POT cycle |
+| Coherent city | `0.56` | varied neighborhood facades, medium blocks, restrained skyline, trees, and sidewalk as one composition | `2048 × 512` approved-alpha POT cycle |
+| Road markings | `1.00` | approved v3 lane marks, full-height asphalt, and white top/bottom curbs | `1792 × 406` panorama in a `2048 × 512` POT cycle |
+| Foreground accents | `1.15` | control-safe neutral pavement | `1792 × 128` panorama in a `2048 × 128` POT cycle |
 
 Rules:
 
 - no official store facade or copied campaign banner;
-- repeated tiles must hide seams and avoid obvious landmark repetition within ten seconds;
+- `ENV-004 v8` derives from the immutable `env-001-parallax-neighborhood-v6-alpha-master.png` as one skyline-to-sidewalk layer; distant towers, medium blocks, facades, trees, roof props, awnings, and storefronts must never receive independent horizontal offsets;
+- the v6 master supplies approved alpha, so runtime derivation performs no color deletion. Detached clouds and the cyan sky stay exclusively in unchanged `ENV-001`; the v8 source period joins two complete facade walls directly, preserves the sidewalk, and may not introduce an empty seam zone, mirrored landmark, or clipped foreground object;
+- `ENV-006 road v6` preserves the approved v3 panorama and exact `y=282–522` gameplay band. Only the top `0–5` and bottom `388–397` curb rows use neutral white pixel shading; asphalt, lane markings, position, scale, and speed remain unchanged;
+- repeated tiles must hide seams and avoid obvious landmark repetition within ten seconds; a cyclic panorama may mirror only an object-free edge gutter, never a tree, storefront, building, lamp post, or other foreground landmark;
+- Phaser 3.90 `TileSprite` runtime textures use a power-of-two canvas, an explicit useful-content rectangle, and a documented horizontal period; do not reintroduce an NPOT source texture into a cyclic layer;
 - near-layer props cannot cover controls, lives, or the courier collision area;
 - scenery contrast is lower than vehicle contrast;
 - Waterbomb references appear through palette and shapes, not repeated logos on every building.
@@ -160,14 +164,25 @@ Rules:
 
 ### Intro
 
-- White or lavender sticker panel over a saturated cyan/pink city field.
-- One bold pixel title, one short explanation, one yellow primary button.
-- Show the courier vehicle and horizontal product tube at a larger scale.
+- Reuse the actual `360 × 640` gameplay composition in a frozen `ready` state: sky, coherent city, road, HUD, courier, lower console, and lane buttons retain their normal positions, while parallax, traffic, and route time remain stopped.
+- `UI-013` is a native `332 × 207` lavender comic callout placed at `x=16, y=154`. Its dark-violet stepped outline, pink lower edge, white highlight, and tail belong to the existing sticker language; the tail tip must point unambiguously toward the courier roof tube.
+- The Russian instruction is rasterized in uppercase Press Start 2P from a repository-local SIL OFL source. Keep the approved eight-line copy and inner margins; do not substitute a runtime system font or external font CDN.
+- `UI-014` is a centered `112 × 36` three-frame `ЖМИ` prompt at `x=180, y=354`. Its chevrons and yellow/pink/cyan states remain visible without covering the courier or HUD.
+- During ordinary waiting, `ЖМИ` uses a restrained `1.00 → 1.06 → 1.00` `Sine.InOut` pulse over `1,000 ms`; the courier uses the approved `VEH-001` body-and-tube drive motion at the same cadence, while both wheel hubs remain fixed to frame `0`.
+- A first canvas press, `Enter`, or `Space` triggers one guarded `1,000 ms` three-color transition. Route time remains zero until completion, then the callout is hidden and standard gameplay motion resumes.
+- Under `prefers-reduced-motion`, remove CTA scaling and courier motion while retaining the static instruction and a calm color change before play.
+- Keep the bottom console and lane controls visible but inert before play. Pause, exit, and sound controls are not rendered. Do not add a fullscreen shade, separate START button, or the former start popup.
 
 ### Gameplay HUD
 
-- Hearts at top-left, progress bar across the upper safe area, remaining route/time at top-right.
-- Yellow touch buttons with deep-violet outlines; minimum interactive size `48 × 48`.
+- Three hot-pink sticker hearts sit at top-left without a `LIVES` label; lost lives switch to the matching pale-violet empty frame instead of disappearing.
+- The `324 × 16` progress bar remains across the upper safe area: turquoise base, acid-yellow fill, deep-violet stepped frame, one small end sparkle, and a white pixel highlight at the live fill edge.
+- Yellow touch buttons retain their native `76 × 48` pixel-art frames and separate up/down normal and pressed states, but render at `1.5×` with matching `114 × 72` hit areas. Their centers are `111/249, 572`, leaving a `24 px` gap between buttons and `32 px` of free space below the `y=522–640` control panel.
+- The fixed `360 × 118` lower control console begins at `y=522`, uses the courier cyan field with a thin yellow/violet/cyan top edge and no `MOVE` label.
+- `UI-010` through `UI-012` remain available as source candidates but are not loaded or rendered. Keyboard `P` and `Esc` retain the temporary local pause entry point.
+- The title stays horizontally centered at `x=180, y=38`.
+- The game uses no decorative outer frame; the logical `360 × 640` canvas remains visually unframed against the host background.
+- The run timer remains internal gameplay authority and is never rendered as seconds or a countdown in the gameplay HUD; progress is communicated only by the progress bar.
 - HUD uses solid fields and silhouettes; no translucent glass effects.
 
 ### Defeat
@@ -223,7 +238,7 @@ Reduced-motion mode:
 
 Art is ready for integration only when:
 
-- vehicle, tube, and wordmark remain recognizable at `360 × 640`;
+- vehicle, broad reference-derived Waterbomb tube, `BEAUTY BOMB` side treatment, and wheel phase markers remain recognizable at `360 × 640`;
 - all traffic silhouettes can be distinguished in grayscale;
 - all three lane scales share one perspective and baseline system;
 - animation frames do not jitter because of changing bounds or origins;

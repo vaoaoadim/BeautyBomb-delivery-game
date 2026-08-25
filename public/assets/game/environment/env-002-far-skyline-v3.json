@@ -1,0 +1,63 @@
+{
+  "assetId": "ENV-002",
+  "version": "v3",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-002-far-skyline-v3.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 256
+    },
+    "contentRect": {
+      "x": 128,
+      "y": 0,
+      "width": 1792,
+      "height": 256
+    },
+    "loopPeriodTexturePx": 2048,
+    "sha256": "8ae83dadd6ab02635d2d51b26ce95fc088d954c8c955a0c35540fc7b94fd784d"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v3.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-parallax-seamless-v3.png",
+    "approvedMasterSha256": "b2cbf1c11feb7a14abacd4bba2fcc1016a59d71bf0af5a2a12f4f7e6c6ac5c73",
+    "sourceBox": [
+      0,
+      150,
+      1774,
+      430
+    ],
+    "alphaExtraction": "remove-cyan-sky",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "safe-gutter-plus-direct-panorama; only the neutral source gutter is mirrored; no generated pixels"
+  },
+  "seamContract": {
+    "mode": "safe-gutter-direct-panorama",
+    "safeGutterTexturePx": 128,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v3-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-far-skyline-v3",
+    "layer": "far-skyline",
+    "position": {
+      "x": 0,
+      "y": 115
+    },
+    "tileScale": {
+      "x": 0.3515625,
+      "y": 0.703125
+    },
+    "displaySpeedPxPerSecond": 10.799999999999999,
+    "textureScrollPixelsPerSecond": 30.719999999999995,
+    "depth": 1,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

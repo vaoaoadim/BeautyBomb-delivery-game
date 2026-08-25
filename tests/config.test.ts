@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   DEMO_PRIZE_WEIGHTS,
+  GAME_RENDER_SCALE,
   GAME_VIEWPORT,
   GAMEPLAY_RULES,
   LANE_BASELINES,
@@ -15,6 +16,7 @@ describe("locked game configuration", () => {
     const minGreenToPinkVisualHeightRatio = 35 / 30;
 
     expect(GAME_VIEWPORT).toEqual({ width: 360, height: 640 });
+    expect(GAME_RENDER_SCALE).toBe(2);
     expect(LANE_BASELINES).toHaveLength(3);
     expect([...LANE_BASELINES]).toEqual(
       [...LANE_BASELINES].sort((a, b) => a - b),

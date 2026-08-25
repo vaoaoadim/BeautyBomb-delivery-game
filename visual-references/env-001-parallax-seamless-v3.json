@@ -1,0 +1,21 @@
+{
+  "assetId": "ENV-SCENE-001",
+  "version": "v3",
+  "status": "approved-master",
+  "canvas": { "width": 1774, "height": 887 },
+  "runtimeViewport": { "width": 360, "height": 640 },
+  "runtimeBandGuides": {
+    "roadTop": 282,
+    "roadBottom": 522,
+    "laneSeparators": [363, 437]
+  },
+  "production": {
+    "approvedCandidate": "visual-references/env-001-parallax-seamless-v3-candidate-02.png",
+    "usage": "Approved visual master for the seam-safe route parallax. Do not edit or regenerate this file; derive runtime assets only through scripts/build_environment_parallax_v3.py."
+  },
+  "seamDesign": {
+    "edgeSafeZones": "Both outer edges contain only neutral sky, distant skyline, sidewalk, and road. No shop, tree, lamp post, or facade crosses a cycle edge.",
+    "noMirroredForegroundObjects": true
+  },
+  "sha256": "b2cbf1c11feb7a14abacd4bba2fcc1016a59d71bf0af5a2a12f4f7e6c6ac5c73"
+}

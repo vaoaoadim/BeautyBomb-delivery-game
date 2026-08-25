@@ -1,29 +1,17 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  CONVOY_SPAWN_GAP_MS,
   createTrafficSchedule,
+  getSameLaneVisibleGapPx,
+  TRAFFIC_MAX_FORMATION_STAGGER_MS,
   TRAFFIC_MIN_VISUAL_GAP_PX,
   TRAFFIC_SAFETY_WINDOW_MS,
   type ObstacleSpawn,
   type ObstacleKind,
   type TrafficPattern,
 } from "../src/game/content/trafficSchedule";
-import {
-  GAMEPLAY_RULES,
-  LANE_VISUAL_SCALES,
-  OBSTACLE_VISUAL_SCALE_MULTIPLIERS,
-} from "../src/game/config";
+import { GAMEPLAY_RULES } from "../src/game/config";
 import type { LaneIndex } from "../src/game/domain/runState";
-import greenWagonAsset from "../public/assets/game/vehicles/obs-003-green-wagon-static-v1.json";
-import pinkHatchbackAsset from "../public/assets/game/vehicles/obs-001-pink-hatchback-static-v1.json";
-import yellowSedanAsset from "../public/assets/game/vehicles/obs-002-yellow-sedan-static-v1.json";
-
-const OBSTACLE_VISIBLE_WIDTHS: Readonly<Record<ObstacleKind, number>> = {
-  "pink-hatchback": pinkHatchbackAsset.visibleBounds.width,
-  "yellow-sedan": yellowSedanAsset.visibleBounds.width,
-  "green-wagon": greenWagonAsset.visibleBounds.width,
-};
 
 function groupById(
   schedule: readonly ObstacleSpawn[],
@@ -101,46 +89,39 @@ describe("deterministic traffic schedule", () => {
     ).toBe(true);
   });
 
-  it("keeps same-lane convoy sprites visually separated", () => {
-    const convoyGroups = [
-      ...groupById(createTrafficSchedule(45_000)).values(),
-    ].filter(
-      (group) =>
-        group.length === 2 &&
-        group[0]?.pattern === "convoy" &&
-        group[0]?.lane === group[1]?.lane,
-    );
+  it("keeps every chronological same-lane pair visually separated", () => {
+    const schedule = createTrafficSchedule(45_000);
 
-    expect(convoyGroups.length).toBeGreaterThan(0);
+    for (const lane of [0, 1, 2] as const) {
+      const laneSchedule = schedule.filter((obstacle) => obstacle.lane === lane);
 
-    for (const group of convoyGroups) {
-      const [first, second] = [...group].sort(
-        (left, right) => left.spawnAtMs - right.spawnAtMs,
-      );
-      expect(first).toBeDefined();
-      expect(second).toBeDefined();
-      if (!first || !second) {
-        continue;
+      for (let index = 1; index < laneSchedule.length; index += 1) {
+        const first = laneSchedule[index - 1]!;
+        const second = laneSchedule[index]!;
+
+        expect(getSameLaneVisibleGapPx(first, second)).toBeGreaterThanOrEqual(
+          TRAFFIC_MIN_VISUAL_GAP_PX,
+        );
       }
+    }
+  });
 
-      const laneScale = LANE_VISUAL_SCALES[first.lane];
-      const firstWidth =
-        OBSTACLE_VISIBLE_WIDTHS[first.kind] *
-        OBSTACLE_VISUAL_SCALE_MULTIPLIERS[first.kind] *
-        laneScale;
-      const secondWidth =
-        OBSTACLE_VISIBLE_WIDTHS[second.kind] *
-        OBSTACLE_VISUAL_SCALE_MULTIPLIERS[second.kind] *
-        laneScale;
-      const centerDistance =
-        ((second.spawnAtMs - first.spawnAtMs) / 1_000) *
-        GAMEPLAY_RULES.obstacleSpeedPxPerSecond;
-      const visibleGap = centerDistance - (firstWidth + secondWidth) / 2;
+  it("keeps cross-lane threats either simultaneous or outside the safety window", () => {
+    const schedule = createTrafficSchedule(45_000);
 
-      expect(second.spawnAtMs - first.spawnAtMs).toBeGreaterThanOrEqual(
-        CONVOY_SPAWN_GAP_MS,
-      );
-      expect(visibleGap).toBeGreaterThanOrEqual(TRAFFIC_MIN_VISUAL_GAP_PX);
+    for (const [index, first] of schedule.entries()) {
+      for (const second of schedule.slice(index + 1)) {
+        const spawnDelayMs = second.spawnAtMs - first.spawnAtMs;
+        if (spawnDelayMs >= TRAFFIC_SAFETY_WINDOW_MS) {
+          break;
+        }
+
+        if (first.lane !== second.lane) {
+          expect(spawnDelayMs).toBeLessThanOrEqual(
+            TRAFFIC_MAX_FORMATION_STAGGER_MS,
+          );
+        }
+      }
     }
   });
 

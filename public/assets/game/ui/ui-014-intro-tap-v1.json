@@ -1,0 +1,66 @@
+{
+  "assetId": "UI-014",
+  "version": "v1",
+  "status": "produced-awaiting-integration",
+  "texture": "ui-014-intro-tap-v1.png",
+  "canvas": {
+    "width": 112,
+    "height": 108
+  },
+  "frame": {
+    "width": 112,
+    "height": 36,
+    "count": 3,
+    "states": [
+      "idle-yellow",
+      "transition-pink",
+      "transition-cyan"
+    ],
+    "visualRect": {
+      "x": 2,
+      "y": 2,
+      "width": 108,
+      "height": 32
+    }
+  },
+  "production": {
+    "buildScript": "scripts/build_intro_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "layoutMaster": "visual-references/ui-005-intro-composition-v1.png",
+    "layoutMasterSha256": "556aeffae26052aef844e4ed252189ccbb070c679df65da0214279722d86630e",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "fontLicense": "visual-references/fonts/press-start-2p/OFL.txt",
+    "fontLicenseId": "SIL-OFL-1.1",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "textMaskThreshold": 128,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "linear",
+    "runtimeSha256": "5eb94b8d11273fa7eb9f4852f9e68f8b3ba78f1ed1c48695541684f4343d745d",
+    "runtimePixelSha256": "3d4e7017bce3e580cbae175ef992a9f46e468fe4dc06871583decf5e9d5885e7"
+  },
+  "runtime": {
+    "center": {
+      "x": 180,
+      "y": 354
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "frameOrder": [
+      0,
+      1,
+      2
+    ],
+    "idleFrame": 0,
+    "transitionColorFrames": [
+      0,
+      1,
+      2
+    ],
+    "transparentPaddingPx": 2,
+    "fixedToCamera": true
+  }
+}

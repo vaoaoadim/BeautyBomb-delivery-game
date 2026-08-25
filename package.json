@@ -18,9 +18,9 @@
     "phaser": "3.90.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.37.1",
     "typescript": "7.0.2",
     "vite": "8.2.1",
     "vitest": "4.1.10"
   }
 }
-
