@@ -1,0 +1,36 @@
+{
+  "id": "VEH-001",
+  "version": 2,
+  "texture": "veh-001-courier-floral-static-v2.png",
+  "canvas": {
+    "width": 104,
+    "height": 80
+  },
+  "visibleBounds": {
+    "x": 2,
+    "y": 10,
+    "width": 100,
+    "height": 66
+  },
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.95,
+    "pixelX": 52,
+    "pixelY": 76
+  },
+  "collision": {
+    "x": 8,
+    "y": 38,
+    "width": 88,
+    "height": 34,
+    "includesRoofProduct": false
+  },
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-floral-concept-v4.png",
+    "sourceSprite": "veh-001-courier-static-v1.png",
+    "buildScript": "scripts/build_courier_floral_sprite.py",
+    "resizeFilter": "nearest-neighbor",
+    "animationFrames": 1,
+    "status": "static-redesign-review-candidate"
+  }
+}

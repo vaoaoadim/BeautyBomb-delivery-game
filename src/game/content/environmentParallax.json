@@ -1,0 +1,113 @@
+{
+  "version": "v9",
+  "masters": [
+    {
+      "id": "environment-neighborhood-v6",
+      "path": "visual-references/env-001-parallax-neighborhood-v6-alpha-master.png",
+      "sha256": "7006064971c5aac3920f4c3820646d8b94c9681436c1c6b6f97820d9794aaa83"
+    },
+    {
+      "id": "environment-coherent-v4",
+      "path": "visual-references/env-001-parallax-coherent-v4-candidate.png",
+      "sha256": "4cbb281360a8acc6cafd574ca1a415f165b9e8fe28003dd95208204953f6c57c"
+    },
+    {
+      "id": "environment-approved-v2",
+      "path": "visual-references/env-001-gameplay-still-concept-v2.png",
+      "sha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12"
+    },
+    {
+      "id": "environment-seamless-v3",
+      "path": "visual-references/env-001-parallax-seamless-v3.png",
+      "sha256": "b2cbf1c11feb7a14abacd4bba2fcc1016a59d71bf0af5a2a12f4f7e6c6ac5c73"
+    }
+  ],
+  "route": {
+    "baseDisplaySpeedPxPerSecond": 72,
+    "mode": "route-loop"
+  },
+  "maskProfiles": {
+    "skyToleranceMaxChannel": 18,
+    "skyToleranceEuclidean": 30,
+    "cityAnchorMinY": 500,
+    "cityBottomSourceY": 512
+  },
+  "layers": [
+    {
+      "assetId": "ENV-001",
+      "masterId": "environment-coherent-v4",
+      "textureKey": "environment-sky-v5",
+      "runtimeName": "env-001-sky-v5",
+      "runtimePath": "/assets/game/environment/env-001-sky-v5.png",
+      "sourceBox": [0, 0, 2172, 512],
+      "contentCanvas": { "width": 2048, "height": 512 },
+      "textureCanvas": { "width": 2048, "height": 512 },
+      "seamGutterTexturePx": 0,
+      "alphaMode": "reconstructed-sky",
+      "cycleMode": "direct-approved-loop",
+      "layer": "sky",
+      "position": { "x": 0, "y": 0 },
+      "tileScale": { "x": 0.36, "y": 0.55078125 },
+      "speedMultiplier": 0.03,
+      "depth": 0,
+      "reducedMotion": "freeze"
+    },
+    {
+      "assetId": "ENV-004",
+      "masterId": "environment-neighborhood-v6",
+      "textureKey": "environment-neighborhood-city-v8",
+      "runtimeName": "env-004-neighborhood-city-v8",
+      "runtimePath": "/assets/game/environment/env-004-neighborhood-city-v8.png",
+      "sourceBox": [123, 0, 2005, 693],
+      "contentCanvas": { "width": 2048, "height": 512 },
+      "textureCanvas": { "width": 2048, "height": 512 },
+      "seamGutterTexturePx": 0,
+      "alphaMode": "approved-alpha-city",
+      "cycleMode": "direct-approved-loop",
+      "layer": "coherent-city",
+      "position": { "x": 0, "y": 0 },
+      "tileScale": { "x": 0.36, "y": 0.55078125 },
+      "speedMultiplier": 0.56,
+      "depth": 1,
+      "reducedMotion": "freeze"
+    },
+    {
+      "assetId": "ENV-006",
+      "masterId": "environment-seamless-v3",
+      "textureKey": "environment-road-v6",
+      "runtimeName": "env-006-road-v6",
+      "runtimePath": "/assets/game/environment/env-006-road-v6.png",
+      "sourceBox": [0, 540, 1774, 887],
+      "contentCanvas": { "width": 1792, "height": 406 },
+      "textureCanvas": { "width": 2048, "height": 512 },
+      "seamGutterTexturePx": 128,
+      "alphaMode": "opaque-source-crop",
+      "cycleMode": "safe-gutter-direct-panorama",
+      "layer": "road",
+      "position": { "x": 0, "y": 282 },
+      "tileScale": { "x": 0.3515625, "y": 0.5911330049 },
+      "speedMultiplier": 1,
+      "depth": 4,
+      "reducedMotion": "essential"
+    },
+    {
+      "assetId": "ENV-008",
+      "masterId": "environment-approved-v2",
+      "textureKey": "environment-foreground-accents-v5",
+      "runtimeName": "env-008-foreground-accents-v5",
+      "runtimePath": "/assets/game/environment/env-008-foreground-accents-v5.png",
+      "sourceBox": [0, 1364, 941, 1672],
+      "contentCanvas": { "width": 1792, "height": 128 },
+      "textureCanvas": { "width": 2048, "height": 128 },
+      "seamGutterTexturePx": 128,
+      "alphaMode": "opaque-source-crop",
+      "cycleMode": "safe-gutter-direct-panorama",
+      "layer": "foreground-accents",
+      "position": { "x": 0, "y": 522 },
+      "tileScale": { "x": 0.3515625, "y": 0.921875 },
+      "speedMultiplier": 1.15,
+      "depth": 5,
+      "reducedMotion": "freeze"
+    }
+  ]
+}

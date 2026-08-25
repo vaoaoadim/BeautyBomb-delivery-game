@@ -1,0 +1,55 @@
+{
+  "assetId": "VEH-001",
+  "version": "v1",
+  "lod": "far",
+  "status": "integrated-gameplay-pixel-master",
+  "texture": "veh-001-courier-waterbomb-brand-gameplay-far-v1.png",
+  "driveTexture": "veh-001-courier-waterbomb-brand-gameplay-far-drive-v1.png",
+  "canvas": {
+    "width": 116,
+    "height": 90
+  },
+  "visibleBounds": {
+    "x": 3,
+    "y": 2,
+    "width": 110,
+    "height": 83
+  },
+  "origin": {
+    "pixelX": 58,
+    "pixelY": 85
+  },
+  "collision": {
+    "x": 16.6048,
+    "y": 45.4864,
+    "width": 82.7904,
+    "height": 31.9872,
+    "includesRoofProduct": false
+  },
+  "animation": {
+    "frameWidth": 116,
+    "frameHeight": 90,
+    "frameCount": 4,
+    "frameRate": 9,
+    "loop": true,
+    "firstFrameMatchesStaticByteForByte": true,
+    "motion": "wheel hub phase only; body, canvas, origin, baseline and collider remain fixed"
+  },
+  "production": {
+    "approvedHighResolutionMaster": "visual-references/veh-001-courier-waterbomb-brand-concept-v6.png",
+    "approvedHighResolutionMasterSha256": "a4c5dd72f15471730cf0070e74354d7821d48d7d551875620a01143684b6694d",
+    "independentLodSource": "visual-references/veh-001-courier-waterbomb-brand-gameplay-lod-source-v1.png",
+    "independentLodSourceSha256": "56797e4a5b54eb95c892cdb17af5ccf56b77d1a56ce75cb230224017211b67c1",
+    "gameplayPixelMaster": "visual-references/gameplay-masters/veh-001-courier-waterbomb-brand-gameplay-far-v1-pixel-master.png",
+    "gameplayPixelMasterSha256": "37cf8b6d0f58ae4e58dce78f4cf51fd85101dc1b253fe92fb30a2748b95e372c",
+    "runtimeStaticSha256": "37cf8b6d0f58ae4e58dce78f4cf51fd85101dc1b253fe92fb30a2748b95e372c",
+    "runtimeDriveSha256": "7179060a552844c531d4eb78859efce2b7a2cf3f82744a53b87329eab9a75422",
+    "buildScript": "scripts/build_vehicle_gameplay_lod_v1.py",
+    "lodMethod": "independently authored near/middle/far source adaptations; each exported once to its own final pixel budget",
+    "runtimeResizeCount": 0,
+    "phaserScale": 1,
+    "phaserTextureFilter": "nearest",
+    "antialiasing": false,
+    "subpixelPlacement": false
+  }
+}

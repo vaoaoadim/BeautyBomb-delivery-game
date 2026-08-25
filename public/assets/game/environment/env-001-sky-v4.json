@@ -1,0 +1,77 @@
+{
+  "assetId": "ENV-001",
+  "version": "v4",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-001-sky-v4.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 512
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 2048,
+      "height": 512
+    },
+    "loopPeriodTexturePx": 2048,
+    "displayPeriodPx": 737.28,
+    "sha256": "78a0990d742d1eded87ab1268ddd5ce27969481d7c87ddb615246dd6c6a9c05f"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v4.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-parallax-coherent-v4-candidate.png",
+    "approvedMasterSha256": "4cbb281360a8acc6cafd574ca1a415f165b9e8fe28003dd95208204953f6c57c",
+    "sourceBox": [
+      0,
+      0,
+      2172,
+      512
+    ],
+    "alphaExtraction": "reconstructed-sky",
+    "maskMethod": "not applicable to this layer",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "direct-approved-loop"
+  },
+  "maskContract": {
+    "sharedSourceCoordinates": true,
+    "segmentOrder": [
+      "A",
+      "B",
+      "C"
+    ],
+    "segmentSourceWidthPx": 724,
+    "cityComposition": null,
+    "review": "visual-references/environment-parallax-v4-mask-review.png"
+  },
+  "seamContract": {
+    "mode": "direct-approved-loop",
+    "safeGutterTexturePx": 0,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v4-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-sky-v4",
+    "layer": "sky",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "tileScale": {
+      "x": 0.36,
+      "y": 0.55078125
+    },
+    "displaySpeedPxPerSecond": 2.16,
+    "textureScrollPixelsPerSecond": 6.000000000000001,
+    "fullCycleSeconds": 341.3333333333333,
+    "depth": 0,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

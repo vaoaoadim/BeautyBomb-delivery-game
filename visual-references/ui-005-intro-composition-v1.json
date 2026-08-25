@@ -1,0 +1,56 @@
+{
+  "assetId": "UI-005",
+  "version": "v1",
+  "status": "approved-layout-master",
+  "canvas": {
+    "width": 360,
+    "height": 640
+  },
+  "sha256": "556aeffae26052aef844e4ed252189ccbb070c679df65da0214279722d86630e",
+  "copy": [
+    "ПОМОГИ КУРЬЕРУ",
+    "ДОСТАВИТЬ КРЕМ!",
+    "В ФИНАЛЕ ВАС",
+    "НАГРАДЯТ КУПОНОМ.",
+    "ЖМИ КНОПКИ СНИЗУ",
+    "ИЛИ СТРЕЛКИ",
+    "НА КЛАВИАТУРЕ.",
+    "СЧАСТЛИВОГО ПУТИ!"
+  ],
+  "layout": {
+    "calloutRuntimePosition": {
+      "x": 16,
+      "y": 154
+    },
+    "bubbleRect": {
+      "x": 18,
+      "y": 156,
+      "width": 324,
+      "height": 168
+    },
+    "textSafeRect": {
+      "x": 36,
+      "y": 168,
+      "width": 288,
+      "height": 142
+    },
+    "tailTip": {
+      "x": 86,
+      "y": 354
+    },
+    "ctaCenter": {
+      "x": 180,
+      "y": 354
+    },
+    "courierReviewBounds": {
+      "x": 11,
+      "y": 331,
+      "width": 127,
+      "height": 98
+    }
+  },
+  "runtimeAssets": [
+    "UI-013",
+    "UI-014"
+  ]
+}

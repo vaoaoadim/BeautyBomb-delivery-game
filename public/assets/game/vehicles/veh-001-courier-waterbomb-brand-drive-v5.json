@@ -1,0 +1,76 @@
+{
+  "id": "VEH-001",
+  "version": 5,
+  "texture": "veh-001-courier-waterbomb-brand-drive-v5.png",
+  "frame": {
+    "width": 208,
+    "height": 160,
+    "count": 4
+  },
+  "frameVisibleBounds": [
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "width": 197,
+      "height": 149
+    }
+  ],
+  "runtimeScale": 0.5,
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.95,
+    "pixelX": 104,
+    "pixelY": 152
+  },
+  "collision": {
+    "x": 16,
+    "y": 76,
+    "width": 176,
+    "height": 68,
+    "includesRoofProduct": false
+  },
+  "animation": {
+    "frameRate": 9,
+    "loop": true,
+    "firstFrameMatchesApprovedStatic": true
+  },
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-waterbomb-brand-concept-v6.png",
+    "designMasterSha256": "a4c5dd72f15471730cf0070e74354d7821d48d7d551875620a01143684b6694d",
+    "approvedStaticTexture": "veh-001-courier-waterbomb-brand-static-v4.png",
+    "approvedStaticRuntimeSha256": "e6b9b3d62b7e5c0461da67a8bf1d103fb4a16a9e295c7e291514e405482436df",
+    "staticRuntimeUsage": "approval anchor only; not an export input",
+    "buildScript": "scripts/build_courier_waterbomb_drive_sheet.py",
+    "exportMethod": "master-component motion transforms plus one production resize per frame",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCountPerFrame": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "laneTextureScales": [
+      0.56,
+      0.61,
+      0.66
+    ],
+    "runtimeSha256": "8de1a005ed666ba504b5831942ea56a38a97c131b62eebcf5b2e07ecd6b896d5",
+    "status": "approved-drive-cycle"
+  }
+}

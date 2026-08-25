@@ -1,0 +1,52 @@
+{
+  "id": "OBS-003",
+  "version": 2,
+  "kind": "green-wagon",
+  "texture": "obs-003-green-wagon-static-v2.png",
+  "canvas": {
+    "width": 84,
+    "height": 58
+  },
+  "visibleBounds": {
+    "x": 2,
+    "y": 23,
+    "width": 80,
+    "height": 31
+  },
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.9310344827586207,
+    "pixelX": 42,
+    "pixelY": 54
+  },
+  "collision": {
+    "x": 6,
+    "y": 29,
+    "width": 72,
+    "height": 24
+  },
+  "production": {
+    "designMaster": "visual-references/obs-003-green-wagon-concept-v2.png",
+    "designMasterSha256": "d04789cdd38ae122a4180ebe92ff0caf44d5eaf5a1351d5fa84801ec75a33d34",
+    "sourceGeneration": "visual-references/obs-003-green-wagon-concept-v2-source.png",
+    "buildScript": "scripts/build_obstacle_static_v2.py",
+    "exportMethod": "alpha-noise threshold plus alpha-bounds crop and one production resize",
+    "assetMode": "high-detail-pixel-style-raster",
+    "alphaNoiseThreshold": 16,
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "visibleColors": 1225,
+    "phaserTextureFilter": "nearest",
+    "laneVisualScales": [
+      1.12,
+      1.22,
+      1.32
+    ],
+    "visualScaleMultiplier": 1.18,
+    "collisionToVisualRatio": 0.711864406779661,
+    "runtimeSha256": "db6d562bf3378b599ca66cbeab2dbd06ca843e18e5dedf8c264613c710d2c505",
+    "animationFrames": 1,
+    "status": "approved-static-master"
+  }
+}

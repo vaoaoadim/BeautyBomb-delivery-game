@@ -1,0 +1,440 @@
+import { describe, expect, it } from "vitest";
+
+import driveMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-drive-v6.json";
+import staticMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-static-v5.json";
+import greenWagonMetadata from "../public/assets/game/vehicles/obs-003-green-wagon-static-v2.json";
+import pinkHatchbackMetadata from "../public/assets/game/vehicles/obs-001-pink-hatchback-static-v2.json";
+import yellowSedanMetadata from "../public/assets/game/vehicles/obs-002-yellow-sedan-static-v2.json";
+import greenWagonDriveMetadata from "../public/assets/game/vehicles/obs-003-green-wagon-drive-v2.json";
+import pinkHatchbackDriveMetadata from "../public/assets/game/vehicles/obs-001-pink-hatchback-drive-v2.json";
+import yellowSedanDriveMetadata from "../public/assets/game/vehicles/obs-002-yellow-sedan-drive-v2.json";
+import environmentSkyMetadata from "../public/assets/game/environment/env-001-sky-v5.json";
+import environmentCoherentCityMetadata from "../public/assets/game/environment/env-004-neighborhood-city-v8.json";
+import environmentRoadMetadata from "../public/assets/game/environment/env-006-road-v6.json";
+import environmentForegroundMetadata from "../public/assets/game/environment/env-008-foreground-accents-v5.json";
+import environmentSkyV4Metadata from "../public/assets/game/environment/env-001-sky-v4.json";
+import environmentRoadV4Metadata from "../public/assets/game/environment/env-006-road-v4.json";
+import environmentForegroundV4Metadata from "../public/assets/game/environment/env-008-foreground-accents-v4.json";
+import environmentMasterMetadata from "../visual-references/env-001-parallax-coherent-v4-candidate.json";
+import environmentNeighborhoodMasterMetadata from "../visual-references/env-001-parallax-neighborhood-v6-alpha-master.json";
+import hudHeartMetadata from "../public/assets/game/ui/ico-001-life-heart-v1.json";
+import hudProgressMetadata from "../public/assets/game/ui/ui-003-progress-bar-v1.json";
+import hudControlsMetadata from "../public/assets/game/ui/ui-004-touch-controls-v1.json";
+import hudPanelMetadata from "../public/assets/game/ui/ui-008-control-panel-v1.json";
+import hudTitleMetadata from "../public/assets/game/ui/ui-009-game-title-v1.json";
+import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v1.json";
+import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
+import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-tab-v1.json";
+import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
+import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
+
+describe("approved-master asset contract", () => {
+  it("keeps the approved courier static tied to one deterministic master export", () => {
+    expect(staticMetadata.canvas).toEqual({ width: 208, height: 160 });
+    expect(staticMetadata.runtimeScale).toBe(0.5);
+    expect(staticMetadata.collision.includesRoofProduct).toBe(false);
+    expect(staticMetadata.production).toMatchObject({
+      designMaster:
+        "visual-references/veh-001-courier-clean-concept-v7.png",
+      buildScript: "scripts/build_courier_clean_asset.py",
+      assetMode: "high-detail-pixel-style-raster",
+      offlineResizeCount: 1,
+      resizeFilter: "nearest-neighbor",
+      paletteQuantization: false,
+      phaserTextureFilter: "nearest",
+      status: "approved-static-master",
+    });
+    expect(staticMetadata.production.designMasterSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(staticMetadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(staticMetadata.production.laneTextureScales).toEqual(
+      LANE_VISUAL_SCALES.map((scale) => scale * staticMetadata.runtimeScale),
+    );
+  });
+
+  it("derives the drive sheet from the approved master without using a runtime export as input", () => {
+    expect(driveMetadata.frame).toEqual({ width: 208, height: 160, count: 4 });
+    expect(driveMetadata.animation).toEqual({
+      frameRate: 9,
+      loop: true,
+      firstFrameMatchesApprovedStatic: true,
+    });
+    expect(driveMetadata.collision.includesRoofProduct).toBe(false);
+    expect(driveMetadata.production).toMatchObject({
+      designMaster:
+        "visual-references/veh-001-courier-clean-concept-v7.png",
+      approvedStaticTexture: "veh-001-courier-clean-static-v5.png",
+      staticRuntimeUsage: "approval anchor only; not an export input",
+      buildScript: "scripts/build_courier_clean_asset.py",
+      offlineResizeCountPerFrame: 1,
+      resizeFilter: "nearest-neighbor",
+      phaserTextureFilter: "nearest",
+    });
+    expect(driveMetadata.production.designMasterSha256).toBe(
+      staticMetadata.production.designMasterSha256,
+    );
+    expect(driveMetadata.production.approvedStaticRuntimeSha256).toBe(
+      staticMetadata.production.runtimeSha256,
+    );
+    expect(driveMetadata.production.laneTextureScales).toEqual(
+      LANE_VISUAL_SCALES.map((scale) => scale * driveMetadata.runtimeScale),
+    );
+  });
+
+  it("keeps every approved obstacle master on a one-resize static export path", () => {
+    const obstacleMetadata = [
+      pinkHatchbackMetadata,
+      yellowSedanMetadata,
+      greenWagonMetadata,
+    ];
+
+    for (const metadata of obstacleMetadata) {
+      expect(metadata.canvas.width).toBeGreaterThan(0);
+      expect(metadata.canvas.height).toBeGreaterThan(0);
+      expect(metadata.visibleBounds.width).toBeGreaterThan(0);
+      expect(metadata.visibleBounds.height).toBeGreaterThan(0);
+      expect(metadata.collision.width).toBeGreaterThan(0);
+      expect(metadata.collision.height).toBeGreaterThan(0);
+      expect(metadata.production).toMatchObject({
+        buildScript: "scripts/build_obstacle_static_v2.py",
+        assetMode: "high-detail-pixel-style-raster",
+        alphaNoiseThreshold: 16,
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
+        animationFrames: 1,
+        status: "approved-static-master",
+      });
+      expect(metadata.production.designMaster).toMatch(
+        /^visual-references\/obs-00[1-3]-.*-concept-v2\.png$/,
+      );
+      expect(metadata.production.designMasterSha256).toMatch(/^[a-f0-9]{64}$/);
+      expect(metadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
+      expect(metadata.production.laneVisualScales).toEqual([...LANE_VISUAL_SCALES]);
+    }
+  });
+
+  it("derives every obstacle drive sheet from its approved static master", () => {
+    const pairs = [
+      [pinkHatchbackMetadata, pinkHatchbackDriveMetadata],
+      [yellowSedanMetadata, yellowSedanDriveMetadata],
+      [greenWagonMetadata, greenWagonDriveMetadata],
+    ] as const;
+
+    for (const [staticMetadata, driveMetadata] of pairs) {
+      expect(driveMetadata.frame).toEqual({
+        width: staticMetadata.canvas.width,
+        height: staticMetadata.canvas.height,
+        count: 4,
+      });
+      expect(driveMetadata.frameVisibleBounds).toEqual(
+        Array.from({ length: 4 }, () => staticMetadata.visibleBounds),
+      );
+      expect(driveMetadata.animation).toEqual({
+        frameRate: 7,
+        loop: true,
+        firstFrameMatchesApprovedStatic: true,
+        motion: "hub rotation only; body and wheel baseline remain stable",
+      });
+      expect(driveMetadata.production).toMatchObject({
+        designMaster: staticMetadata.production.designMaster,
+        approvedStaticTexture: staticMetadata.texture,
+        approvedStaticRuntimeSha256: staticMetadata.production.runtimeSha256,
+        staticRuntimeUsage: "approval anchor only; not an export input",
+        buildScript: "scripts/build_obstacle_drive_v2.py",
+        offlineResizeCountPerFrame: 1,
+        resizeFilter: "nearest-neighbor",
+        phaserTextureFilter: "nearest",
+        status: "approved-drive-cycle",
+      });
+    }
+  });
+
+  it("keeps the city coherent and restores the approved full-height road", () => {
+    expect(ENVIRONMENT_PARALLAX.route.baseDisplaySpeedPxPerSecond).toBe(72);
+    expect(environmentMasterMetadata).toMatchObject({
+      assetId: "ENV-SCENE-001",
+      version: "v4",
+      status: "approved-master",
+      canvas: { width: 2172, height: 724 },
+      runtimeViewport: { width: 360, height: 640 },
+      runtimeBandGuides: {
+        roadTop: 282,
+        roadBottom: 522,
+        laneSeparators: [363, 437],
+      },
+    });
+    expect(environmentMasterMetadata.sha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(environmentNeighborhoodMasterMetadata).toMatchObject({
+      assetId: "ENV-SCENE-001",
+      version: "v6",
+      status: "approved-master",
+      canvas: { width: 2172, height: 724 },
+      runtimeBandGuides: { cityBottom: 282, roadTop: 282 },
+      alpha: { mode: "RGBA" },
+    });
+    expect(environmentNeighborhoodMasterMetadata.sha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
+
+    const layers = [
+      [environmentSkyMetadata, { width: 2048, height: 512 }, "v5", "scripts/build_environment_parallax_v5.py"],
+      [environmentCoherentCityMetadata, { width: 2048, height: 512 }, "v8", "scripts/build_environment_city_v8.py"],
+      [environmentRoadMetadata, { width: 2048, height: 512 }, "v9", "scripts/build_environment_road_v6.py"],
+      [environmentForegroundMetadata, { width: 2048, height: 128 }, "v5", "scripts/build_environment_parallax_v5.py"],
+    ] as const;
+
+    for (const [metadata, canvas, version, script] of layers) {
+      expect(metadata.status).toBe("integrated");
+      expect(metadata.version).toBe(version);
+      expect(metadata.runtime.textureCanvas).toEqual(canvas);
+      expect(metadata.runtime.loopPeriodTexturePx).toBe(canvas.width);
+      expect(metadata.runtime.contentRect.height).toBeLessThanOrEqual(
+        canvas.height,
+      );
+      expect(Number.isInteger(Math.log2(canvas.width))).toBe(true);
+      expect(Number.isInteger(Math.log2(canvas.height))).toBe(true);
+      expect(metadata.production).toMatchObject({
+        script,
+        contentSource: "src/game/content/environmentParallax.json",
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        paletteQuantization: "none",
+        phaserTextureFilter: "nearest",
+      });
+      expect(metadata.runtime.sha256).toMatch(/^[a-f0-9]{64}$/);
+      expect(metadata.runtimePlacement.displaySpeedPxPerSecond).toBeGreaterThan(
+        0,
+      );
+      expect(metadata.seamContract.edgeMismatchRows).toEqual({ cycleWrap: 0 });
+    }
+
+    for (const metadata of [
+      environmentSkyMetadata,
+      environmentCoherentCityMetadata,
+    ]) {
+      expect(metadata.runtime.contentRect).toMatchObject({
+        x: 0,
+        width: 2048,
+      });
+      expect(metadata.seamContract).toMatchObject({
+        mode: "direct-approved-loop",
+        safeGutterTexturePx: 0,
+      });
+    }
+    expect(environmentForegroundMetadata.runtime.contentRect).toMatchObject({
+      x: 128,
+      width: 1792,
+    });
+    expect(environmentForegroundMetadata.seamContract).toMatchObject({
+      mode: "safe-gutter-direct-panorama",
+      safeGutterTexturePx: 128,
+    });
+
+    expect(environmentSkyMetadata.production).toMatchObject({
+      approvedMaster:
+        "visual-references/env-001-parallax-coherent-v4-candidate.png",
+      approvedMasterSha256: environmentMasterMetadata.sha256,
+    });
+    expect(environmentCoherentCityMetadata.production).toMatchObject({
+      approvedMaster:
+        "visual-references/env-001-parallax-neighborhood-v6-alpha-master.png",
+      approvedMasterSha256: environmentNeighborhoodMasterMetadata.sha256,
+    });
+    expect(environmentForegroundMetadata.production.approvedMaster).toBe(
+      "visual-references/env-001-gameplay-still-concept-v2.png",
+    );
+    expect(environmentRoadMetadata.production).toMatchObject({
+      approvedMaster: "visual-references/env-001-parallax-seamless-v3.png",
+      sourceBox: [0, 540, 1774, 887],
+    });
+    expect(environmentRoadMetadata.runtime).toMatchObject({
+      textureCanvas: { width: 2048, height: 512 },
+      contentRect: { x: 128, width: 1792, height: 406 },
+    });
+    expect(environmentRoadMetadata.seamContract).toMatchObject({
+      mode: "safe-gutter-direct-panorama",
+      safeGutterTexturePx: 128,
+    });
+    expect(environmentSkyMetadata.runtime.sha256).toBe(
+      environmentSkyV4Metadata.runtime.sha256,
+    );
+    expect(environmentRoadMetadata.runtime.sha256).not.toBe(
+      environmentRoadV4Metadata.runtime.sha256,
+    );
+    expect(environmentRoadMetadata.curbContract).toEqual({
+      top: "white neutral pixel curb",
+      bottom: "white neutral pixel curb",
+      laneMarkingsChanged: false,
+      roadSurfaceChanged: false,
+    });
+    expect(environmentForegroundMetadata.runtime.sha256).toBe(
+      environmentForegroundV4Metadata.runtime.sha256,
+    );
+
+    expect(ENVIRONMENT_PARALLAX.layers.map((layer) => layer.assetId)).toEqual([
+      "ENV-001",
+      "ENV-004",
+      "ENV-006",
+      "ENV-008",
+    ]);
+    expect(environmentCoherentCityMetadata.production).toMatchObject({
+      alphaExtraction: "approved-alpha-city",
+      maskMethod:
+        "versioned transparent master derived from a flat magenta imagegen source via the installed remove_chroma_key helper",
+      sourceBox: [123, 0, 2005, 693],
+    });
+    expect(environmentCoherentCityMetadata.alphaContract).toMatchObject({
+      cityComposition: "unified-neighborhood-skyline-to-sidewalk",
+      runtimeColorDeletion: "none",
+      detachedCloudsRetained: false,
+    });
+
+    for (const layer of ENVIRONMENT_PARALLAX.layers) {
+      expect(layer.textureCanvas.width).toBe(
+        layer.contentCanvas.width + layer.seamGutterTexturePx * 2,
+      );
+      expect(layer.textureCanvas.width).toBeGreaterThanOrEqual(
+        GAME_VIEWPORT.width,
+      );
+      expect(layer.depth).toBeLessThan(40);
+      expect(layer.alphaMode).not.toBe("remove-cyan-sky");
+    }
+    expect(environmentCoherentCityMetadata.runtimePlacement.fullCycleSeconds).toBeGreaterThanOrEqual(
+      18,
+    );
+  });
+
+  it("keeps the branded HUD candidate on the locked gameplay geometry", () => {
+    const hudAssets = [
+      hudHeartMetadata,
+      hudProgressMetadata,
+      hudControlsMetadata,
+      hudPanelMetadata,
+      hudTitleMetadata,
+      hudPauseMetadata,
+      hudExitMetadata,
+      hudSoundMetadata,
+    ];
+
+    for (const metadata of hudAssets) {
+      expect(metadata.status).toBe("integrated");
+      expect(metadata.production).toMatchObject({
+        buildScript: "scripts/build_hud_ui_v1.py",
+        assetMode: "authored-low-resolution-pixel-art",
+        offlineResizeCount: 0,
+        antialiasing: false,
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
+      });
+      expect(metadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
+    }
+
+    expect(hudHeartMetadata).toMatchObject({
+      assetId: "ICO-001",
+      canvas: { width: 40, height: 18 },
+      frame: {
+        width: 20,
+        height: 18,
+        count: 2,
+        states: ["full", "empty"],
+      },
+      runtime: {
+        position: { x: 18, y: 106 },
+        gapPx: 2,
+        maxLives: 3,
+      },
+    });
+    expect(hudProgressMetadata).toMatchObject({
+      assetId: "UI-003",
+      canvas: { width: 324, height: 16 },
+      runtime: {
+        position: { x: 18, y: 134 },
+        fillRect: { x: 20, centerY: 142, width: 320, height: 8 },
+      },
+    });
+    expect(hudControlsMetadata).toMatchObject({
+      assetId: "UI-004",
+      canvas: { width: 76, height: 192 },
+      frame: {
+        width: 76,
+        height: 48,
+        count: 4,
+        states: ["up", "up-pressed", "down", "down-pressed"],
+      },
+      runtime: {
+        centers: [{ x: 111, y: 572 }, { x: 249, y: 572 }],
+        displayScale: 1.5,
+        hitArea: { width: 114, height: 72 },
+        bottomClearancePx: 32,
+      },
+    });
+    expect(hudPanelMetadata).toMatchObject({
+      assetId: "UI-008",
+      canvas: { width: 360, height: 118 },
+      runtime: {
+        position: { x: 0, y: 522 },
+        fixedToCamera: true,
+      },
+    });
+    expect(hudTitleMetadata).toMatchObject({
+      assetId: "UI-009",
+      canvas: { width: 242, height: 28 },
+      runtime: {
+        position: { x: 180, y: 38 },
+        origin: { x: 0.5, y: 0.5 },
+        fixedToCamera: true,
+        text: "BEAUTY BOMB DELIVERY",
+      },
+    });
+    expect(hudPauseMetadata).toMatchObject({
+      assetId: "UI-010",
+      canvas: { width: 32, height: 64 },
+      frame: {
+        width: 32,
+        height: 32,
+        count: 2,
+        states: ["idle", "pressed"],
+      },
+      runtime: {
+        center: { x: 332, y: 32 },
+        edgeInsets: { top: 16, right: 12 },
+        fixedToCamera: true,
+      },
+    });
+    expect(hudExitMetadata).toMatchObject({
+      assetId: "UI-011",
+      canvas: { width: 32, height: 64 },
+      frame: {
+        width: 32,
+        height: 32,
+        count: 2,
+        states: ["idle", "pressed"],
+      },
+      runtime: {
+        center: { x: 28, y: 32 },
+        edgeInsets: { top: 16, left: 12 },
+        fixedToCamera: true,
+        behavior: "visual-placeholder",
+        futureAction: "exit-game",
+      },
+    });
+    expect(hudSoundMetadata).toMatchObject({
+      assetId: "UI-012",
+      canvas: { width: 28, height: 56 },
+      frame: {
+        width: 28,
+        height: 28,
+        count: 2,
+        states: ["idle", "pressed"],
+      },
+      runtime: {
+        center: { x: 346, y: 540 },
+        attachedPanelEdge: "right",
+        fixedToCamera: true,
+        behavior: "visual-placeholder",
+        futureAction: "toggle-sound",
+      },
+    });
+  });
+});

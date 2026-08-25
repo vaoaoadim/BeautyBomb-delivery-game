@@ -1,0 +1,10 @@
+{
+  "id": "OBS-001",
+  "version": 1,
+  "kind": "pink-hatchback",
+  "texture": "obs-001-pink-hatchback-static-v1.png",
+  "canvas": { "width": 80, "height": 56 },
+  "visibleBounds": { "x": 2, "y": 17, "width": 76, "height": 35 },
+  "origin": { "normalizedX": 0.5, "normalizedY": 0.9286, "pixelX": 40, "pixelY": 52 },
+  "collision": { "x": 6, "y": 27, "width": 68, "height": 24 }
+}

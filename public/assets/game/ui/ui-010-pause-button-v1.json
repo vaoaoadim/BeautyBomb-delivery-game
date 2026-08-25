@@ -1,0 +1,54 @@
+{
+  "assetId": "UI-010",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ui-010-pause-button-v1.png",
+  "canvas": {
+    "width": 32,
+    "height": 64
+  },
+  "frame": {
+    "width": 32,
+    "height": 32,
+    "count": 2,
+    "states": [
+      "idle",
+      "pressed"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "violet": "#1e1d3e",
+    "purple": "#982add",
+    "lavender": "#eef0ff",
+    "lavender_shadow": "#cfcced",
+    "cream": "#fff3dc",
+    "white": "#ffffff",
+    "cyan": "#00b7d6",
+    "cyan_light": "#54e0ff",
+    "pink": "#ff4fab",
+    "pink_shadow": "#d22b85",
+    "yellow": "#ffef5c",
+    "yellow_pressed": "#dad73d"
+  },
+  "production": {
+    "buildScript": "scripts/build_hud_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "77f4d5e77d181b8a401196e54e67138e57f2b6bf599a7b5c4286ae69ce3c849f"
+  },
+  "runtime": {
+    "center": {
+      "x": 332,
+      "y": 32
+    },
+    "edgeInsets": {
+      "top": 16,
+      "right": 12
+    },
+    "fixedToCamera": true
+  }
+}

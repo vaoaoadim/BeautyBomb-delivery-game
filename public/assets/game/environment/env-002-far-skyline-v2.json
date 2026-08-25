@@ -1,0 +1,64 @@
+{
+  "assetId": "ENV-002",
+  "version": "v2",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-002-far-skyline-v2.png",
+    "textureCanvas": {
+      "width": 1024,
+      "height": 128
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 512,
+      "height": 128
+    },
+    "loopPeriodTexturePx": 1024,
+    "sha256": "c86a540a2d32d23db7171236179c2b0c581909ae002821d6dda1d7ebf06aad54"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v2.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      300,
+      941,
+      535
+    ],
+    "alphaExtraction": "remove-cyan-sky",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "source-plus-horizontal-mirror; no generated pixels"
+  },
+  "seamContract": {
+    "mode": "mirrored-source-pair",
+    "halfPeriodTexturePx": 512,
+    "edgeMismatchRows": {
+      "halfPeriod": 0,
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v2-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-far-skyline-v2",
+    "layer": "far-skyline",
+    "position": {
+      "x": 0,
+      "y": 115
+    },
+    "tileScale": {
+      "x": 0.703125,
+      "y": 0.703125
+    },
+    "displaySpeedPxPerSecond": 7.199999999999999,
+    "textureScrollPixelsPerSecond": 10.239999999999998,
+    "depth": 1,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

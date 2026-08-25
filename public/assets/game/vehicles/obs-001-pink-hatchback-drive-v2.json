@@ -1,0 +1,78 @@
+{
+  "id": "OBS-001",
+  "version": 2,
+  "kind": "pink-hatchback",
+  "texture": "obs-001-pink-hatchback-drive-v2.png",
+  "frame": {
+    "width": 80,
+    "height": 56,
+    "count": 4
+  },
+  "frameVisibleBounds": [
+    {
+      "x": 2,
+      "y": 14,
+      "width": 76,
+      "height": 38
+    },
+    {
+      "x": 2,
+      "y": 14,
+      "width": 76,
+      "height": 38
+    },
+    {
+      "x": 2,
+      "y": 14,
+      "width": 76,
+      "height": 38
+    },
+    {
+      "x": 2,
+      "y": 14,
+      "width": 76,
+      "height": 38
+    }
+  ],
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.9285714285714286,
+    "pixelX": 40,
+    "pixelY": 52
+  },
+  "collision": {
+    "x": 6,
+    "y": 27,
+    "width": 68,
+    "height": 24
+  },
+  "animation": {
+    "frameRate": 7,
+    "loop": true,
+    "firstFrameMatchesApprovedStatic": true,
+    "motion": "hub rotation only; body and wheel baseline remain stable"
+  },
+  "production": {
+    "designMaster": "visual-references/obs-001-pink-hatchback-concept-v2.png",
+    "designMasterSha256": "a4a73a07f39ba1214a4f85405cbb17b389e4013af75346651615c569f773ac2a",
+    "approvedStaticTexture": "obs-001-pink-hatchback-static-v2.png",
+    "approvedStaticRuntimeSha256": "3bffc0baa45244b5abfdb2829cd874de699d9c9d266473b199162de64bab2649",
+    "staticRuntimeUsage": "approval anchor only; not an export input",
+    "buildScript": "scripts/build_obstacle_drive_v2.py",
+    "exportMethod": "high-resolution hub rotation plus one production resize per frame",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCountPerFrame": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "laneVisualScales": [
+      1.12,
+      1.22,
+      1.32
+    ],
+    "visualScaleMultiplier": 1.0,
+    "collisionToVisualRatio": 0.84,
+    "runtimeSha256": "2362ecc493d1c8c5d95111b7eaaa2de4f7167e7ceadda2b29670fbd8eb565b07",
+    "status": "approved-drive-cycle"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "assetId": "ENV-006",
+  "version": "v9",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-006-road-v6.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 512
+    },
+    "contentRect": {
+      "x": 128,
+      "y": 0,
+      "width": 1792,
+      "height": 406
+    },
+    "loopPeriodTexturePx": 2048,
+    "displayPeriodPx": 720.0,
+    "sha256": "17b34568526ae728e7041764441cefe27b7c223d640bd05684fb194efedaf049"
+  },
+  "production": {
+    "script": "scripts/build_environment_road_v6.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-parallax-seamless-v3.png",
+    "approvedMasterSha256": "b2cbf1c11feb7a14abacd4bba2fcc1016a59d71bf0af5a2a12f4f7e6c6ac5c73",
+    "sourceBox": [
+      0,
+      540,
+      1774,
+      887
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "curbTransform": {
+      "sourceRows": [
+        [
+          0,
+          6
+        ],
+        [
+          388,
+          398
+        ]
+      ],
+      "changedPixels": 28672,
+      "outputColorModel": "neutral grayscale preserving source luminance"
+    },
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "safe-gutter-direct-panorama",
+    "untouchedLayerHashes": {
+      "ENV-001": "78a0990d742d1eded87ab1268ddd5ce27969481d7c87ddb615246dd6c6a9c05f",
+      "ENV-004": "e888e436e39acf405e9ee0e8577c74d067e217ba2e03db8b6f08d0e1fdab3287",
+      "ENV-008": "a82f59cf84274d891aa8579bae8fed7674795252b9d8efa4011c2016181c4a3a"
+    }
+  },
+  "curbContract": {
+    "top": "white neutral pixel curb",
+    "bottom": "white neutral pixel curb",
+    "laneMarkingsChanged": false,
+    "roadSurfaceChanged": false
+  },
+  "seamContract": {
+    "mode": "safe-gutter-direct-panorama",
+    "safeGutterTexturePx": 128,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-road-v6-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-road-v6",
+    "layer": "road",
+    "position": {
+      "x": 0,
+      "y": 282
+    },
+    "tileScale": {
+      "x": 0.3515625,
+      "y": 0.5911330049
+    },
+    "displaySpeedPxPerSecond": 72,
+    "textureScrollPixelsPerSecond": 204.8,
+    "fullCycleSeconds": 10.0,
+    "depth": 4,
+    "mode": "route-loop",
+    "reducedMotion": "essential"
+  }
+}

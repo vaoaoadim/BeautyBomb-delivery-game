@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-008",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-008-foreground-accents-v1.png",
+    "canvas": {
+      "width": 512,
+      "height": 128
+    },
+    "sha256": "8cb06ba191e24614a96c92117ac82b5604f1b1cbac3be59611b1dc9b4d0def3c"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      1364,
+      941,
+      1672
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-foreground-accents-v1",
+    "layer": "foreground-accents",
+    "position": {
+      "x": 0,
+      "y": 522
+    },
+    "scale": {
+      "x": 0.703125,
+      "y": 0.921875
+    },
+    "scrollPixelsPerSecond": 0.3
+  }
+}

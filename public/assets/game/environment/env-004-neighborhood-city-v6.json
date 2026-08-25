@@ -1,0 +1,92 @@
+{
+  "assetId": "ENV-004",
+  "version": "v6",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-004-neighborhood-city-v6.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 512
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 2048,
+      "height": 512
+    },
+    "loopPeriodTexturePx": 2048,
+    "displayPeriodPx": 737.28,
+    "sha256": "827027698ce9151d89a46d4d4a2346239139fb415094e319bc32e638a40758e5"
+  },
+  "production": {
+    "script": "scripts/build_environment_city_v6.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-parallax-neighborhood-v6-alpha-master.png",
+    "approvedMasterSha256": "7006064971c5aac3920f4c3820646d8b94c9681436c1c6b6f97820d9794aaa83",
+    "reference": "C:/Users/пк/Downloads/ChatGPT Image 23 авг. 2026 г., 19_58_11.png",
+    "generationMode": "built-in-imagegen",
+    "sourceBox": [
+      105,
+      0,
+      1907,
+      693
+    ],
+    "alphaExtraction": "approved-alpha-city",
+    "maskMethod": "versioned transparent master derived from a flat magenta imagegen source via the installed remove_chroma_key helper",
+    "chromaSource": "visual-references/env-001-parallax-neighborhood-v6-chroma-source.png",
+    "chromaKeyMethod": "auto-key border; soft matte 12..220; despill",
+    "maskStats": {
+      "transparentPixels": 472802,
+      "opaquePixels": 754162,
+      "partialAlphaPixels": 21822,
+      "alphaBoundingBox": [
+        0,
+        132,
+        1802,
+        693
+      ]
+    },
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "direct-approved-loop",
+    "untouchedLayerHashes": {
+      "ENV-001": "78a0990d742d1eded87ab1268ddd5ce27969481d7c87ddb615246dd6c6a9c05f",
+      "ENV-006": "94fac7de9b3448504d8bcd663cfb47f8232336ada1cd8628c945b422a60cc5b1",
+      "ENV-008": "a82f59cf84274d891aa8579bae8fed7674795252b9d8efa4011c2016181c4a3a"
+    }
+  },
+  "seamContract": {
+    "mode": "direct-approved-loop",
+    "safeGutterTexturePx": 0,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v6-loop-review.png"
+  },
+  "alphaContract": {
+    "cityComposition": "unified-neighborhood-skyline-to-sidewalk",
+    "source": "approved RGBA master",
+    "runtimeColorDeletion": "none",
+    "detachedCloudsRetained": false
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-neighborhood-city-v6",
+    "layer": "coherent-city",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "tileScale": {
+      "x": 0.36,
+      "y": 0.55078125
+    },
+    "displaySpeedPxPerSecond": 40.32000000000001,
+    "textureScrollPixelsPerSecond": 112.00000000000003,
+    "fullCycleSeconds": 18.28571428571428,
+    "depth": 1,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

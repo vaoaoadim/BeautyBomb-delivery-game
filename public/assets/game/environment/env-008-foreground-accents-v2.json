@@ -1,0 +1,64 @@
+{
+  "assetId": "ENV-008",
+  "version": "v2",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-008-foreground-accents-v2.png",
+    "textureCanvas": {
+      "width": 1024,
+      "height": 128
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 512,
+      "height": 128
+    },
+    "loopPeriodTexturePx": 1024,
+    "sha256": "a60bea0294d5cb2e91c478a1a1377775092b7e255c994f3e05189f47dc090bb1"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v2.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      1364,
+      941,
+      1672
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "source-plus-horizontal-mirror; no generated pixels"
+  },
+  "seamContract": {
+    "mode": "mirrored-source-pair",
+    "halfPeriodTexturePx": 512,
+    "edgeMismatchRows": {
+      "halfPeriod": 0,
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v2-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-foreground-accents-v2",
+    "layer": "foreground-accents",
+    "position": {
+      "x": 0,
+      "y": 522
+    },
+    "tileScale": {
+      "x": 0.703125,
+      "y": 0.921875
+    },
+    "displaySpeedPxPerSecond": 55.199999999999996,
+    "textureScrollPixelsPerSecond": 78.50666666666666,
+    "depth": 5,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

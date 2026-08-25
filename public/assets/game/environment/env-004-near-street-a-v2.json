@@ -1,0 +1,64 @@
+{
+  "assetId": "ENV-004",
+  "version": "v2",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-004-near-street-a-v2.png",
+    "textureCanvas": {
+      "width": 2048,
+      "height": 512
+    },
+    "contentRect": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 293
+    },
+    "loopPeriodTexturePx": 2048,
+    "sha256": "1920cfa24215bbb8b356e6d6910b145243bd08351459b41bc13010d41b669f2c"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v2.py",
+    "contentSource": "src/game/content/environmentParallax.json",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      468,
+      941,
+      737
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest",
+    "cyclicConstruction": "source-plus-horizontal-mirror; no generated pixels"
+  },
+  "seamContract": {
+    "mode": "mirrored-source-pair",
+    "halfPeriodTexturePx": 1024,
+    "edgeMismatchRows": {
+      "halfPeriod": 0,
+      "cycleWrap": 0
+    },
+    "review": "visual-references/environment-parallax-v2-loop-review.png"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-near-street-a-v2",
+    "layer": "near-street",
+    "position": {
+      "x": 0,
+      "y": 179
+    },
+    "tileScale": {
+      "x": 0.3515625,
+      "y": 0.3515625
+    },
+    "displaySpeedPxPerSecond": 26.880000000000003,
+    "textureScrollPixelsPerSecond": 76.45866666666667,
+    "depth": 3,
+    "mode": "route-loop",
+    "reducedMotion": "freeze"
+  }
+}

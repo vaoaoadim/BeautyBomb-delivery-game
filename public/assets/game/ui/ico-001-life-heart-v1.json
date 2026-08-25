@@ -1,0 +1,51 @@
+{
+  "assetId": "ICO-001",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ico-001-life-heart-v1.png",
+  "canvas": {
+    "width": 40,
+    "height": 18
+  },
+  "frame": {
+    "width": 20,
+    "height": 18,
+    "count": 2,
+    "states": [
+      "full",
+      "empty"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "violet": "#1e1d3e",
+    "purple": "#982add",
+    "lavender": "#eef0ff",
+    "lavender_shadow": "#cfcced",
+    "cream": "#fff3dc",
+    "white": "#ffffff",
+    "cyan": "#00b7d6",
+    "cyan_light": "#54e0ff",
+    "pink": "#ff4fab",
+    "pink_shadow": "#d22b85",
+    "yellow": "#ffef5c",
+    "yellow_pressed": "#dad73d"
+  },
+  "production": {
+    "buildScript": "scripts/build_hud_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "4cb6b9a1321a4617867242811049155765d1f44f1b06c6d5a412055831341ba3"
+  },
+  "runtime": {
+    "position": {
+      "x": 18,
+      "y": 106
+    },
+    "gapPx": 2,
+    "maxLives": 3
+  }
+}

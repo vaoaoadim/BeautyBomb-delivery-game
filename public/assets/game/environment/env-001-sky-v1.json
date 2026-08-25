@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-001",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-001-sky-v1.png",
+    "canvas": {
+      "width": 512,
+      "height": 180
+    },
+    "sha256": "0d731835c817a76001266c2a8d6bd73d922c48e0e92ca420a7f9f2ef1a67d024"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      0,
+      941,
+      331
+    ],
+    "alphaExtraction": "opaque-source-crop",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-sky-v1",
+    "layer": "sky",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "scale": {
+      "x": 0.703125,
+      "y": 0.703125
+    },
+    "scrollPixelsPerSecond": 0.1
+  }
+}

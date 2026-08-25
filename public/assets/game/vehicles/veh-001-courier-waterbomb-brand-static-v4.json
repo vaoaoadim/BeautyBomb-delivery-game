@@ -1,0 +1,50 @@
+{
+  "id": "VEH-001",
+  "version": 4,
+  "texture": "veh-001-courier-waterbomb-brand-static-v4.png",
+  "canvas": {
+    "width": 208,
+    "height": 160
+  },
+  "visibleBounds": {
+    "x": 5,
+    "y": 3,
+    "width": 197,
+    "height": 149
+  },
+  "runtimeScale": 0.5,
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.95,
+    "pixelX": 104,
+    "pixelY": 152
+  },
+  "collision": {
+    "x": 16,
+    "y": 76,
+    "width": 176,
+    "height": 68,
+    "includesRoofProduct": false
+  },
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-waterbomb-brand-concept-v6.png",
+    "designMasterSha256": "a4c5dd72f15471730cf0070e74354d7821d48d7d551875620a01143684b6694d",
+    "shapeReference": "visual-references/beautybomb-water-bomb-reference.png",
+    "buildScript": "scripts/build_courier_waterbomb_brand_sprite.py",
+    "exportMethod": "alpha-bounds crop plus one production resize",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "visibleColors": 8975,
+    "phaserTextureFilter": "nearest",
+    "laneTextureScales": [
+      0.56,
+      0.61,
+      0.66
+    ],
+    "runtimeSha256": "e6b9b3d62b7e5c0461da67a8bf1d103fb4a16a9e295c7e291514e405482436df",
+    "animationFrames": 1,
+    "status": "approved-static-master"
+  }
+}

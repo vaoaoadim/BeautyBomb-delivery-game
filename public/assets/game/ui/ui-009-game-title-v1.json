@@ -1,0 +1,51 @@
+{
+  "assetId": "UI-009",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ui-009-game-title-v1.png",
+  "canvas": {
+    "width": 242,
+    "height": 28
+  },
+  "frame": {
+    "width": 242,
+    "height": 28,
+    "count": 1
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "violet": "#1e1d3e",
+    "purple": "#982add",
+    "lavender": "#eef0ff",
+    "lavender_shadow": "#cfcced",
+    "cream": "#fff3dc",
+    "white": "#ffffff",
+    "cyan": "#00b7d6",
+    "cyan_light": "#54e0ff",
+    "pink": "#ff4fab",
+    "pink_shadow": "#d22b85",
+    "yellow": "#ffef5c",
+    "yellow_pressed": "#dad73d"
+  },
+  "production": {
+    "buildScript": "scripts/build_hud_ui_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "40626b99ece77831776c91843a0b046df1924181b506f91746c9ee72eb810ee3"
+  },
+  "runtime": {
+    "position": {
+      "x": 180,
+      "y": 38
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "fixedToCamera": true,
+    "text": "BEAUTY BOMB DELIVERY"
+  }
+}

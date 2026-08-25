@@ -1,0 +1,42 @@
+{
+  "assetId": "ENV-002",
+  "version": "v1",
+  "status": "integrated",
+  "runtime": {
+    "path": "public/assets/game/environment/env-002-far-skyline-v1.png",
+    "canvas": {
+      "width": 512,
+      "height": 128
+    },
+    "sha256": "38eeb12044280a799d5e56f389b0533ed8d28547b06fabc5071bc4bbceab2391"
+  },
+  "production": {
+    "script": "scripts/build_environment_parallax_v1.py",
+    "approvedMaster": "visual-references/env-001-gameplay-still-concept-v2.png",
+    "approvedMasterSha256": "a4c09eb3cf36b043717759931611ef84bff353c79775ebad10c59ebde027bb12",
+    "sourceBox": [
+      0,
+      300,
+      941,
+      535
+    ],
+    "alphaExtraction": "remove-cyan-sky",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "phaserTextureFilter": "nearest"
+  },
+  "runtimePlacement": {
+    "textureKey": "environment-far-skyline-v1",
+    "layer": "far-skyline",
+    "position": {
+      "x": 0,
+      "y": 115
+    },
+    "scale": {
+      "x": 0.703125,
+      "y": 0.703125
+    },
+    "scrollPixelsPerSecond": 0.4
+  }
+}

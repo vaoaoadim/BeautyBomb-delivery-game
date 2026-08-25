@@ -1,0 +1,52 @@
+{
+  "id": "OBS-002",
+  "version": 2,
+  "kind": "yellow-sedan",
+  "texture": "obs-002-yellow-sedan-static-v2.png",
+  "canvas": {
+    "width": 88,
+    "height": 56
+  },
+  "visibleBounds": {
+    "x": 2,
+    "y": 22,
+    "width": 84,
+    "height": 30
+  },
+  "origin": {
+    "normalizedX": 0.5,
+    "normalizedY": 0.9285714285714286,
+    "pixelX": 44,
+    "pixelY": 52
+  },
+  "collision": {
+    "x": 6,
+    "y": 30,
+    "width": 76,
+    "height": 21
+  },
+  "production": {
+    "designMaster": "visual-references/obs-002-yellow-sedan-concept-v2.png",
+    "designMasterSha256": "bb050f6175f3273a0046ce3f5f9f1ebf1fb157e87c8fc4d0a1dd2e7ef0f6e189",
+    "sourceGeneration": "visual-references/obs-002-yellow-sedan-concept-v2-source.png",
+    "buildScript": "scripts/build_obstacle_static_v2.py",
+    "exportMethod": "alpha-noise threshold plus alpha-bounds crop and one production resize",
+    "assetMode": "high-detail-pixel-style-raster",
+    "alphaNoiseThreshold": 16,
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "visibleColors": 1241,
+    "phaserTextureFilter": "nearest",
+    "laneVisualScales": [
+      1.12,
+      1.22,
+      1.32
+    ],
+    "visualScaleMultiplier": 1.04,
+    "collisionToVisualRatio": 0.8076923076923076,
+    "runtimeSha256": "1bdd2635d6feabc0f0915e5f2530af34a30ca771a5ac90856007e94b6ee12890",
+    "animationFrames": 1,
+    "status": "approved-static-master"
+  }
+}

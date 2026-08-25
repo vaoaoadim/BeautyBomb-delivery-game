@@ -1,0 +1,38 @@
+{
+  "assetId": "ENV-SCENE-001",
+  "version": "v6",
+  "status": "approved-master",
+  "approvedAt": "2026-08-23",
+  "canvas": { "width": 2172, "height": 724 },
+  "runtimeViewport": { "width": 360, "height": 640 },
+  "runtimeBandGuides": {
+    "cityBottom": 282,
+    "roadTop": 282,
+    "roadBottom": 522,
+    "laneSeparators": [363, 437]
+  },
+  "production": {
+    "generationMode": "built-in-imagegen",
+    "reference": "C:/Users/пк/Downloads/ChatGPT Image 23 авг. 2026 г., 19_58_11.png",
+    "approvedCandidate": "visual-references/env-001-parallax-neighborhood-v6-alpha-master.png",
+    "chromaSource": "visual-references/env-001-parallax-neighborhood-v6-chroma-source.png",
+    "usage": "Immutable transparent city master. Derive only ENV-004 through the current versioned environment-city builder; keep ENV-001, ENV-006, and ENV-008 unchanged."
+  },
+  "promptSet": {
+    "generation": "Create an original ultra-wide 3:1 pixel-art city panorama for the coherent city layer of a portrait browser driving game, using the supplied city reference only for composition, depth, and neighborhood character. Build one continuous believable streetscape from sparse distant skyline through varied mid-rise blocks to a complete foreground row of distinct 2-5 storey shops and residential facades. Vary widths, heights, rooflines, window rhythms, materials, awnings, trees, roof equipment, and colors; every facade must be structurally readable, with no malformed balconies, windows, floors, floating fragments, invented signs, text, logos, vehicles, road, lane markings, clouds, UI, or characters. Keep distant towers sparse, lower contrast, and integrated behind medium-density blocks rather than directly behind every shop. Preserve a perfectly straight sidewalk baseline and a continuous, natural urban rhythm. Use crisp detailed pixel art, daytime turquoise-blue atmosphere, no blur, no photorealism, no perspective drift, no duplicated or mirrored landmarks, and no empty seam zones.",
+    "edgeCorrection": "Edit only the horizontal loop boundaries. Finish the foreground architecture and sidewalk cleanly before both outer edges, keep the left and right edge neighborhoods visually different, and make the repeated edge read as ordinary adjacent city blocks. Do not crop trees, lamps, awnings, roofs, balconies, windows, or facade ornaments; do not mirror or duplicate the same building at both ends; preserve the interior city unchanged.",
+    "alphaPreparation": "Preserve the city exactly and replace only all sky and empty canvas with a flat uniform magenta background suitable for deterministic alpha extraction. Keep every building, antenna, tree, awning, planter, roof object, and sidewalk pixel unchanged. Add no clouds, text, road, vehicles, UI, shadows outside the city, or new objects."
+  },
+  "alpha": {
+    "mode": "RGBA",
+    "boundingBox": [0, 132, 2172, 693],
+    "method": "Flat magenta generation source converted once with the installed remove_chroma_key helper using border auto-key, soft matte 12..220, and despill. Runtime derivation performs no color deletion."
+  },
+  "seamDesign": {
+    "runtimeSourceBox": [123, 0, 2005, 693],
+    "noMirroredForegroundObjects": true,
+    "noEmptySafeGutters": true,
+    "review": "visual-references/environment-parallax-v6-loop-review.png"
+  },
+  "sha256": "7006064971c5aac3920f4c3820646d8b94c9681436c1c6b6f97820d9794aaa83"
+}

@@ -1,0 +1,54 @@
+{
+  "assetId": "OBS-003",
+  "version": "v1",
+  "lod": "near",
+  "status": "integrated-gameplay-pixel-master",
+  "texture": "obs-003-green-wagon-gameplay-near-v1.png",
+  "driveTexture": "obs-003-green-wagon-gameplay-near-drive-v1.png",
+  "canvas": {
+    "width": 132,
+    "height": 90
+  },
+  "visibleBounds": {
+    "x": 4,
+    "y": 35,
+    "width": 124,
+    "height": 49
+  },
+  "origin": {
+    "pixelX": 66,
+    "pixelY": 84
+  },
+  "collision": {
+    "x": 26.0832,
+    "y": 50.4456,
+    "width": 79.8336,
+    "height": 26.6112
+  },
+  "animation": {
+    "frameWidth": 132,
+    "frameHeight": 90,
+    "frameCount": 4,
+    "frameRate": 7,
+    "loop": true,
+    "firstFrameMatchesStaticByteForByte": true,
+    "motion": "wheel hub phase only; body, canvas, origin, baseline and collider remain fixed"
+  },
+  "production": {
+    "approvedHighResolutionMaster": "visual-references/obs-003-green-wagon-concept-v2.png",
+    "approvedHighResolutionMasterSha256": "d04789cdd38ae122a4180ebe92ff0caf44d5eaf5a1351d5fa84801ec75a33d34",
+    "independentLodSource": "visual-references/obs-003-green-wagon-gameplay-lod-source-v1.png",
+    "independentLodSourceSha256": "e457425561b1edba3e37c75aabbed0bc6a4415447f7d31ed14bf419e4b84bed2",
+    "gameplayPixelMaster": "visual-references/gameplay-masters/obs-003-green-wagon-gameplay-near-v1-pixel-master.png",
+    "gameplayPixelMasterSha256": "368f06f73d2b4f3454cf2baa75503acec9a06efa23a81c281e465e1c915687dc",
+    "runtimeStaticSha256": "368f06f73d2b4f3454cf2baa75503acec9a06efa23a81c281e465e1c915687dc",
+    "runtimeDriveSha256": "be750e61872e951c4402209038758f69cd20522ff89f8564d447096043750579",
+    "buildScript": "scripts/build_vehicle_gameplay_lod_v1.py",
+    "lodMethod": "independently authored near/middle/far source adaptations; each exported once to its own final pixel budget",
+    "runtimeResizeCount": 0,
+    "phaserScale": 1,
+    "phaserTextureFilter": "nearest",
+    "antialiasing": false,
+    "subpixelPlacement": false
+  }
+}

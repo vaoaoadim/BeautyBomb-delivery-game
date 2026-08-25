@@ -1,0 +1,10 @@
+{
+  "id": "OBS-002",
+  "version": 1,
+  "kind": "yellow-sedan",
+  "texture": "obs-002-yellow-sedan-static-v1.png",
+  "canvas": { "width": 88, "height": 56 },
+  "visibleBounds": { "x": 2, "y": 25, "width": 84, "height": 27 },
+  "origin": { "normalizedX": 0.5, "normalizedY": 0.9286, "pixelX": 44, "pixelY": 52 },
+  "collision": { "x": 6, "y": 30, "width": 76, "height": 21 }
+}
