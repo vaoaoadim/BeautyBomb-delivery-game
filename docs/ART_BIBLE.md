@@ -165,7 +165,7 @@ Rules:
 ### Intro
 
 - Reuse the actual `360 × 640` gameplay composition in a frozen `ready` state: sky, coherent city, road, HUD, courier, lower console, and lane buttons retain their normal positions, while parallax, traffic, and route time remain stopped.
-- `UI-013` is a native `332 × 207` lavender comic callout placed at `x=16, y=154`. Its dark-violet stepped outline, pink lower edge, white highlight, and tail belong to the existing sticker language; the tail tip must point unambiguously toward the courier roof tube.
+- `UI-013` v2 is a native `332 × 207` lavender comic callout placed at `x=16, y=154`. Its dark-violet stepped outline, pink lower edge, white highlight, and tail belong to the existing sticker language; the tail tip must point unambiguously toward the courier roof tube. The lower-right interior contains no decorative yellow mark.
 - The Russian instruction is rasterized in uppercase Press Start 2P from a repository-local SIL OFL source. Keep the approved eight-line copy and inner margins; do not substitute a runtime system font or external font CDN.
 - `UI-014` is a centered `112 × 36` three-frame `ЖМИ` prompt at `x=180, y=354`. Its chevrons and yellow/pink/cyan states remain visible without covering the courier or HUD.
 - During ordinary waiting, `ЖМИ` uses a restrained `1.00 → 1.06 → 1.00` `Sine.InOut` pulse over `1,000 ms`; the courier uses the approved `VEH-001` body-and-tube drive motion at the same cadence, while both wheel hubs remain fixed to frame `0`.

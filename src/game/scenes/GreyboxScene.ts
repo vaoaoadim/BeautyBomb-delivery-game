@@ -146,8 +146,8 @@ const HUD_ASSETS = Object.freeze({
 
 const INTRO_ASSETS = Object.freeze({
   callout: {
-    textureKey: "intro-callout-v1",
-    path: "/assets/game/ui/ui-013-intro-callout-v1.png",
+    textureKey: "intro-callout-v2",
+    path: "/assets/game/ui/ui-013-intro-callout-v2.png",
     x: 16,
     y: 154,
   },

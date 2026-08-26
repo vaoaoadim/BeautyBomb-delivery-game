@@ -1,0 +1,36 @@
+{
+  "assetId": "UI-013",
+  "version": "v2",
+  "status": "verified",
+  "texture": "ui-013-intro-callout-v2.png",
+  "canvas": {
+    "width": 332,
+    "height": 207
+  },
+  "frame": {
+    "width": 332,
+    "height": 207,
+    "count": 1
+  },
+  "sourceAsset": "ui-013-intro-callout-v1.png",
+  "change": "Removed the yellow decorative mark from the lower-right interior of the thought bubble.",
+  "removedLocalRect": {
+    "x": 300,
+    "y": 158,
+    "width": 14,
+    "height": 3
+  },
+  "removedPixelCount": 42,
+  "runtimeSha256": "88c0d7e713a9f5c057b1c4e335fb5e7c4c355d31bf2fe8cfd8f8d4a35ede794d",
+  "runtime": {
+    "position": {
+      "x": 16,
+      "y": 154
+    },
+    "origin": {
+      "x": 0,
+      "y": 0
+    },
+    "fixedToCamera": true
+  }
+}
