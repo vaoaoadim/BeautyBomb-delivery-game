@@ -1,0 +1,72 @@
+{
+  "assetId": "UI-015",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-015-pause-callout-v2.png",
+  "canvas": {
+    "width": 332,
+    "height": 272
+  },
+  "frame": {
+    "width": 332,
+    "height": 272,
+    "count": 1
+  },
+  "copy": "Не тормози! Нужно успеть вовремя :)",
+  "renderedCopy": [
+    "НЕ ТОРМОЗИ!",
+    "НУЖНО УСПЕТЬ",
+    "ВОВРЕМЯ :)"
+  ],
+  "font": {
+    "family": "Press Start 2P",
+    "sizePx": 15
+  },
+  "palette": {
+    "violet": "#1e1d3e",
+    "lavender": "#eef0ff",
+    "pink": "#ff4fab"
+  },
+  "production": {
+    "buildScript": "scripts/build_pause_callout_v2.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "styleSource": "UI-013 v3 stepped comic body and +3,+4 pink extrusion; tail omitted",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "fontLicense": "visual-references/fonts/press-start-2p/OFL.txt",
+    "fontLicenseId": "SIL-OFL-1.1",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "e2a96f20fdc65b2c95eced9aa16449249baa63f47f3748e4899c6ad8b91c8163",
+    "runtimePixelSha256": "c2435fb6708e03d9b94ac9e7fd5a3b529a03f0d5a25bdf030213ba50faaa215c"
+  },
+  "runtime": {
+    "center": {
+      "x": 180,
+      "y": 318
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "fixedToCamera": true,
+    "tail": "none",
+    "visibleBounds": {
+      "x": 16,
+      "y": 184,
+      "width": 328,
+      "height": 267
+    },
+    "continueButtonCenter": {
+      "x": 180,
+      "y": 334
+    },
+    "restartButtonCenter": {
+      "x": 180,
+      "y": 394
+    },
+    "buttonContainment": "both existing 168 x 44 buttons remain inside the lavender inner body"
+  }
+}

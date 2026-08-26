@@ -26,7 +26,7 @@ import hudTitleMetadata from "../public/assets/game/ui/ui-009-game-title-v1.json
 import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.json";
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
 import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.json";
-import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v1.json";
+import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v2.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
 
@@ -485,24 +485,25 @@ describe("approved-master asset contract", () => {
   it("keeps the pause copy in a tail-free local-font comic callout", () => {
     expect(pauseCalloutMetadata).toMatchObject({
       assetId: "UI-015",
-      version: "v1",
+      version: "v2",
       status: "integrated",
-      canvas: { width: 304, height: 232 },
+      canvas: { width: 332, height: 272 },
       copy: "Не тормози! Нужно успеть вовремя :)",
       font: { family: "Press Start 2P", sizePx: 15 },
       production: {
-        buildScript: "scripts/build_pause_callout_v1.py",
+        buildScript: "scripts/build_pause_callout_v2.py",
         assetMode: "authored-low-resolution-pixel-art",
         offlineResizeCount: 0,
         antialiasing: false,
         phaserTextureFilter: "nearest",
       },
       runtime: {
-        center: { x: 180, y: 312 },
+        center: { x: 180, y: 318 },
         fixedToCamera: true,
         tail: "none",
-        continueButtonCenter: { x: 180, y: 350 },
-        restartButtonCenter: { x: 180, y: 404 },
+        visibleBounds: { x: 16, y: 184, width: 328, height: 267 },
+        continueButtonCenter: { x: 180, y: 334 },
+        restartButtonCenter: { x: 180, y: 394 },
       },
     });
     expect(pauseCalloutMetadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);

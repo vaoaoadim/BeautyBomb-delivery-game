@@ -174,9 +174,9 @@ Rules:
 
 ### Pause
 
-- `UI-015` v1 is a centered native `304 × 232` lavender comic callout at `x=180, y=312`. It repeats the intro callout's dark-violet stepped outline, white upper-left highlight, and pink lower-right extrusion, but has no tail or pointer.
+- `UI-015` v2 is a centered native `332 × 272` lavender comic callout at `x=180, y=318`; v1 is retained unchanged. It uses the exact stepped front-body geometry and offset `+3,+4 px` pink extrusion from the integrated intro cloud, extended only vertically and without a tail or pointer.
 - The copy is rasterized with the same repository-local Press Start 2P source as the intro: `Не тормози! Нужно успеть вовремя :)`, split into three centered uppercase pixel lines. Do not replace it with runtime system text or a web font.
-- The existing `ПРОДОЛЖИТЬ` and `ЗАНОВО` buttons retain their construction, labels, and pressed feedback; they appear below the copy at centers `180,350` and `180,404`.
+- The existing `ПРОДОЛЖИТЬ` and `ЗАНОВО` buttons retain their construction, labels, and pressed feedback; they appear below the copy at centers `180,334` and `180,394`, wholly inside the lavender inner body.
 - Keep the bottom console and lane controls visible but inert before play. Pause, exit, and sound controls are not rendered. Do not add a fullscreen shade, separate START button, or the former start popup.
 
 ### Gameplay HUD

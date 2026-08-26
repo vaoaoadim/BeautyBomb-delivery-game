@@ -181,10 +181,10 @@ const INTRO_ASSETS = Object.freeze({
 
 const PAUSE_ASSETS = Object.freeze({
   callout: {
-    textureKey: "pause-callout-v1",
-    path: "/assets/game/ui/ui-015-pause-callout-v1.png",
+    textureKey: "pause-callout-v2",
+    path: "/assets/game/ui/ui-015-pause-callout-v2.png",
     x: 180,
-    y: 312,
+    y: 318,
   },
 });
 
@@ -980,12 +980,12 @@ export class GreyboxScene extends Phaser.Scene {
       PAUSE_ASSETS.callout.textureKey,
     );
     const continueButton = this.createPauseMenuButton(
-      350,
+      334,
       "ПРОДОЛЖИТЬ",
       () => this.resumeRun(),
     );
     const restartButton = this.createPauseMenuButton(
-      404,
+      394,
       "ЗАНОВО",
       () => this.restartPausedRun(),
     );
