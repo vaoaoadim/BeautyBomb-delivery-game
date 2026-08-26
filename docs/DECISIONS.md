@@ -76,6 +76,7 @@ Keep this file short. Record only decisions that change product behavior, archit
 | D-049 | Animate the courier on the intro screen with the approved driving cadence while freezing wheel rotation. | A new `VEH-001-INTRO` sheet is derived directly from the clean `v7` master. It applies the same body and tube offsets as the integrated drive sheet at `9 fps`, but composites both hubs from the static source for every frame. The ready scene plays this sheet; ordinary gameplay switches back to the unchanged `v6` drive sheet at the existing transition boundary. |
 | D-050 | Temporarily remove the pause, exit, and sound buttons from the rendered game UI. | `UI-010` through `UI-012` stay in the repository as source candidates, but the scene no longer loads, creates, or displays them. Local pause remains available through `P` and `Esc`, including the existing continue/restart dialog. |
 | D-051 | Remove the small yellow decorative mark from the lower-right interior of the intro thought bubble. | The approved `UI-013` v1 asset remains immutable. A deterministic `UI-013` v2 derivation clears only its 42 exact-yellow pixels in the documented 14 × 3 local rectangle; the callout copy, geometry, palette, position, tail, and all gameplay behavior remain unchanged. |
+| D-052 | Restore the thought-bubble surface where UI-013 v2 had become transparent. | `UI-013` v3 replaces exactly the same 42 source-yellow pixels with opaque lavender (`#EEF0FF`), so the cloud remains a continuous clean surface and no scene background shows through. |
 
 ## Open production questions
 

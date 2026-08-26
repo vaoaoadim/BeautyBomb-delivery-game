@@ -1,0 +1,36 @@
+{
+  "assetId": "UI-013",
+  "version": "v3",
+  "status": "verified",
+  "texture": "ui-013-intro-callout-v3.png",
+  "canvas": {
+    "width": 332,
+    "height": 207
+  },
+  "frame": {
+    "width": 332,
+    "height": 207,
+    "count": 1
+  },
+  "sourceAsset": "ui-013-intro-callout-v1.png",
+  "change": "Replaced the yellow decorative mark with the opaque lavender thought-bubble surface.",
+  "replacedLocalRect": {
+    "x": 300,
+    "y": 158,
+    "width": 14,
+    "height": 3
+  },
+  "replacedPixelCount": 42,
+  "runtimeSha256": "096d26a25d6cf381c559e83a8d7a36832aa2fa6e9680ee8136e0665808a24edb",
+  "runtime": {
+    "position": {
+      "x": 16,
+      "y": 154
+    },
+    "origin": {
+      "x": 0,
+      "y": 0
+    },
+    "fixedToCamera": true
+  }
+}
