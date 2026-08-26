@@ -50,11 +50,11 @@
   "runtime": {
     "center": {
       "x": 332,
-      "y": 84
+      "y": 78
     },
     "edgeInsets": {
       "right": 12,
-      "belowPauseGap": 20
+      "belowPauseGap": 14
     },
     "hitArea": {
       "width": 44,

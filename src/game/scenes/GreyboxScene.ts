@@ -157,7 +157,7 @@ const HUD_ASSETS = Object.freeze({
     frameWidth: 32,
     frameHeight: 32,
     x: 332,
-    y: 84,
+    y: 78,
     hitAreaSize: 44,
   },
 });

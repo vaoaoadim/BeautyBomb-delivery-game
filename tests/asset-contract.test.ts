@@ -471,8 +471,8 @@ describe("approved-master asset contract", () => {
         states: ["idle", "pressed"],
       },
       runtime: {
-        center: { x: 332, y: 84 },
-        edgeInsets: { right: 12, belowPauseGap: 20 },
+        center: { x: 332, y: 78 },
+        edgeInsets: { right: 12, belowPauseGap: 14 },
         hitArea: { width: 44, height: 44 },
         fixedToCamera: true,
         behavior: "visual-placeholder",
