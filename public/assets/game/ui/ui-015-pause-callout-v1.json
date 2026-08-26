@@ -1,0 +1,65 @@
+{
+  "assetId": "UI-015",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ui-015-pause-callout-v1.png",
+  "canvas": {
+    "width": 304,
+    "height": 232
+  },
+  "frame": {
+    "width": 304,
+    "height": 232,
+    "count": 1
+  },
+  "copy": "Не тормози! Нужно успеть вовремя :)",
+  "renderedCopy": [
+    "НЕ ТОРМОЗИ!",
+    "НУЖНО УСПЕТЬ",
+    "ВОВРЕМЯ :)"
+  ],
+  "font": {
+    "family": "Press Start 2P",
+    "sizePx": 15
+  },
+  "palette": {
+    "violet": "#1e1d3e",
+    "lavender": "#eef0ff",
+    "pink": "#ff4fab",
+    "white": "#ffffff"
+  },
+  "production": {
+    "buildScript": "scripts/build_pause_callout_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "fontLicense": "visual-references/fonts/press-start-2p/OFL.txt",
+    "fontLicenseId": "SIL-OFL-1.1",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "9056aa5a9c6299935abe72dff1636d0429ed4da64372bd42072e4d5f59cc3755",
+    "runtimePixelSha256": "9be84b8abc10af190758a04c7541237d880b75221a75cdf85fdfdd5fece1087e"
+  },
+  "runtime": {
+    "center": {
+      "x": 180,
+      "y": 312
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "fixedToCamera": true,
+    "tail": "none",
+    "continueButtonCenter": {
+      "x": 180,
+      "y": 350
+    },
+    "restartButtonCenter": {
+      "x": 180,
+      "y": 404
+    }
+  }
+}

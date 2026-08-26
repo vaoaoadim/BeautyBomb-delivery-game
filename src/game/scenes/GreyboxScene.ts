@@ -179,6 +179,15 @@ const INTRO_ASSETS = Object.freeze({
   },
 });
 
+const PAUSE_ASSETS = Object.freeze({
+  callout: {
+    textureKey: "pause-callout-v1",
+    path: "/assets/game/ui/ui-015-pause-callout-v1.png",
+    x: 180,
+    y: 312,
+  },
+});
+
 const RENDER_DEPTH = Object.freeze({
   environmentFront: 9,
   obstacleBase: 18,
@@ -344,6 +353,10 @@ export class GreyboxScene extends Phaser.Scene {
         frameHeight: INTRO_ASSETS.tap.frameHeight,
       },
     );
+    this.load.image(
+      PAUSE_ASSETS.callout.textureKey,
+      PAUSE_ASSETS.callout.path,
+    );
   }
 
   public create(): void {
@@ -386,6 +399,7 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.pause.textureKey,
       HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
+      PAUSE_ASSETS.callout.textureKey,
     ]) {
       this.textures
         .get(textureKey)
@@ -960,34 +974,25 @@ export class GreyboxScene extends Phaser.Scene {
         0.78,
       )
       .setInteractive();
-    const panelShadow = this.add.rectangle(184, 326, 288, 226, 0x982add, 1);
-    const panel = this.add.rectangle(180, 320, 288, 226, COLORS.cream, 1);
-    panel.setStrokeStyle(5, COLORS.pink, 1);
-    const title = this.add
-      .text(180, 248, "ПАУЗА", {
-        align: "center",
-        color: "#17162f",
-        fontFamily: "monospace",
-        fontSize: "22px",
-        fontStyle: "bold",
-      })
-      .setOrigin(0.5);
+    const callout = this.add.image(
+      PAUSE_ASSETS.callout.x,
+      PAUSE_ASSETS.callout.y,
+      PAUSE_ASSETS.callout.textureKey,
+    );
     const continueButton = this.createPauseMenuButton(
-      310,
+      350,
       "ПРОДОЛЖИТЬ",
       () => this.resumeRun(),
     );
     const restartButton = this.createPauseMenuButton(
-      370,
+      404,
       "ЗАНОВО",
       () => this.restartPausedRun(),
     );
 
     this.pauseOverlay = this.add.container(0, 0, [
       shade,
-      panelShadow,
-      panel,
-      title,
+      callout,
       continueButton,
       restartButton,
     ]);

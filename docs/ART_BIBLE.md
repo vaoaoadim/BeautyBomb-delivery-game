@@ -171,6 +171,12 @@ Rules:
 - During ordinary waiting, `ЖМИ` uses a restrained `1.00 → 1.06 → 1.00` `Sine.InOut` pulse over `1,000 ms`; the courier uses the approved `VEH-001` body-and-tube drive motion at the same cadence, while both wheel hubs remain fixed to frame `0`.
 - A first canvas press, `Enter`, or `Space` triggers one guarded `1,000 ms` three-color transition. Route time remains zero until completion, then the callout is hidden and standard gameplay motion resumes.
 - Under `prefers-reduced-motion`, remove CTA scaling and courier motion while retaining the static instruction and a calm color change before play.
+
+### Pause
+
+- `UI-015` v1 is a centered native `304 × 232` lavender comic callout at `x=180, y=312`. It repeats the intro callout's dark-violet stepped outline, white upper-left highlight, and pink lower-right extrusion, but has no tail or pointer.
+- The copy is rasterized with the same repository-local Press Start 2P source as the intro: `Не тормози! Нужно успеть вовремя :)`, split into three centered uppercase pixel lines. Do not replace it with runtime system text or a web font.
+- The existing `ПРОДОЛЖИТЬ` and `ЗАНОВО` buttons retain their construction, labels, and pressed feedback; they appear below the copy at centers `180,350` and `180,404`.
 - Keep the bottom console and lane controls visible but inert before play. Pause, exit, and sound controls are not rendered. Do not add a fullscreen shade, separate START button, or the former start popup.
 
 ### Gameplay HUD
