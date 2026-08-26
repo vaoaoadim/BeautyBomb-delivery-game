@@ -86,9 +86,9 @@ const TRANSITIONS: Readonly<
 > = Object.freeze({
   inactive: { "progress-complete": "finish-road" },
   "finish-road": { "finish-road-complete": "arrival-transition" },
-  "arrival-transition": { "arrival-complete": "reward-prompt" },
-  "reward-prompt": { claim: "product-transfer" },
-  "product-transfer": { "product-transfer-complete": "complete" },
+  "arrival-transition": { "arrival-complete": "product-transfer" },
+  "product-transfer": { "product-transfer-complete": "reward-prompt" },
+  "reward-prompt": { claim: "complete" },
 });
 
 export function advanceDeliveryPresentationPhase(

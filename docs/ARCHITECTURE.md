@@ -75,7 +75,7 @@ Rules:
 - a prize request can occur once per completed run;
 - restarting creates a fresh run state.
 
-`delivered` remains the single domain authority for a successful route. The Phaser scene owns only the local presentation sequence `inactive -> finish-road -> arrival-transition -> reward-prompt -> product-transfer -> complete`; it cannot issue a prize or create a second delivered state. Tunings and logical `360 × 640` anchors live in `src/game/content/deliveryFinale.json`, while `src/game/content/deliveryFinale.ts` exposes guarded pure transitions for deterministic tests. Completion hands control back to the existing reward-flow contract exactly once.
+`delivered` remains the single domain authority for a successful route. The Phaser scene owns only the local presentation sequence `inactive -> finish-road -> arrival-transition -> product-transfer -> reward-prompt -> complete`; it cannot issue a prize or create a second delivered state. Tunings and logical `360 × 640` anchors live in `src/game/content/deliveryFinale.json`, while `src/game/content/deliveryFinale.ts` exposes guarded pure transitions for deterministic tests. Claiming after the transfer hands control back to the existing reward-flow contract exactly once.
 
 ## Integration boundary
 

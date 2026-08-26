@@ -324,7 +324,7 @@ export class GreyboxScene extends Phaser.Scene {
   };
 
   private readonly onClaimPointerDown = (): void => {
-    this.beginProductTransfer();
+    this.claimDeliveryReward();
   };
 
   private readonly onReducedMotionChange = (
@@ -1007,11 +1007,11 @@ export class GreyboxScene extends Phaser.Scene {
       this.deliveryPhaseElapsedMs >=
       DELIVERY_FINALE.arrivalRevealMs + DELIVERY_FINALE.rewardPromptDelayMs
     ) {
-      this.showDeliveryRewardPrompt();
+      this.beginProductTransfer();
     }
   }
 
-  private showDeliveryRewardPrompt(): void {
+  private beginProductTransfer(): void {
     const nextPhase = advanceDeliveryPresentationPhase(
       this.deliveryPhase,
       "arrival-complete",
@@ -1023,6 +1023,20 @@ export class GreyboxScene extends Phaser.Scene {
     this.deliveryPhase = nextPhase;
     this.deliveryPhaseElapsedMs = 0;
     this.setUtilityControlsVisible(false);
+    this.startProductFlight();
+  }
+
+  private showDeliveryRewardPrompt(): void {
+    const nextPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "product-transfer-complete",
+    );
+    if (nextPhase === this.deliveryPhase) {
+      return;
+    }
+
+    this.deliveryPhase = nextPhase;
+    this.deliveryPhaseElapsedMs = 0;
     this.deliveryCallout.setAlpha(0).setY(158).setVisible(true);
     this.deliveryClaim.setFrame(0).setScale(1).setAlpha(0).setVisible(true);
     this.tweens.add({
@@ -1078,7 +1092,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.input.off("pointerdown", this.onClaimPointerDown, this);
   }
 
-  private beginProductTransfer(): void {
+  private claimDeliveryReward(): void {
     const nextPhase = advanceDeliveryPresentationPhase(
       this.deliveryPhase,
       "claim",
@@ -1104,7 +1118,8 @@ export class GreyboxScene extends Phaser.Scene {
       },
       onComplete: () => {
         this.deliveryClaim.setVisible(false);
-        this.startProductFlight();
+        this.deliveryCallout.setVisible(false);
+        this.invokeExistingRewardFlow();
       },
     });
   }
@@ -1173,15 +1188,7 @@ export class GreyboxScene extends Phaser.Scene {
       onComplete: () => {
         this.deliveryProduct?.destroy();
         this.deliveryProduct = null;
-        const nextPhase = advanceDeliveryPresentationPhase(
-          this.deliveryPhase,
-          "product-transfer-complete",
-        );
-        if (nextPhase === this.deliveryPhase) {
-          return;
-        }
-        this.deliveryPhase = nextPhase;
-        this.invokeExistingRewardFlow();
+        this.showDeliveryRewardPrompt();
       },
     });
   }
@@ -1632,7 +1639,7 @@ export class GreyboxScene extends Phaser.Scene {
     }
 
     if (this.deliveryPhase === "reward-prompt") {
-      this.beginProductTransfer();
+      this.claimDeliveryReward();
       return;
     }
 

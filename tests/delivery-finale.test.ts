@@ -19,14 +19,14 @@ describe("delivery finale presentation", () => {
       "progress-complete",
       "finish-road-complete",
       "arrival-complete",
-      "claim",
       "product-transfer-complete",
+      "claim",
     ];
     const expected: readonly DeliveryPresentationPhase[] = [
       "finish-road",
       "arrival-transition",
-      "reward-prompt",
       "product-transfer",
+      "reward-prompt",
       "complete",
     ];
 
@@ -41,6 +41,9 @@ describe("delivery finale presentation", () => {
     expect(advanceDeliveryPresentationPhase("inactive", "claim")).toBe(
       "inactive",
     );
+    expect(
+      advanceDeliveryPresentationPhase("arrival-transition", "claim"),
+    ).toBe("arrival-transition");
     expect(
       advanceDeliveryPresentationPhase("product-transfer", "claim"),
     ).toBe("product-transfer");
