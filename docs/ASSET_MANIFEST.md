@@ -89,7 +89,7 @@ Environment runtime v8 removes the remaining cyan street-level interval at the c
 | `UI-001` | Yellow primary button, 9-slice | `96 × 48` source | specified |
 | `UI-002` | White/lavender sticker panel, 9-slice | `160 × 120` source | specified |
 | `UI-003` | Progress bar | `324 × 16`, static frame + runtime fill | integrated (v1 candidate) |
-| `UI-004` | Touch up/down controls | `76 × 48`, `4` normal/pressed frames | integrated (v1 candidate) |
+| `UI-004` | Touch down/up controls | `76 × 48`, `4` normal/pressed frames | integrated (v2 candidate; v1 retained) |
 | `UI-005` | Intro composition | `360 × 640` layout masters | approved |
 | `UI-006` | Defeat composition | `360 × 640` layout masters | specified |
 | `UI-008` | Lower control console | `360 × 118`, fixed | integrated (v1 candidate) |
@@ -102,7 +102,7 @@ Environment runtime v8 removes the remaining cyan street-level interval at the c
 
 Required icon coverage: heart, progress/route, sound, pause, up, down, retry, home, parcel, star, and location pin.
 
-The branded HUD v1 candidate is authored directly on the runtime pixel grid by `scripts/build_hud_ui_v1.py`; it performs no resize, antialiasing, or palette quantization. Runtime files and adjacent metadata live in `public/assets/game/ui/`. `UI-004` retains its immutable native frames but renders at `1.5×` with matching `114 × 72` hit areas centered at `111/249, 572`; the lower panel keeps `32 px` of bottom clearance. `UI-010` through `UI-012` are retained as source candidates but are deliberately not loaded or rendered while their visual treatment is reconsidered. Review evidence: `visual-references/ui-hud-v1-review.png`.
+The branded HUD v1 candidate is authored directly on the runtime pixel grid by `scripts/build_hud_ui_v1.py`; it performs no resize, antialiasing, or palette quantization. Runtime files and adjacent metadata live in `public/assets/game/ui/`. `UI-004` v2 is independently authored by `scripts/build_touch_controls_v2.py` on the same immutable `76 × 48` runtime grid: four normal/pressed frames use the project yellow face, solid black arrows, a restrained Beauty Bomb pink extrusion, and no micro-detail. It renders at `1.5×` with matching `114 × 72` hit areas centered at `111/249, 572`; down is left and up is right, while the lower panel keeps `32 px` of bottom clearance. `UI-010` through `UI-012` are retained as source candidates but are deliberately not loaded or rendered while their visual treatment is reconsidered. Review evidence: `visual-references/ui-hud-v1-review.png` and `visual-references/ui-004-touch-controls-v2-review.png`.
 
 `UI-009` is the one-line `BEAUTY BOMB DELIVERY` gameplay title authored by the same deterministic HUD script. Its acid-yellow face, deep-violet outline, hot-pink lower-right extrusion, and small cyan-white highlights are drawn directly on a transparent `242 × 28` runtime grid. Phaser renders the PNG at native size with `NEAREST`, centered at `x=180, y=38`, six logical pixels below the utility-button centerline; no system font or runtime text effect is involved. Review evidence: `visual-references/ui-game-title-v1-review.png`.
 

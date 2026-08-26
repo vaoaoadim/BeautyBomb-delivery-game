@@ -20,7 +20,7 @@ import environmentMasterMetadata from "../visual-references/env-001-parallax-coh
 import environmentNeighborhoodMasterMetadata from "../visual-references/env-001-parallax-neighborhood-v6-alpha-master.json";
 import hudHeartMetadata from "../public/assets/game/ui/ico-001-life-heart-v1.json";
 import hudProgressMetadata from "../public/assets/game/ui/ui-003-progress-bar-v1.json";
-import hudControlsMetadata from "../public/assets/game/ui/ui-004-touch-controls-v1.json";
+import hudControlsMetadata from "../public/assets/game/ui/ui-004-touch-controls-v2.json";
 import hudPanelMetadata from "../public/assets/game/ui/ui-008-control-panel-v1.json";
 import hudTitleMetadata from "../public/assets/game/ui/ui-009-game-title-v1.json";
 import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v1.json";
@@ -332,20 +332,20 @@ describe("approved-master asset contract", () => {
 
   it("keeps the branded HUD candidate on the locked gameplay geometry", () => {
     const hudAssets = [
-      hudHeartMetadata,
-      hudProgressMetadata,
-      hudControlsMetadata,
-      hudPanelMetadata,
-      hudTitleMetadata,
-      hudPauseMetadata,
-      hudExitMetadata,
-      hudSoundMetadata,
-    ];
+      [hudHeartMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudProgressMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudControlsMetadata, "scripts/build_touch_controls_v2.py"],
+      [hudPanelMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudTitleMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudPauseMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudExitMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudSoundMetadata, "scripts/build_hud_ui_v1.py"],
+    ] as const;
 
-    for (const metadata of hudAssets) {
+    for (const [metadata, buildScript] of hudAssets) {
       expect(metadata.status).toBe("integrated");
       expect(metadata.production).toMatchObject({
-        buildScript: "scripts/build_hud_ui_v1.py",
+        buildScript,
         assetMode: "authored-low-resolution-pixel-art",
         offlineResizeCount: 0,
         antialiasing: false,
@@ -389,6 +389,7 @@ describe("approved-master asset contract", () => {
       },
       runtime: {
         centers: [{ x: 111, y: 572 }, { x: 249, y: 572 }],
+        layout: { left: "down", right: "up" },
         displayScale: 1.5,
         hitArea: { width: 114, height: 72 },
         bottomClearancePx: 32,

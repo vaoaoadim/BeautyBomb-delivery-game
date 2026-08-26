@@ -39,7 +39,7 @@ The player delivers a Water Bomb cream order, avoids traffic, reaches the destin
 - The first obstacle set cycles through a pink hatchback, yellow sedan, and green boxy wagon.
 - Final art follows `docs/ART_BIBLE.md`; asset production and approvals follow `docs/ASSET_MANIFEST.md`.
 - Lane transition: 180 ms with one buffered command.
-- Desktop controls: arrow keys; mobile controls: on-screen up/down buttons.
+- Desktop controls: arrow keys; mobile controls: on-screen down/up buttons, with down on the left and up on the right.
 - The initial `ready` state keeps route time at zero, freezes parallax and obstacles, shows courier frame `0` with only a subtle `1 px` idle bob, and leaves the bottom lane controls visible but inert.
 - The intro callout and `ЖМИ` prompt sit above the frozen environment while pause, exit, and sound controls remain hidden. The former START popup is not part of the flow.
 - A first pointer press anywhere on the canvas, `Enter`, or `Space` starts one guarded `1,000 ms` color-pulse transition. Repeated input cannot create another start, and lane input remains inactive until `startRun` executes at transition completion.

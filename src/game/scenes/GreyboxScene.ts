@@ -127,13 +127,13 @@ const HUD_ASSETS = Object.freeze({
     fillHeight: 8,
   },
   controls: {
-    textureKey: "hud-touch-controls-v1",
-    path: "/assets/game/ui/ui-004-touch-controls-v1.png",
+    textureKey: "hud-touch-controls-v2",
+    path: "/assets/game/ui/ui-004-touch-controls-v2.png",
     frameWidth: 76,
     frameHeight: 48,
     displayScale: 1.5,
-    upX: 111,
-    downX: 249,
+    downX: 111,
+    upX: 249,
     y: 572,
   },
   panel: {

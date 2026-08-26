@@ -177,7 +177,7 @@ Rules:
 
 - Three hot-pink sticker hearts sit at top-left without a `LIVES` label; lost lives switch to the matching pale-violet empty frame instead of disappearing.
 - The `324 × 16` progress bar remains across the upper safe area: turquoise base, acid-yellow fill, deep-violet stepped frame, one small end sparkle, and a white pixel highlight at the live fill edge.
-- Yellow touch buttons retain their native `76 × 48` pixel-art frames and separate up/down normal and pressed states, but render at `1.5×` with matching `114 × 72` hit areas. Their centers are `111/249, 572`, leaving a `24 px` gap between buttons and `32 px` of free space below the `y=522–640` control panel.
+- Yellow touch buttons retain their native `76 × 48` pixel-art frames and separate up/down normal and pressed states, but render at `1.5×` with matching `114 × 72` hit areas. The v2 treatment uses a clean yellow face, solid black arrow, stepped black frame, and one restrained pink extrusion. Down is centered at `111, 572` on the left; up is centered at `249, 572` on the right, leaving a `24 px` gap between buttons and `32 px` of free space below the `y=522–640` control panel.
 - The fixed `360 × 118` lower control console begins at `y=522`, uses the courier cyan field with a thin yellow/violet/cyan top edge and no `MOVE` label.
 - `UI-010` through `UI-012` remain available as source candidates but are not loaded or rendered. Keyboard `P` and `Esc` retain the temporary local pause entry point.
 - The title stays horizontally centered at `x=180, y=38`.

@@ -1,0 +1,62 @@
+{
+  "assetId": "UI-004",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-004-touch-controls-v2.png",
+  "canvas": {
+    "width": 76,
+    "height": 192
+  },
+  "frame": {
+    "width": 76,
+    "height": 48,
+    "count": 4,
+    "states": [
+      "up",
+      "up-pressed",
+      "down",
+      "down-pressed"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "yellow": "#ffef5c",
+    "yellow_pressed": "#e0d236",
+    "highlight": "#fff9b1",
+    "pink": "#ff4fab",
+    "pink_shadow": "#be2b7b",
+    "review_surface": "#eef0ff"
+  },
+  "production": {
+    "buildScript": "scripts/build_touch_controls_v2.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "04bdf0d59a2cf0921ccb3c2dde0eced089c52a59c85c91c05872b29e1a528335"
+  },
+  "runtime": {
+    "centers": [
+      {
+        "x": 111,
+        "y": 572
+      },
+      {
+        "x": 249,
+        "y": 572
+      }
+    ],
+    "layout": {
+      "left": "down",
+      "right": "up"
+    },
+    "displayScale": 1.5,
+    "hitArea": {
+      "width": 114,
+      "height": 72
+    },
+    "bottomClearancePx": 32,
+    "interaction": "pressed frame on pointerdown; idle frame on pointerup or pointerout"
+  }
+}
