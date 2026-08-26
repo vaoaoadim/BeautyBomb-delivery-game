@@ -23,9 +23,9 @@ import hudProgressMetadata from "../public/assets/game/ui/ui-003-progress-bar-v1
 import hudControlsMetadata from "../public/assets/game/ui/ui-004-touch-controls-v2.json";
 import hudPanelMetadata from "../public/assets/game/ui/ui-008-control-panel-v1.json";
 import hudTitleMetadata from "../public/assets/game/ui/ui-009-game-title-v1.json";
-import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v1.json";
+import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.json";
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
-import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-tab-v1.json";
+import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
 
@@ -337,21 +337,35 @@ describe("approved-master asset contract", () => {
       [hudControlsMetadata, "scripts/build_touch_controls_v2.py"],
       [hudPanelMetadata, "scripts/build_hud_ui_v1.py"],
       [hudTitleMetadata, "scripts/build_hud_ui_v1.py"],
-      [hudPauseMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudPauseMetadata, "scripts/build_utility_buttons_v2.py"],
       [hudExitMetadata, "scripts/build_hud_ui_v1.py"],
-      [hudSoundMetadata, "scripts/build_hud_ui_v1.py"],
+      [hudSoundMetadata, "scripts/build_utility_buttons_v2.py"],
     ] as const;
 
     for (const [metadata, buildScript] of hudAssets) {
       expect(metadata.status).toBe("integrated");
-      expect(metadata.production).toMatchObject({
-        buildScript,
-        assetMode: "authored-low-resolution-pixel-art",
-        offlineResizeCount: 0,
-        antialiasing: false,
-        paletteQuantization: false,
-        phaserTextureFilter: "nearest",
-      });
+      const generatedUtilityAsset =
+        metadata === hudPauseMetadata || metadata === hudSoundMetadata;
+      expect(metadata.production).toMatchObject(
+        generatedUtilityAsset
+          ? {
+              buildScript,
+              assetMode: "generated-master-derived-pixel-art",
+              offlineResizeCountPerFrame: 1,
+              resizeFilter: "nearest-neighbor",
+              antialiasing: false,
+              paletteQuantization: false,
+              phaserTextureFilter: "nearest",
+            }
+          : {
+              buildScript,
+              assetMode: "authored-low-resolution-pixel-art",
+              offlineResizeCount: 0,
+              antialiasing: false,
+              paletteQuantization: false,
+              phaserTextureFilter: "nearest",
+            },
+      );
       expect(metadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
     }
 
@@ -425,7 +439,9 @@ describe("approved-master asset contract", () => {
       runtime: {
         center: { x: 332, y: 32 },
         edgeInsets: { top: 16, right: 12 },
+        hitArea: { width: 44, height: 44 },
         fixedToCamera: true,
+        action: "existing-pause-flow",
       },
     });
     expect(hudExitMetadata).toMatchObject({
@@ -447,16 +463,17 @@ describe("approved-master asset contract", () => {
     });
     expect(hudSoundMetadata).toMatchObject({
       assetId: "UI-012",
-      canvas: { width: 28, height: 56 },
+      canvas: { width: 32, height: 64 },
       frame: {
-        width: 28,
-        height: 28,
+        width: 32,
+        height: 32,
         count: 2,
         states: ["idle", "pressed"],
       },
       runtime: {
-        center: { x: 346, y: 540 },
-        attachedPanelEdge: "right",
+        center: { x: 332, y: 84 },
+        edgeInsets: { right: 12, belowPauseGap: 20 },
+        hitArea: { width: 44, height: 44 },
         fixedToCamera: true,
         behavior: "visual-placeholder",
         futureAction: "toggle-sound",

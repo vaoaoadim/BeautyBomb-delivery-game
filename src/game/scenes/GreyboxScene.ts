@@ -142,6 +142,24 @@ const HUD_ASSETS = Object.freeze({
     x: 0,
     y: 522,
   },
+  pause: {
+    textureKey: "hud-pause-button-v2",
+    path: "/assets/game/ui/ui-010-pause-button-v2.png",
+    frameWidth: 32,
+    frameHeight: 32,
+    x: 332,
+    y: 32,
+    hitAreaSize: 44,
+  },
+  sound: {
+    textureKey: "hud-sound-button-v2",
+    path: "/assets/game/ui/ui-012-sound-button-v2.png",
+    frameWidth: 32,
+    frameHeight: 32,
+    x: 332,
+    y: 84,
+    hitAreaSize: 44,
+  },
 });
 
 const INTRO_ASSETS = Object.freeze({
@@ -231,6 +249,7 @@ export class GreyboxScene extends Phaser.Scene {
   private promptBody!: Phaser.GameObjects.Text;
   private promptButton!: Phaser.GameObjects.Text;
   private pauseOverlay!: Phaser.GameObjects.Container;
+  private utilityControls: Phaser.GameObjects.Sprite[] = [];
   private environmentLayers: ActiveEnvironmentLayer[] = [];
   private environmentMode: ParallaxMovementMode = "route-loop";
   private prefersReducedMotion = false;
@@ -305,6 +324,14 @@ export class GreyboxScene extends Phaser.Scene {
     );
     this.load.image(HUD_ASSETS.panel.textureKey, HUD_ASSETS.panel.path);
     this.load.image(HUD_ASSETS.title.textureKey, HUD_ASSETS.title.path);
+    this.load.spritesheet(HUD_ASSETS.pause.textureKey, HUD_ASSETS.pause.path, {
+      frameWidth: HUD_ASSETS.pause.frameWidth,
+      frameHeight: HUD_ASSETS.pause.frameHeight,
+    });
+    this.load.spritesheet(HUD_ASSETS.sound.textureKey, HUD_ASSETS.sound.path, {
+      frameWidth: HUD_ASSETS.sound.frameWidth,
+      frameHeight: HUD_ASSETS.sound.frameHeight,
+    });
     this.load.image(
       INTRO_ASSETS.callout.textureKey,
       INTRO_ASSETS.callout.path,
@@ -356,6 +383,8 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.progress.textureKey,
       HUD_ASSETS.controls.textureKey,
       HUD_ASSETS.panel.textureKey,
+      HUD_ASSETS.pause.textureKey,
+      HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
     ]) {
       this.textures
@@ -373,6 +402,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.createHud();
     this.player = this.createPlayer();
     this.createTouchControls();
+    this.createUtilityControls();
     this.createIntroOverlay();
     this.createOutcomeOverlay();
     this.createPauseOverlay();
@@ -644,6 +674,50 @@ export class GreyboxScene extends Phaser.Scene {
     down.setDepth(RENDER_DEPTH.controls).setScrollFactor(0);
   }
 
+  private createUtilityControls(): void {
+    const pause = this.createUtilityButton(HUD_ASSETS.pause, () => {
+      this.pauseRun();
+    });
+    const sound = this.createUtilityButton(HUD_ASSETS.sound);
+    this.utilityControls = [pause, sound];
+    this.setUtilityControlsVisible(false);
+  }
+
+  private createUtilityButton(
+    asset: (typeof HUD_ASSETS)["pause"],
+    onActivate?: () => void,
+  ): Phaser.GameObjects.Sprite {
+    const hitAreaOffset = -(asset.hitAreaSize - asset.frameWidth) / 2;
+    const button = this.add
+      .sprite(asset.x, asset.y, asset.textureKey, 0)
+      .setInteractive({
+        hitArea: new Phaser.Geom.Rectangle(
+          hitAreaOffset,
+          hitAreaOffset,
+          asset.hitAreaSize,
+          asset.hitAreaSize,
+        ),
+        hitAreaCallback: Phaser.Geom.Rectangle.Contains,
+        useHandCursor: true,
+      })
+      .setDepth(RENDER_DEPTH.controls + 1)
+      .setScrollFactor(0);
+
+    button.on("pointerdown", () => {
+      button.setFrame(1);
+      onActivate?.();
+    });
+    button.on("pointerup", () => button.setFrame(0));
+    button.on("pointerout", () => button.setFrame(0));
+    return button;
+  }
+
+  private setUtilityControlsVisible(visible: boolean): void {
+    for (const button of this.utilityControls) {
+      button.setVisible(visible);
+    }
+  }
+
   private createControlButton(
     x: number,
     y: number,
@@ -858,6 +932,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.runState = startRun(this.runState);
     this.displayedPhase = "playing";
     this.introTransitionActive = false;
+    this.setUtilityControlsVisible(true);
     this.player
       .setTexture(PLAYER_ASSET.textureKey, 0)
       .play(PLAYER_DRIVE_ANIMATION);
@@ -1164,6 +1239,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.displayedPhase = phase;
 
     if (phase === "delivered") {
+      this.setUtilityControlsVisible(false);
       this.setEnvironmentMode("arrival-finite");
       this.player.stop();
       this.player.setFrame(0);
@@ -1173,6 +1249,7 @@ export class GreyboxScene extends Phaser.Scene {
       this.promptButton.setText("PLAY AGAIN");
       this.promptOverlay.setVisible(true);
     } else if (phase === "defeated") {
+      this.setUtilityControlsVisible(false);
       this.player.stop();
       this.player.setFrame(0);
       this.promptTitle.setText("DELIVERY FAILED");
@@ -1185,6 +1262,7 @@ export class GreyboxScene extends Phaser.Scene {
   private resetRun(): void {
     this.isPaused = false;
     this.pauseOverlay.setVisible(false);
+    this.setUtilityControlsVisible(true);
     this.tweens.resumeAll();
     this.tweens.killTweensOf(this.player);
     this.playerIntroIdleAnimationActive = false;

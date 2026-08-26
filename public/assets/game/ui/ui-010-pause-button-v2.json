@@ -1,0 +1,81 @@
+{
+  "assetId": "UI-010",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-010-pause-button-v2.png",
+  "canvas": {
+    "width": 32,
+    "height": 64
+  },
+  "frame": {
+    "width": 32,
+    "height": 32,
+    "count": 2,
+    "states": [
+      "idle",
+      "pressed"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "yellow": "#ffef5c",
+    "pink": "#ff4fab"
+  },
+  "production": {
+    "designMaster": "visual-references/ui-005-utility-buttons-master-v1.png",
+    "designMasterSha256": "8f70cc45a50010162e89a14a818417ab615273777f08acce1976161cae40a860",
+    "buildScript": "scripts/build_utility_buttons_v2.py",
+    "assetMode": "generated-master-derived-pixel-art",
+    "sourceCrop": [
+      [
+        64,
+        56,
+        464,
+        456
+      ],
+      [
+        560,
+        56,
+        960,
+        456
+      ]
+    ],
+    "offlineResizeCountPerFrame": 1,
+    "resizeFilter": "nearest-neighbor",
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "d129fa5cacac28877bd971de1b20a5cbf1dff8a10cdadbbe1d1a11f4cf237170"
+  },
+  "runtime": {
+    "center": {
+      "x": 332,
+      "y": 32
+    },
+    "edgeInsets": {
+      "top": 16,
+      "right": 12
+    },
+    "hitArea": {
+      "width": 44,
+      "height": 44
+    },
+    "fixedToCamera": true,
+    "interaction": "pressed frame on pointerdown; idle frame on pointerup or pointerout",
+    "action": "existing-pause-flow",
+    "sourceCrop": [
+      [
+        64,
+        56,
+        464,
+        456
+      ],
+      [
+        560,
+        56,
+        960,
+        456
+      ]
+    ]
+  }
+}

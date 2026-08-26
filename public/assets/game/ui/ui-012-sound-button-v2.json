@@ -1,0 +1,82 @@
+{
+  "assetId": "UI-012",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-012-sound-button-v2.png",
+  "canvas": {
+    "width": 32,
+    "height": 64
+  },
+  "frame": {
+    "width": 32,
+    "height": 32,
+    "count": 2,
+    "states": [
+      "idle",
+      "pressed"
+    ]
+  },
+  "palette": {
+    "ink": "#1d1d1b",
+    "yellow": "#ffef5c",
+    "pink": "#ff4fab"
+  },
+  "production": {
+    "designMaster": "visual-references/ui-005-utility-buttons-master-v1.png",
+    "designMasterSha256": "8f70cc45a50010162e89a14a818417ab615273777f08acce1976161cae40a860",
+    "buildScript": "scripts/build_utility_buttons_v2.py",
+    "assetMode": "generated-master-derived-pixel-art",
+    "sourceCrop": [
+      [
+        64,
+        568,
+        464,
+        968
+      ],
+      [
+        560,
+        568,
+        960,
+        968
+      ]
+    ],
+    "offlineResizeCountPerFrame": 1,
+    "resizeFilter": "nearest-neighbor",
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "405eaa11467af8b0f62f31ec88a6e7505493c5b91f662170ee43610e8777c4fb"
+  },
+  "runtime": {
+    "center": {
+      "x": 332,
+      "y": 84
+    },
+    "edgeInsets": {
+      "right": 12,
+      "belowPauseGap": 20
+    },
+    "hitArea": {
+      "width": 44,
+      "height": 44
+    },
+    "fixedToCamera": true,
+    "interaction": "pressed frame on pointerdown; idle frame on pointerup or pointerout",
+    "behavior": "visual-placeholder",
+    "futureAction": "toggle-sound",
+    "sourceCrop": [
+      [
+        64,
+        568,
+        464,
+        968
+      ],
+      [
+        560,
+        568,
+        960,
+        968
+      ]
+    ]
+  }
+}
