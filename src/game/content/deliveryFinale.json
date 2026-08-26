@@ -1,5 +1,5 @@
 {
-  "version": "v1",
+  "version": "v2",
   "finishRoadDurationMs": 1500,
   "arrivalDecelerationMs": 600,
   "arrivalRevealMs": 700,
@@ -16,24 +16,21 @@
     "colors": [16707420, 16732075, 5562623, 9972445, 16777215]
   },
   "anchors": {
-    "house": { "x": 270, "y": 292, "originX": 0.5, "originY": 1 },
-    "girl": { "x": 205, "y": 414, "originX": 0.5, "originY": 1 },
+    "girl": { "x": 290, "y": 324, "originX": 0.5, "originY": 1 },
     "vehicleStop": { "x": 74, "y": 350 },
-    "callout": { "x": 14, "y": 154 },
-    "cta": { "x": 180, "y": 306 },
+    "callout": { "x": 14, "y": 338 },
+    "cta": { "x": 180, "y": 466 },
     "productStart": { "x": 70, "y": 286 },
-    "productTarget": { "x": 205, "y": 370 }
+    "productTarget": { "x": 290, "y": 302 }
   },
   "runtime": {
-    "houseScale": 1,
     "girlScale": 1,
     "productScale": 1,
     "arrivalStartX": 380,
-    "cityFadeStartProgress": 0.12,
-    "cityFadeEndProgress": 0.78
+    "destinationCityStartOffsetTexturePx": 526,
+    "destinationCityReducedMotionOffsetTexturePx": 701
   },
   "depth": {
-    "house": 3,
     "girl": 17,
     "confetti": 32,
     "product": 70,

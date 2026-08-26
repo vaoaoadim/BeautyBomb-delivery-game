@@ -27,10 +27,11 @@ import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.js
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
 import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.json";
 import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v2.json";
-import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-callout-v1.json";
+import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-callout-v5.json";
 import deliveryClaimMetadata from "../public/assets/game/ui/ui-017-claim-v1.json";
+import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
-import deliveryGirlMetadata from "../public/assets/game/characters/chr-001-waiting-girl-v1.json";
+import deliveryGirlMetadata from "../public/assets/game/characters/chr-001-waiting-girl-v2.json";
 import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v1.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
@@ -515,18 +516,45 @@ describe("approved-master asset contract", () => {
   });
 
   it("keeps the delivery finale on versioned one-resize asset contracts", () => {
-    for (const metadata of [deliveryHouseMetadata, deliveryGirlMetadata]) {
-      expect(metadata.status).toBe("integrated");
-      expect(metadata.production).toMatchObject({
+    expect(deliveryHouseMetadata).toMatchObject({
+      status: "integrated",
+      production: {
         buildScript: "scripts/build_delivery_finale_assets_v1.py",
         offlineResizeCount: 1,
         resizeFilter: "nearest-neighbor",
         paletteQuantization: false,
         phaserTextureFilter: "nearest",
-      });
-      expect(metadata.production.designMasterSha256).toMatch(/^[a-f0-9]{64}$/);
-      expect(metadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
-    }
+      },
+    });
+    expect(deliveryHouseMetadata.production.designMasterSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
+    expect(deliveryHouseMetadata.production.runtimeSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
+
+    expect(deliveryGirlMetadata).toMatchObject({
+      assetId: "CHR-001",
+      version: "v2",
+      status: "integrated",
+      canvas: { width: 28, height: 44 },
+      visibleBounds: { width: 15, height: 40 },
+      runtimePlacement: { x: 290, y: 324, originX: 0.5, originY: 1 },
+      production: {
+        buildScript: "scripts/build_delivery_girl_v2.py",
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
+        runtimeScale: 1,
+      },
+    });
+    expect(deliveryGirlMetadata.production.designMasterSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
+    expect(deliveryGirlMetadata.production.runtimeSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
 
     expect(deliveryProductMetadata).toMatchObject({
       assetId: "PRD-003",
@@ -544,20 +572,58 @@ describe("approved-master asset contract", () => {
 
     expect(deliveryCalloutMetadata).toMatchObject({
       assetId: "UI-016",
-      canvas: { width: 332, height: 132 },
+      version: "v5",
+      canvas: { width: 332, height: 104 },
+      runtimePosition: { x: 14, y: 338, originX: 0, originY: 0 },
       copy: "Большое спасибо! Теперь можешь забрать награду!",
-      tailTarget: "CHR-001",
+      tailTarget: "CHR-001 v2",
+      tailPointLocal: { x: 276, y: 0 },
+      tailTargetRuntime: { x: 290, y: 324 },
+      tailPlacement: "UI-013 geometry reflected upward; continuous top join",
       production: {
+        buildScript: "scripts/build_delivery_finale_ui_v5.py",
         offlineResizeCount: 0,
         antialiasing: false,
         phaserTextureFilter: "nearest",
+        singleContinuousJoin: true,
+        highlightCrossesTail: false,
+        pinkTailOutline: false,
       },
     });
     expect(deliveryClaimMetadata).toMatchObject({
       assetId: "UI-017",
       frame: { width: 168, height: 36, count: 3 },
-      runtimeCenter: { x: 180, y: 306 },
+      runtimeCenter: { x: 180, y: 466 },
       input: ["pointer-anywhere", "Enter", "Space"],
+    });
+    expect(deliveryDestinationCityMetadata).toMatchObject({
+      assetId: "ENV-009",
+      version: "v3",
+      canvas: { width: 2048, height: 512 },
+      runtime: {
+        tileScale: { x: 0.36, y: 0.55078125 },
+        depth: 1,
+        switchTrigger: "delivery progress complete",
+        startOffsetTexturePx: 526,
+        reducedMotionFinalOffsetTexturePx: 701,
+        expectedFinalHouseCenterX: 297,
+      },
+      production: {
+        chromaMasterSha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+        alphaMasterSha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        phaserTextureFilter: "nearest",
+      },
+      integration: {
+        independentHouseSprite: false,
+        sharedCityTransform: true,
+        continuousSidewalk: true,
+        rectangularHouseBackdrop: false,
+        doorstepGapFilled: true,
+        curbSampleBox: [1451, 506, 1493, 512],
+        curbDestination: [1493, 506],
+      },
     });
   });
 });

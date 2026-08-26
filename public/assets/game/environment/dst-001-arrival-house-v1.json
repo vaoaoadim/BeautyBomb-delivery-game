@@ -20,7 +20,7 @@
     "originY": 1
   },
   "production": {
-    "designMaster": "visual-references/dst-001-arrival-house-master-v1.png",
+    "designMaster": "visual-references\\dst-001-arrival-house-master-v1.png",
     "designMasterSha256": "02477733bf24b931250bf4bb08730eb17a2c76e2a118521a18de942a9eae4386",
     "sourceBox": [
       57,
@@ -34,7 +34,7 @@
     "resizeFilter": "nearest-neighbor",
     "paletteQuantization": false,
     "phaserTextureFilter": "nearest",
-    "runtimeScale": 1,
-    "runtimeSha256": "a22eb23698cb3bfa230f28545705580e06718287fa7fbc4fd65b823618cf132c"
+    "runtimeScale": 0.88,
+    "runtimeSha256": "2645be4cf91ff79f350f011e7f4d1fedb3fbe7b38edf9102eb27720500b89148"
   }
 }

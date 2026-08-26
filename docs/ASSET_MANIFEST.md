@@ -116,15 +116,16 @@ The owner approved `visual-references/ui-005-intro-composition-v1.png` and its a
 | ID | Asset | Native canvas / frames | Status |
 |---|---|---:|---|
 | `DST-001` | Solitary pink arrival house | `176 × 176`, static | integrated v1 |
-| `CHR-001` | Waiting blonde girl | `56 × 88`, static | integrated v1 |
+| `ENV-009` | Unified delivery-destination city panorama | `2048 × 512`, finale-bounded | integrated v3 |
+| `CHR-001` | Waiting blonde girl | `28 × 44`, static | integrated v2 |
 | `CHR-002` | Waiting girl greeting | `64 × 88`, `6` frames | specified |
 | `VFX-002` | Delivery success confetti | bounded Phaser pixel rectangles | integrated procedural v1 |
 | `UI-007` | Victory composition | `360 × 640` layout masters | specified |
-| `UI-016` | Delivery thank-you callout | `332 × 132`, static | integrated v1 |
+| `UI-016` | Delivery thank-you callout | `332 × 104`, static | integrated v5 |
 | `UI-017` | `<ЗАБРАТЬ>` prompt | `168 × 36`, `3` frames | integrated v1 |
 | `PRD-003` | Vertical delivery-transfer cream | `32 × 64`, static | integrated v1 |
 
-`DST-001` and `CHR-001` use separate immutable generated masters: `visual-references/dst-001-arrival-house-master-v1.png` and `visual-references/chr-001-waiting-girl-master-v1.png`. `scripts/build_delivery_finale_assets_v1.py` verifies both SHA-256 values, crops only existing alpha, performs one nearest-neighbor resize, and writes runtime PNGs plus adjacent metadata. `UI-016` and `UI-017` are authored directly on their final pixel grids by `scripts/build_delivery_finale_ui_v1.py` with the repository-local Press Start 2P source and no runtime font. `PRD-003` is built by `scripts/build_delivery_product_v1.py` from the product region of the immutable `veh-001-courier-clean-concept-v7.png` master, not from a screenshot or runtime sprite. Finale timings, anchors, and depth ordering are adjacent in `src/game/content/deliveryFinale.json`.
+`DST-001` and `CHR-001` use separate immutable generated masters: `visual-references/dst-001-arrival-house-master-v1.png` and `visual-references/chr-001-waiting-girl-master-v1.png`. The standalone house remains a design reference only. `scripts/build_delivery_girl_v2.py` verifies the original character master and performs one nearest-neighbor export to a `28 × 44` canvas, avoiding fractional runtime scaling. `ENV-009` v3 is derived by `scripts/build_delivery_destination_city_v3.py` from the immutable unified destination master `visual-references/env-009-delivery-destination-city-alpha-master-v2.png`; that master already contains the house as a complete city lot. The runtime export performs one nearest-neighbor resize, then copies the immediately adjacent approved curb sample into only the `42 × 6` doorstep interval with opaque alpha, so no sky-colored gap remains and no facade is regenerated. `UI-016` v5 is authored directly on its final pixel grid by `scripts/build_delivery_finale_ui_v5.py`, using the approved `UI-013` v3 tail geometry reflected upward and translated to `CHR-001` v2. The tail keeps the deep-violet outline and lavender interior but receives no pink shadow; the body retains its existing pink extrusion. `UI-017` remains the v1 three-frame sheet from `scripts/build_delivery_finale_ui_v1.py`. Both use the repository-local Press Start 2P source and no runtime font. `PRD-003` is built by `scripts/build_delivery_product_v1.py` from the product region of the immutable `veh-001-courier-clean-concept-v7.png` master, not from a screenshot or runtime sprite. Finale timings, anchors, and depth ordering are adjacent in `src/game/content/deliveryFinale.json`.
 
 ## Batch F — later prize system
 

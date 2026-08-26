@@ -21,6 +21,7 @@ ASSETS = (
         "canvas": (176, 176),
         "contentMax": (168, 168),
         "runtimePlacement": {"x": 270, "y": 292, "originX": 0.5, "originY": 1},
+        "runtimeScale": 0.88,
         "promptSummary": "One small solitary pink premium pixel-art house with a compact yard, transparent background, no UI or characters.",
     },
     {
@@ -30,7 +31,8 @@ ASSETS = (
         "runtime": ROOT / "public/assets/game/characters/chr-001-waiting-girl-v1.png",
         "canvas": (56, 88),
         "contentMax": (52, 84),
-        "runtimePlacement": {"x": 205, "y": 414, "originX": 0.5, "originY": 1},
+        "runtimePlacement": {"x": 220, "y": 362, "originX": 0.5, "originY": 1},
+        "runtimeScale": 1,
         "promptSummary": "One full-body friendly blonde girl in a simple pink dress, turned slightly left, transparent background, empty hands.",
     },
 )
@@ -120,7 +122,7 @@ def build_asset(spec: dict[str, Any]) -> None:
             "resizeFilter": "nearest-neighbor",
             "paletteQuantization": False,
             "phaserTextureFilter": "nearest",
-            "runtimeScale": 1,
+            "runtimeScale": spec["runtimeScale"],
             "runtimeSha256": file_hash(runtime),
         },
     }

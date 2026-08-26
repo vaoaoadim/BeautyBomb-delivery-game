@@ -14,6 +14,24 @@ describe("delivery finale presentation", () => {
     expect(DELIVERY_FINALE.finishRoadDurationMs).toBeLessThanOrEqual(2_000);
   });
 
+  it("keeps the recipient and lower reward UI on their approved finale anchors", () => {
+    expect(DELIVERY_FINALE.anchors).toMatchObject({
+      girl: { x: 290, y: 324 },
+      callout: { x: 14, y: 338 },
+      cta: { x: 180, y: 466 },
+      productTarget: { x: 290, y: 302 },
+    });
+    expect(DELIVERY_FINALE.runtime.destinationCityStartOffsetTexturePx).toBe(
+      526,
+    );
+    expect(
+      DELIVERY_FINALE.runtime.destinationCityReducedMotionOffsetTexturePx,
+    ).toBe(701);
+    expect(522 - (DELIVERY_FINALE.anchors.cta.y + 18 * 1.06)).toBeGreaterThanOrEqual(
+      14,
+    );
+  });
+
   it("advances through the finale exactly in the intended order", () => {
     const events: readonly DeliveryPresentationEvent[] = [
       "progress-complete",

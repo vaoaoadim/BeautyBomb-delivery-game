@@ -199,7 +199,7 @@ def main() -> None:
             "status": "integrated",
             "texture": CTA_FILE.name,
             "frame": {"width": CTA_FRAME_SIZE[0], "height": CTA_FRAME_SIZE[1], "count": len(CTA_STATES)},
-            "runtimeCenter": {"x": 180, "y": 306},
+            "runtimeCenter": {"x": 180, "y": 466},
             "input": ["pointer-anywhere", "Enter", "Space"],
             "production": {
                 "buildScript": "scripts/build_delivery_finale_ui_v1.py",

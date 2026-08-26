@@ -1,0 +1,48 @@
+{
+  "assetId": "ENV-009",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "env-009-delivery-destination-city-v2.png",
+  "canvas": {
+    "width": 2048,
+    "height": 512
+  },
+  "composition": "One generated city panorama with DST-001 architecture built into a complete foreground lot",
+  "runtime": {
+    "tileScale": {
+      "x": 0.36,
+      "y": 0.55078125
+    },
+    "depth": 1,
+    "switchTrigger": "delivery progress complete",
+    "startOffsetTexturePx": 526,
+    "reducedMotionFinalOffsetTexturePx": 701,
+    "expectedFinalHouseCenterX": 297
+  },
+  "production": {
+    "buildScript": "scripts/build_delivery_destination_city_v2.py",
+    "chromaMaster": "visual-references/env-009-delivery-destination-city-chroma-master-v2.png",
+    "chromaMasterSha256": "a05df5fd146f38dcd73acbcd89b2e555d6aaaaec41405b195be06d1cae1b03b1",
+    "alphaMaster": "visual-references/env-009-delivery-destination-city-alpha-master-v2.png",
+    "alphaMasterSha256": "4c39e80712adc35e506280c85c1674c6364418b37fe222769e797394770c2aa8",
+    "sourceBox": [
+      0,
+      0,
+      2172,
+      644
+    ],
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "alphaExtraction": "auto-key border with soft matte and despill",
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "c52c5907d61fc08ff3b50e7a0a6ae841bbae279ca9925909c3011c3f5fffc73a"
+  },
+  "integration": {
+    "houseCenterSourceX": 1618,
+    "houseCenterRuntimeX": 1526,
+    "independentHouseSprite": false,
+    "sharedCityTransform": true,
+    "continuousSidewalk": true,
+    "rectangularHouseBackdrop": false
+  }
+}

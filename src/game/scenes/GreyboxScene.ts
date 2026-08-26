@@ -194,17 +194,17 @@ const PAUSE_ASSETS = Object.freeze({
 });
 
 const DELIVERY_ASSETS = Object.freeze({
-  house: {
-    textureKey: "delivery-house-v1",
-    path: "/assets/game/environment/dst-001-arrival-house-v1.png",
+  destinationCity: {
+    textureKey: "delivery-destination-city-v3",
+    path: "/assets/game/environment/env-009-delivery-destination-city-v3.png",
   },
   girl: {
-    textureKey: "delivery-girl-v1",
-    path: "/assets/game/characters/chr-001-waiting-girl-v1.png",
+    textureKey: "delivery-girl-v2",
+    path: "/assets/game/characters/chr-001-waiting-girl-v2.png",
   },
   callout: {
-    textureKey: "delivery-callout-v1",
-    path: "/assets/game/ui/ui-016-delivery-callout-v1.png",
+    textureKey: "delivery-callout-v5",
+    path: "/assets/game/ui/ui-016-delivery-callout-v5.png",
   },
   claim: {
     textureKey: "delivery-claim-v1",
@@ -308,7 +308,6 @@ export class GreyboxScene extends Phaser.Scene {
     y: LANE_BASELINES[1],
     scale: 1,
   };
-  private deliveryHouse!: Phaser.GameObjects.Image;
   private deliveryGirl!: Phaser.GameObjects.Image;
   private deliveryCallout!: Phaser.GameObjects.Image;
   private deliveryClaim!: Phaser.GameObjects.Sprite;
@@ -408,7 +407,10 @@ export class GreyboxScene extends Phaser.Scene {
       PAUSE_ASSETS.callout.textureKey,
       PAUSE_ASSETS.callout.path,
     );
-    this.load.image(DELIVERY_ASSETS.house.textureKey, DELIVERY_ASSETS.house.path);
+    this.load.image(
+      DELIVERY_ASSETS.destinationCity.textureKey,
+      DELIVERY_ASSETS.destinationCity.path,
+    );
     this.load.image(DELIVERY_ASSETS.girl.textureKey, DELIVERY_ASSETS.girl.path);
     this.load.image(
       DELIVERY_ASSETS.callout.textureKey,
@@ -472,7 +474,7 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
       PAUSE_ASSETS.callout.textureKey,
-      DELIVERY_ASSETS.house.textureKey,
+      DELIVERY_ASSETS.destinationCity.textureKey,
       DELIVERY_ASSETS.girl.textureKey,
       DELIVERY_ASSETS.callout.textureKey,
       DELIVERY_ASSETS.product.textureKey,
@@ -576,6 +578,39 @@ export class GreyboxScene extends Phaser.Scene {
         arrivalEndOffsetTexturePx: 0,
       };
     });
+  }
+
+  private getCoherentCityLayer(): ActiveEnvironmentLayer | undefined {
+    return this.environmentLayers.find(
+      ({ spec }) => spec.assetId === "ENV-004",
+    );
+  }
+
+  private showDeliveryDestinationCity(): void {
+    const city = this.getCoherentCityLayer();
+    if (!city) {
+      return;
+    }
+
+    city.sprite
+      .setTexture(DELIVERY_ASSETS.destinationCity.textureKey)
+      .setTileScale(city.spec.tileScale.x, city.spec.tileScale.y);
+    city.sprite.tilePositionX = this.prefersReducedMotion
+      ? DELIVERY_FINALE.runtime.destinationCityReducedMotionOffsetTexturePx
+      : DELIVERY_FINALE.runtime.destinationCityStartOffsetTexturePx;
+  }
+
+  private restoreRouteCity(): void {
+    const city = this.getCoherentCityLayer();
+    if (!city) {
+      return;
+    }
+
+    const currentOffset = city.sprite.tilePositionX;
+    city.sprite
+      .setTexture(city.spec.textureKey)
+      .setTileScale(city.spec.tileScale.x, city.spec.tileScale.y);
+    city.sprite.tilePositionX = currentOffset;
   }
 
   private animateEnvironment(delta: number, speedScale = 1): void {
@@ -764,17 +799,6 @@ export class GreyboxScene extends Phaser.Scene {
 
   private createDeliveryFinaleObjects(): void {
     const { anchors, depth, runtime } = DELIVERY_FINALE;
-    this.deliveryHouse = this.add
-      .image(
-        anchors.house.x + runtime.arrivalStartX,
-        anchors.house.y,
-        DELIVERY_ASSETS.house.textureKey,
-      )
-      .setOrigin(anchors.house.originX, anchors.house.originY)
-      .setScale(runtime.houseScale)
-      .setAlpha(0)
-      .setVisible(false)
-      .setDepth(depth.house);
     this.deliveryGirl = this.add
       .image(
         anchors.girl.x + runtime.arrivalStartX,
@@ -848,6 +872,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.laneTweenActive = false;
     this.tweens.killTweensOf(this.player);
     this.player.setAlpha(1).play(PLAYER_DRIVE_ANIMATION);
+    this.showDeliveryDestinationCity();
     this.startConfetti();
   }
 
@@ -924,10 +949,6 @@ export class GreyboxScene extends Phaser.Scene {
       scale: this.player.scaleX,
     };
     const { anchors, runtime } = DELIVERY_FINALE;
-    this.deliveryHouse
-      .setPosition(anchors.house.x + runtime.arrivalStartX, anchors.house.y)
-      .setAlpha(0)
-      .setVisible(true);
     this.deliveryGirl
       .setPosition(anchors.girl.x + runtime.arrivalStartX, anchors.girl.y)
       .setAlpha(0)
@@ -952,9 +973,6 @@ export class GreyboxScene extends Phaser.Scene {
 
     const { anchors, runtime } = DELIVERY_FINALE;
     const arrivalOffset = runtime.arrivalStartX * (1 - easedReveal);
-    this.deliveryHouse
-      .setX(anchors.house.x + arrivalOffset)
-      .setAlpha(easedReveal);
     this.deliveryGirl
       .setX(anchors.girl.x + arrivalOffset)
       .setAlpha(easedReveal);
@@ -982,20 +1000,6 @@ export class GreyboxScene extends Phaser.Scene {
         ),
       )
       .setDepth(RENDER_DEPTH.playerBase);
-
-    const city = this.environmentLayers.find(
-      ({ spec }) => spec.assetId === "ENV-004",
-    );
-    if (city) {
-      const fadeSpan =
-        runtime.cityFadeEndProgress - runtime.cityFadeStartProgress;
-      const fadeProgress = Phaser.Math.Clamp(
-        (revealProgress - runtime.cityFadeStartProgress) / fadeSpan,
-        0,
-        1,
-      );
-      city.sprite.setAlpha(1 - fadeProgress);
-    }
 
     if (revealProgress >= 1 && this.player.anims.isPlaying) {
       this.setEnvironmentMode("arrival-finite");
@@ -1037,7 +1041,10 @@ export class GreyboxScene extends Phaser.Scene {
 
     this.deliveryPhase = nextPhase;
     this.deliveryPhaseElapsedMs = 0;
-    this.deliveryCallout.setAlpha(0).setY(158).setVisible(true);
+    this.deliveryCallout
+      .setAlpha(0)
+      .setY(DELIVERY_FINALE.anchors.callout.y + 10)
+      .setVisible(true);
     this.deliveryClaim.setFrame(0).setScale(1).setAlpha(0).setVisible(true);
     this.tweens.add({
       targets: [this.deliveryCallout, this.deliveryClaim],
@@ -1222,13 +1229,13 @@ export class GreyboxScene extends Phaser.Scene {
     this.deliveryProduct?.destroy();
     this.deliveryProduct = null;
     this.clearConfetti();
-    this.deliveryHouse?.setVisible(false).setAlpha(0);
     this.deliveryGirl?.setVisible(false).setAlpha(0);
     this.deliveryCallout?.setVisible(false).setAlpha(1);
     this.deliveryClaim?.setVisible(false).setAlpha(1).setFrame(0).setScale(1);
     for (const layer of this.environmentLayers) {
       layer.sprite.setAlpha(1);
     }
+    this.restoreRouteCity();
     this.deliveryPhase = advanceDeliveryPresentationPhase(
       this.deliveryPhase,
       "reset",

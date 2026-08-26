@@ -1,0 +1,33 @@
+{
+  "assetId": "UI-016",
+  "version": "v4",
+  "status": "integrated",
+  "texture": "ui-016-delivery-callout-v4.png",
+  "canvas": {
+    "width": 332,
+    "height": 104
+  },
+  "runtimePosition": {
+    "x": 14,
+    "y": 350,
+    "originX": 0,
+    "originY": 0
+  },
+  "copy": "Большое спасибо! Теперь можешь забрать награду!",
+  "tailTarget": "CHR-001",
+  "tailPlacement": "UI-013 geometry reflected upward; continuous top join",
+  "visibleBottomAtRuntime": 454,
+  "production": {
+    "buildScript": "scripts/build_delivery_finale_ui_v4.py",
+    "geometryReference": "public/assets/game/ui/ui-013-intro-callout-v3.png",
+    "geometryReferenceSha256": "096d26a25d6cf381c559e83a8d7a36832aa2fa6e9680ee8136e0665808a24edb",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "phaserTextureFilter": "nearest",
+    "singleContinuousJoin": true,
+    "highlightCrossesTail": false,
+    "runtimeSha256": "69fa12d1317b25e394933265cbb242f2c3dac056420fbd9749e449b5bb5b4388"
+  }
+}

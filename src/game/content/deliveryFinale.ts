@@ -17,12 +17,6 @@ export type DeliveryPresentationEvent =
   | "reset";
 
 export interface ArrivalAnchors {
-  readonly house: Readonly<{
-    x: number;
-    y: number;
-    originX: number;
-    originY: number;
-  }>;
   readonly girl: Readonly<{
     x: number;
     y: number;
@@ -37,7 +31,7 @@ export interface ArrivalAnchors {
 }
 
 export interface DeliveryFinaleContent {
-  readonly version: "v1";
+  readonly version: "v2";
   readonly finishRoadDurationMs: number;
   readonly arrivalDecelerationMs: number;
   readonly arrivalRevealMs: number;
@@ -55,15 +49,13 @@ export interface DeliveryFinaleContent {
   }>;
   readonly anchors: ArrivalAnchors;
   readonly runtime: Readonly<{
-    houseScale: number;
     girlScale: number;
     productScale: number;
     arrivalStartX: number;
-    cityFadeStartProgress: number;
-    cityFadeEndProgress: number;
+    destinationCityStartOffsetTexturePx: number;
+    destinationCityReducedMotionOffsetTexturePx: number;
   }>;
   readonly depth: Readonly<{
-    house: number;
     girl: number;
     confetti: number;
     product: number;

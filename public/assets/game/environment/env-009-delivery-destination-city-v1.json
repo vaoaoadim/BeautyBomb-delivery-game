@@ -1,0 +1,59 @@
+{
+  "assetId": "ENV-009",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "env-009-delivery-destination-city-v1.png",
+  "canvas": {
+    "width": 2048,
+    "height": 512
+  },
+  "composition": "ENV-004 v8 city with DST-001 baked into one complete cyclic street-front lot",
+  "runtime": {
+    "tileScale": {
+      "x": 0.36,
+      "y": 0.55078125
+    },
+    "depth": 1,
+    "switchTrigger": "delivery progress complete",
+    "reducedMotionFinalOffsetTexturePx": 1134,
+    "expectedFinalHouseCenterX": 297.36
+  },
+  "production": {
+    "buildScript": "scripts/build_delivery_destination_city_v1.py",
+    "baseCity": "public/assets/game/environment/env-004-neighborhood-city-v8.png",
+    "baseCitySha256": "e888e436e39acf405e9ee0e8577c74d067e217ba2e03db8b6f08d0e1fdab3287",
+    "houseMaster": "visual-references/dst-001-arrival-house-master-v1.png",
+    "houseMasterSha256": "02477733bf24b931250bf4bb08730eb17a2c76e2a118521a18de942a9eae4386",
+    "houseSourceBox": [
+      57,
+      96,
+      1161,
+      1192
+    ],
+    "houseResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "cd56b8abe578991f3bd445246fd4bcde6f54936d3b5010a34e5748d31553aa02"
+  },
+  "lot": {
+    "wrappedTextureSegments": [
+      [
+        1805,
+        2048
+      ],
+      [
+        0,
+        68
+      ]
+    ],
+    "topTextureY": 309,
+    "sidewalkTopTextureY": 496,
+    "houseCenterTextureX": 1960,
+    "houseDisplaySize": {
+      "width": 112,
+      "height": 112
+    },
+    "sidewalkPreserved": true,
+    "independentHouseSprite": false
+  }
+}

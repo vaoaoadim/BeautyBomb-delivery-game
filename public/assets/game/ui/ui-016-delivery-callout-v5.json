@@ -1,0 +1,42 @@
+{
+  "assetId": "UI-016",
+  "version": "v5",
+  "status": "integrated",
+  "texture": "ui-016-delivery-callout-v5.png",
+  "canvas": {
+    "width": 332,
+    "height": 104
+  },
+  "runtimePosition": {
+    "x": 14,
+    "y": 338,
+    "originX": 0,
+    "originY": 0
+  },
+  "copy": "Большое спасибо! Теперь можешь забрать награду!",
+  "tailTarget": "CHR-001 v2",
+  "tailPointLocal": {
+    "x": 276,
+    "y": 0
+  },
+  "tailTargetRuntime": {
+    "x": 290,
+    "y": 324
+  },
+  "tailPlacement": "UI-013 geometry reflected upward; continuous top join",
+  "visibleBottomAtRuntime": 442,
+  "production": {
+    "buildScript": "scripts/build_delivery_finale_ui_v5.py",
+    "geometryReference": "public/assets/game/ui/ui-013-intro-callout-v3.png",
+    "geometryReferenceSha256": "096d26a25d6cf381c559e83a8d7a36832aa2fa6e9680ee8136e0665808a24edb",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "phaserTextureFilter": "nearest",
+    "singleContinuousJoin": true,
+    "highlightCrossesTail": false,
+    "pinkTailOutline": false,
+    "runtimeSha256": "6bc5d6d60a5b31f506b2e1f70fa36e0976ad1046705b86ce693178797f76a224"
+  }
+}

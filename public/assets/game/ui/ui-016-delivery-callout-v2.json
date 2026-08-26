@@ -1,0 +1,28 @@
+{
+  "assetId": "UI-016",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-016-delivery-callout-v2.png",
+  "canvas": {
+    "width": 332,
+    "height": 112
+  },
+  "runtimePosition": {
+    "x": 14,
+    "y": 378,
+    "originX": 0,
+    "originY": 0
+  },
+  "copy": "Большое спасибо! Теперь можешь забрать награду!",
+  "tailTarget": "CHR-001",
+  "tailPlacement": "top edge; points upward to the recipient",
+  "production": {
+    "buildScript": "scripts/build_delivery_finale_ui_v2.py",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "3bcd5d4f63cf30ccb4b809b5cc66607a5a3a43cf3f78fc9648786b02d9ae8a01"
+  }
+}
