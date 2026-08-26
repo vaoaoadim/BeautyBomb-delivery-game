@@ -1,0 +1,14 @@
+{
+  "assetId": "DST-001",
+  "version": "master-v1",
+  "status": "generated-master",
+  "source": "built-in image_gen; two-asset finale batch",
+  "canvas": {
+    "width": 1199,
+    "height": 1312
+  },
+  "sha256": "02477733bf24b931250bf4bb08730eb17a2c76e2a118521a18de942a9eae4386",
+  "promptSummary": "One small solitary pink premium pixel-art house with a compact yard, transparent background, no UI or characters.",
+  "transparentBackgroundRequested": true,
+  "licenseNote": "Original generated artwork for this independent portfolio concept."
+}

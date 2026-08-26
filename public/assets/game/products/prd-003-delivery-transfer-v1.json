@@ -1,0 +1,39 @@
+{
+  "assetId": "PRD-003",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "prd-003-delivery-transfer-v1.png",
+  "canvas": {
+    "width": 32,
+    "height": 64
+  },
+  "visibleBounds": {
+    "x": 5,
+    "y": 5,
+    "width": 22,
+    "height": 54
+  },
+  "orientation": "vertical; approved roof tube rotated clockwise",
+  "origin": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "runtimeScale": 1,
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-clean-concept-v7.png",
+    "designMasterSha256": "9803444fd2a084d6f3ea413ce4abdcc69ebebf0022ab1e5456bd73e1dc8b2408",
+    "sourceBox": [
+      270,
+      78,
+      1138,
+      432
+    ],
+    "buildScript": "scripts/build_delivery_product_v1.py",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "bb9a712b7024f40e681ba175890c91a34a713364606adaa80af8ea11173230c3",
+    "runtimeSource": "approved master; not screenshot or runtime sprite"
+  }
+}

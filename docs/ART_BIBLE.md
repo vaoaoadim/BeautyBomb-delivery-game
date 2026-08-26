@@ -198,9 +198,13 @@ Rules:
 
 ### Delivery and victory
 
-- Vehicle reaches a small house/storefront where a girl waits.
-- Arrival uses product-focused framing before the future roulette transition.
-- Victory palette shifts toward lavender, purple, pink, yellow, and white.
+- The 100% progress frame leads into a `1,500 ms` obstacle-free victory drive with bounded rectangular confetti in yellow, pink, cyan, violet, and white.
+- Dense `ENV-004` facades leave naturally during arrival; the sky and road remain, while generated `DST-001` appears once as a compact solitary pink house rather than a repeated tile.
+- Generated `CHR-001` is a full-body blonde recipient in a simple pink dress, placed separately from the house so its depth and product-receiving anchor remain controllable.
+- `UI-016` repeats the lavender/deep-violet/pink intro-cloud language and local Press Start 2P rasterization. Its copy is `Большое спасибо! Теперь можешь забрать награду!` and its tail targets the girl.
+- `UI-017` is a three-frame `<ЗАБРАТЬ>` sibling of `UI-014`, with the same yellow/pink/cyan order and restrained pulse.
+- `PRD-003` derives from the immutable clean courier master, rotates the same roof tube vertically, and follows a short arc to the girl's receiving anchor before disappearing.
+- Arrival uses product-focused framing before the future roulette transition. The victory palette shifts toward lavender, purple, pink, yellow, and white.
 
 ### Prize screen
 

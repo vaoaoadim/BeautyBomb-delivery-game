@@ -1,0 +1,40 @@
+{
+  "assetId": "CHR-001",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "chr-001-waiting-girl-v1.png",
+  "canvas": {
+    "width": 56,
+    "height": 88
+  },
+  "visibleBounds": {
+    "x": 12,
+    "y": 4,
+    "width": 31,
+    "height": 84
+  },
+  "runtimePlacement": {
+    "x": 205,
+    "y": 414,
+    "originX": 0.5,
+    "originY": 1
+  },
+  "production": {
+    "designMaster": "visual-references/chr-001-waiting-girl-master-v1.png",
+    "designMasterSha256": "c687fc7019c6a7af2662bc66e3094d9e71ae6942fb1642c44cac19cf08f3d57f",
+    "sourceBox": [
+      153,
+      19,
+      753,
+      1655
+    ],
+    "buildScript": "scripts/build_delivery_finale_assets_v1.py",
+    "alphaCleanup": "threshold existing alpha at 128; no RGB/chroma deletion",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeScale": 1,
+    "runtimeSha256": "06a018f103b6194a41437b3bb0affd6784147c66171a92eddaf44bdce2b1d957"
+  }
+}

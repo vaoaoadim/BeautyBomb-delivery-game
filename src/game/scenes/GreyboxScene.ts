@@ -19,6 +19,11 @@ import {
   type EnvironmentLayerSpec,
 } from "../content/environmentParallax";
 import {
+  advanceDeliveryPresentationPhase,
+  DELIVERY_FINALE,
+  type DeliveryPresentationPhase,
+} from "../content/deliveryFinale";
+import {
   advanceRun,
   createRunState,
   getRunProgress,
@@ -188,6 +193,31 @@ const PAUSE_ASSETS = Object.freeze({
   },
 });
 
+const DELIVERY_ASSETS = Object.freeze({
+  house: {
+    textureKey: "delivery-house-v1",
+    path: "/assets/game/environment/dst-001-arrival-house-v1.png",
+  },
+  girl: {
+    textureKey: "delivery-girl-v1",
+    path: "/assets/game/characters/chr-001-waiting-girl-v1.png",
+  },
+  callout: {
+    textureKey: "delivery-callout-v1",
+    path: "/assets/game/ui/ui-016-delivery-callout-v1.png",
+  },
+  claim: {
+    textureKey: "delivery-claim-v1",
+    path: "/assets/game/ui/ui-017-claim-v1.png",
+    frameWidth: 168,
+    frameHeight: 36,
+  },
+  product: {
+    textureKey: "delivery-product-v1",
+    path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
+  },
+});
+
 const RENDER_DEPTH = Object.freeze({
   environmentFront: 9,
   obstacleBase: 18,
@@ -271,9 +301,30 @@ export class GreyboxScene extends Phaser.Scene {
   private introPulseTween: Phaser.Tweens.Tween | null = null;
   private introTransitionTween: Phaser.Tweens.Tween | null = null;
   private introTransitionActive = false;
+  private deliveryPhase: DeliveryPresentationPhase = "inactive";
+  private deliveryPhaseElapsedMs = 0;
+  private arrivalPlayerStart: { x: number; y: number; scale: number } = {
+    x: PLAYER_X,
+    y: LANE_BASELINES[1],
+    scale: 1,
+  };
+  private deliveryHouse!: Phaser.GameObjects.Image;
+  private deliveryGirl!: Phaser.GameObjects.Image;
+  private deliveryCallout!: Phaser.GameObjects.Image;
+  private deliveryClaim!: Phaser.GameObjects.Sprite;
+  private deliveryProduct: Phaser.GameObjects.Image | null = null;
+  private deliveryClaimPulseTween: Phaser.Tweens.Tween | null = null;
+  private productTween: Phaser.Tweens.Tween | null = null;
+  private confettiPieces: Phaser.GameObjects.Rectangle[] = [];
+  private claimInputBound = false;
+  private rewardFlowInvoked = false;
 
   private readonly onIntroPointerDown = (): void => {
     this.beginIntroTransition();
+  };
+
+  private readonly onClaimPointerDown = (): void => {
+    this.beginProductTransfer();
   };
 
   private readonly onReducedMotionChange = (
@@ -357,6 +408,24 @@ export class GreyboxScene extends Phaser.Scene {
       PAUSE_ASSETS.callout.textureKey,
       PAUSE_ASSETS.callout.path,
     );
+    this.load.image(DELIVERY_ASSETS.house.textureKey, DELIVERY_ASSETS.house.path);
+    this.load.image(DELIVERY_ASSETS.girl.textureKey, DELIVERY_ASSETS.girl.path);
+    this.load.image(
+      DELIVERY_ASSETS.callout.textureKey,
+      DELIVERY_ASSETS.callout.path,
+    );
+    this.load.spritesheet(
+      DELIVERY_ASSETS.claim.textureKey,
+      DELIVERY_ASSETS.claim.path,
+      {
+        frameWidth: DELIVERY_ASSETS.claim.frameWidth,
+        frameHeight: DELIVERY_ASSETS.claim.frameHeight,
+      },
+    );
+    this.load.image(
+      DELIVERY_ASSETS.product.textureKey,
+      DELIVERY_ASSETS.product.path,
+    );
   }
 
   public create(): void {
@@ -366,6 +435,9 @@ export class GreyboxScene extends Phaser.Scene {
     this.displayedPhase = "ready";
     this.isPaused = false;
     this.environmentMode = ENVIRONMENT_PARALLAX.route.mode;
+    this.deliveryPhase = "inactive";
+    this.deliveryPhaseElapsedMs = 0;
+    this.rewardFlowInvoked = false;
     this.configureReducedMotion();
 
     this.cameras.main
@@ -400,6 +472,10 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
       PAUSE_ASSETS.callout.textureKey,
+      DELIVERY_ASSETS.house.textureKey,
+      DELIVERY_ASSETS.girl.textureKey,
+      DELIVERY_ASSETS.callout.textureKey,
+      DELIVERY_ASSETS.product.textureKey,
     ]) {
       this.textures
         .get(textureKey)
@@ -408,6 +484,9 @@ export class GreyboxScene extends Phaser.Scene {
     this.textures
       .get(INTRO_ASSETS.tap.textureKey)
       .setFilter(Phaser.Textures.FilterMode.LINEAR);
+    this.textures
+      .get(DELIVERY_ASSETS.claim.textureKey)
+      .setFilter(Phaser.Textures.FilterMode.LINEAR);
     this.ensurePlayerDriveAnimation();
     this.ensurePlayerIntroIdleAnimation();
     this.ensureObstacleDriveAnimations();
@@ -415,6 +494,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.createEnvironment();
     this.createHud();
     this.player = this.createPlayer();
+    this.createDeliveryFinaleObjects();
     this.createTouchControls();
     this.createUtilityControls();
     this.createIntroOverlay();
@@ -428,6 +508,8 @@ export class GreyboxScene extends Phaser.Scene {
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.unbindIntroPointerInput();
+      this.unbindClaimInput();
+      this.resetDeliveryFinale();
       this.stopIntroTransitionTween(false);
       this.stopIntroPulseTween(false);
       this.stopPlayerIntroIdleAnimation(false);
@@ -440,7 +522,16 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   public update(_time: number, delta: number): void {
-    if (this.runState.phase !== "playing" || this.isPaused) {
+    if (this.isPaused) {
+      return;
+    }
+
+    if (this.runState.phase === "delivered") {
+      this.updateDeliveryFinale(delta);
+      return;
+    }
+
+    if (this.runState.phase !== "playing") {
       return;
     }
 
@@ -487,14 +578,14 @@ export class GreyboxScene extends Phaser.Scene {
     });
   }
 
-  private animateEnvironment(delta: number): void {
+  private animateEnvironment(delta: number, speedScale = 1): void {
     for (const layer of this.environmentLayers) {
       const texturePixelsPerSecond =
         this.getEnvironmentTextureSpeed(layer.spec);
       layer.sprite.tilePositionX = advanceParallaxOffset({
         currentOffsetTexturePx: layer.sprite.tilePositionX,
         texturePixelsPerSecond,
-        deltaMs: delta,
+        deltaMs: delta * speedScale,
         mode: this.environmentMode,
         loopPeriodTexturePx: layer.spec.textureCanvas.width,
         arrivalEndOffsetTexturePx: layer.arrivalEndOffsetTexturePx,
@@ -669,6 +760,474 @@ export class GreyboxScene extends Phaser.Scene {
       .setOrigin(0.5, PLAYER_ASSET.originPixelY / PLAYER_ASSET.canvasHeight)
       .setScale(LANE_VISUAL_SCALES[lane] * PLAYER_ASSET.textureScale)
       .setDepth(RENDER_DEPTH.playerBase + lane);
+  }
+
+  private createDeliveryFinaleObjects(): void {
+    const { anchors, depth, runtime } = DELIVERY_FINALE;
+    this.deliveryHouse = this.add
+      .image(
+        anchors.house.x + runtime.arrivalStartX,
+        anchors.house.y,
+        DELIVERY_ASSETS.house.textureKey,
+      )
+      .setOrigin(anchors.house.originX, anchors.house.originY)
+      .setScale(runtime.houseScale)
+      .setAlpha(0)
+      .setVisible(false)
+      .setDepth(depth.house);
+    this.deliveryGirl = this.add
+      .image(
+        anchors.girl.x + runtime.arrivalStartX,
+        anchors.girl.y,
+        DELIVERY_ASSETS.girl.textureKey,
+      )
+      .setOrigin(anchors.girl.originX, anchors.girl.originY)
+      .setScale(runtime.girlScale)
+      .setAlpha(0)
+      .setVisible(false)
+      .setDepth(depth.girl);
+    this.deliveryCallout = this.add
+      .image(
+        anchors.callout.x,
+        anchors.callout.y,
+        DELIVERY_ASSETS.callout.textureKey,
+      )
+      .setOrigin(0, 0)
+      .setVisible(false)
+      .setDepth(depth.callout)
+      .setScrollFactor(0);
+    this.deliveryClaim = this.add
+      .sprite(
+        anchors.cta.x,
+        anchors.cta.y,
+        DELIVERY_ASSETS.claim.textureKey,
+        0,
+      )
+      .setOrigin(0.5)
+      .setVisible(false)
+      .setDepth(depth.cta)
+      .setScrollFactor(0);
+  }
+
+  private updateDeliveryFinale(delta: number): void {
+    if (this.deliveryPhase === "inactive") {
+      this.beginDeliveryFinale();
+      return;
+    }
+
+    this.deliveryPhaseElapsedMs += delta;
+    if (this.deliveryPhase === "finish-road") {
+      this.animateEnvironment(delta);
+      this.moveObstacles(delta);
+      const duration = this.prefersReducedMotion
+        ? DELIVERY_FINALE.reducedMotion.finishRoadDurationMs
+        : DELIVERY_FINALE.finishRoadDurationMs;
+      if (this.deliveryPhaseElapsedMs >= duration) {
+        this.beginArrivalTransition();
+      }
+      return;
+    }
+
+    if (this.deliveryPhase === "arrival-transition") {
+      this.updateArrivalTransition(delta);
+    }
+  }
+
+  private beginDeliveryFinale(): void {
+    const nextPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "progress-complete",
+    );
+    if (nextPhase === this.deliveryPhase) {
+      return;
+    }
+
+    this.deliveryPhase = nextPhase;
+    this.deliveryPhaseElapsedMs = 0;
+    this.bufferedDirection = null;
+    this.laneTweenActive = false;
+    this.tweens.killTweensOf(this.player);
+    this.player.setAlpha(1).play(PLAYER_DRIVE_ANIMATION);
+    this.startConfetti();
+  }
+
+  private startConfetti(): void {
+    if (this.confettiPieces.length > 0) {
+      return;
+    }
+
+    const count = this.prefersReducedMotion
+      ? DELIVERY_FINALE.reducedMotion.confettiCount
+      : DELIVERY_FINALE.confetti.count;
+    const colors = DELIVERY_FINALE.confetti.colors;
+    for (let index = 0; index < count; index += 1) {
+      const source = index % 3;
+      const startX =
+        source === 0
+          ? (index * 47) % GAME_VIEWPORT.width
+          : source === 1
+            ? -4
+            : GAME_VIEWPORT.width + 4;
+      const startY = source === 0 ? -8 - (index % 6) * 8 : 150 + (index * 31) % 220;
+      const width = index % 2 === 0 ? 4 : 6;
+      const height = index % 3 === 0 ? 3 : 5;
+      const piece = this.add
+        .rectangle(startX, startY, width, height, colors[index % colors.length]!, 1)
+        .setDepth(DELIVERY_FINALE.depth.confetti)
+        .setScrollFactor(0);
+      this.confettiPieces.push(piece);
+
+      const targetX = Phaser.Math.Clamp(
+        source === 1
+          ? 70 + (index * 23) % 250
+          : source === 2
+            ? 290 - (index * 19) % 250
+            : startX + ((index % 5) - 2) * 18,
+        4,
+        GAME_VIEWPORT.width - 4,
+      );
+      this.tweens.add({
+        targets: piece,
+        x: targetX,
+        y: GAME_VIEWPORT.height * 0.76 + (index % 7) * 9,
+        angle: this.prefersReducedMotion ? 0 : (index % 2 === 0 ? 220 : -220),
+        duration: Math.max(
+          550,
+          DELIVERY_FINALE.confetti.durationMs - (index % 5) * 90,
+        ),
+        delay: (index % 8) * 35,
+        ease: "Quad.In",
+        onComplete: () => {
+          piece.destroy();
+          this.confettiPieces = this.confettiPieces.filter(
+            (candidate) => candidate !== piece,
+          );
+        },
+      });
+    }
+  }
+
+  private beginArrivalTransition(): void {
+    const nextPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "finish-road-complete",
+    );
+    if (nextPhase === this.deliveryPhase) {
+      return;
+    }
+
+    this.deliveryPhase = nextPhase;
+    this.deliveryPhaseElapsedMs = 0;
+    this.arrivalPlayerStart = {
+      x: this.player.x,
+      y: this.player.y,
+      scale: this.player.scaleX,
+    };
+    const { anchors, runtime } = DELIVERY_FINALE;
+    this.deliveryHouse
+      .setPosition(anchors.house.x + runtime.arrivalStartX, anchors.house.y)
+      .setAlpha(0)
+      .setVisible(true);
+    this.deliveryGirl
+      .setPosition(anchors.girl.x + runtime.arrivalStartX, anchors.girl.y)
+      .setAlpha(0)
+      .setVisible(true);
+  }
+
+  private updateArrivalTransition(delta: number): void {
+    const revealProgress = Phaser.Math.Clamp(
+      this.deliveryPhaseElapsedMs / DELIVERY_FINALE.arrivalRevealMs,
+      0,
+      1,
+    );
+    const decelerationProgress = Phaser.Math.Clamp(
+      this.deliveryPhaseElapsedMs / DELIVERY_FINALE.arrivalDecelerationMs,
+      0,
+      1,
+    );
+    const easedReveal = 1 - (1 - revealProgress) ** 3;
+    const speedScale = (1 - decelerationProgress) ** 2;
+    this.animateEnvironment(delta, speedScale);
+    this.moveObstacles(delta * speedScale);
+
+    const { anchors, runtime } = DELIVERY_FINALE;
+    const arrivalOffset = runtime.arrivalStartX * (1 - easedReveal);
+    this.deliveryHouse
+      .setX(anchors.house.x + arrivalOffset)
+      .setAlpha(easedReveal);
+    this.deliveryGirl
+      .setX(anchors.girl.x + arrivalOffset)
+      .setAlpha(easedReveal);
+
+    const finalPlayerScale =
+      LANE_VISUAL_SCALES[0] * PLAYER_ASSET.textureScale;
+    this.player
+      .setPosition(
+        Phaser.Math.Linear(
+          this.arrivalPlayerStart.x,
+          anchors.vehicleStop.x,
+          easedReveal,
+        ),
+        Phaser.Math.Linear(
+          this.arrivalPlayerStart.y,
+          anchors.vehicleStop.y,
+          easedReveal,
+        ),
+      )
+      .setScale(
+        Phaser.Math.Linear(
+          this.arrivalPlayerStart.scale,
+          finalPlayerScale,
+          easedReveal,
+        ),
+      )
+      .setDepth(RENDER_DEPTH.playerBase);
+
+    const city = this.environmentLayers.find(
+      ({ spec }) => spec.assetId === "ENV-004",
+    );
+    if (city) {
+      const fadeSpan =
+        runtime.cityFadeEndProgress - runtime.cityFadeStartProgress;
+      const fadeProgress = Phaser.Math.Clamp(
+        (revealProgress - runtime.cityFadeStartProgress) / fadeSpan,
+        0,
+        1,
+      );
+      city.sprite.setAlpha(1 - fadeProgress);
+    }
+
+    if (revealProgress >= 1 && this.player.anims.isPlaying) {
+      this.setEnvironmentMode("arrival-finite");
+      this.player.stop().setFrame(0);
+      this.clearObstacles();
+    }
+
+    if (
+      this.deliveryPhaseElapsedMs >=
+      DELIVERY_FINALE.arrivalRevealMs + DELIVERY_FINALE.rewardPromptDelayMs
+    ) {
+      this.showDeliveryRewardPrompt();
+    }
+  }
+
+  private showDeliveryRewardPrompt(): void {
+    const nextPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "arrival-complete",
+    );
+    if (nextPhase === this.deliveryPhase) {
+      return;
+    }
+
+    this.deliveryPhase = nextPhase;
+    this.deliveryPhaseElapsedMs = 0;
+    this.setUtilityControlsVisible(false);
+    this.deliveryCallout.setAlpha(0).setY(158).setVisible(true);
+    this.deliveryClaim.setFrame(0).setScale(1).setAlpha(0).setVisible(true);
+    this.tweens.add({
+      targets: [this.deliveryCallout, this.deliveryClaim],
+      alpha: 1,
+      duration: 180,
+      ease: "Sine.Out",
+    });
+    this.tweens.add({
+      targets: this.deliveryCallout,
+      y: DELIVERY_FINALE.anchors.callout.y,
+      duration: 180,
+      ease: "Sine.Out",
+    });
+    this.startDeliveryClaimPulse();
+    this.bindClaimInput();
+  }
+
+  private startDeliveryClaimPulse(): void {
+    if (this.prefersReducedMotion || this.deliveryClaimPulseTween) {
+      return;
+    }
+    this.deliveryClaimPulseTween = this.tweens.add({
+      targets: this.deliveryClaim,
+      scaleX: 1.06,
+      scaleY: 1.06,
+      duration: 500,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.InOut",
+    });
+  }
+
+  private stopDeliveryClaimPulse(): void {
+    this.deliveryClaimPulseTween?.stop();
+    this.deliveryClaimPulseTween = null;
+    this.deliveryClaim.setScale(1);
+  }
+
+  private bindClaimInput(): void {
+    if (this.claimInputBound) {
+      return;
+    }
+    this.claimInputBound = true;
+    this.input.on("pointerdown", this.onClaimPointerDown, this);
+  }
+
+  private unbindClaimInput(): void {
+    if (!this.claimInputBound) {
+      return;
+    }
+    this.claimInputBound = false;
+    this.input.off("pointerdown", this.onClaimPointerDown, this);
+  }
+
+  private beginProductTransfer(): void {
+    const nextPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "claim",
+    );
+    if (nextPhase === this.deliveryPhase || this.isPaused) {
+      return;
+    }
+
+    this.deliveryPhase = nextPhase;
+    this.deliveryPhaseElapsedMs = 0;
+    this.unbindClaimInput();
+    this.stopDeliveryClaimPulse();
+    const colorPhase = { value: 0 };
+    this.tweens.add({
+      targets: colorPhase,
+      value: 3,
+      duration: 330,
+      ease: "Linear",
+      onUpdate: () => {
+        this.deliveryClaim.setFrame(
+          Math.min(2, Math.floor(colorPhase.value)),
+        );
+      },
+      onComplete: () => {
+        this.deliveryClaim.setVisible(false);
+        this.startProductFlight();
+      },
+    });
+  }
+
+  private startProductFlight(): void {
+    const { anchors, depth, runtime } = DELIVERY_FINALE;
+    this.deliveryProduct?.destroy();
+    this.deliveryProduct = this.add
+      .image(
+        anchors.productStart.x,
+        anchors.productStart.y,
+        DELIVERY_ASSETS.product.textureKey,
+      )
+      .setOrigin(0.5)
+      .setScale(runtime.productScale)
+      .setDepth(depth.product)
+      .setScrollFactor(0);
+
+    const control = {
+      x: (anchors.productStart.x + anchors.productTarget.x) / 2,
+      y: Math.min(anchors.productStart.y, anchors.productTarget.y) - 58,
+    };
+    const flight = { progress: 0 };
+    this.productTween = this.tweens.add({
+      targets: flight,
+      progress: 1,
+      duration: DELIVERY_FINALE.productFlightDurationMs,
+      ease: "Sine.InOut",
+      onUpdate: () => {
+        if (!this.deliveryProduct) {
+          return;
+        }
+        const progress = flight.progress;
+        const inverse = 1 - progress;
+        this.deliveryProduct
+          .setPosition(
+            inverse * inverse * anchors.productStart.x +
+              2 * inverse * progress * control.x +
+              progress * progress * anchors.productTarget.x,
+            inverse * inverse * anchors.productStart.y +
+              2 * inverse * progress * control.y +
+              progress * progress * anchors.productTarget.y,
+          )
+          .setAngle(
+            this.prefersReducedMotion ? 0 : Math.sin(progress * Math.PI) * 5,
+          );
+      },
+      onComplete: () => {
+        this.productTween = null;
+        this.completeProductFlight();
+      },
+    });
+  }
+
+  private completeProductFlight(): void {
+    if (!this.deliveryProduct) {
+      return;
+    }
+    this.tweens.add({
+      targets: this.deliveryProduct,
+      scaleX: 0.2,
+      scaleY: 0.2,
+      alpha: 0,
+      duration: DELIVERY_FINALE.productDisappearDurationMs,
+      ease: "Sine.In",
+      onComplete: () => {
+        this.deliveryProduct?.destroy();
+        this.deliveryProduct = null;
+        const nextPhase = advanceDeliveryPresentationPhase(
+          this.deliveryPhase,
+          "product-transfer-complete",
+        );
+        if (nextPhase === this.deliveryPhase) {
+          return;
+        }
+        this.deliveryPhase = nextPhase;
+        this.invokeExistingRewardFlow();
+      },
+    });
+  }
+
+  private invokeExistingRewardFlow(): void {
+    if (this.rewardFlowInvoked) {
+      return;
+    }
+    this.rewardFlowInvoked = true;
+    this.deliveryCallout.setVisible(false);
+    this.deliveryClaim.setVisible(false);
+    this.promptTitle.setText("ORDER DELIVERED!");
+    this.promptBody.setText("Greybox route complete.\nPrize roulette comes later.");
+    this.promptButton.setText("PLAY AGAIN");
+    this.promptOverlay.setVisible(true);
+  }
+
+  private clearConfetti(): void {
+    for (const piece of this.confettiPieces) {
+      this.tweens.killTweensOf(piece);
+      piece.destroy();
+    }
+    this.confettiPieces = [];
+  }
+
+  private resetDeliveryFinale(): void {
+    this.unbindClaimInput();
+    this.stopDeliveryClaimPulse();
+    this.productTween?.stop();
+    this.productTween = null;
+    this.deliveryProduct?.destroy();
+    this.deliveryProduct = null;
+    this.clearConfetti();
+    this.deliveryHouse?.setVisible(false).setAlpha(0);
+    this.deliveryGirl?.setVisible(false).setAlpha(0);
+    this.deliveryCallout?.setVisible(false).setAlpha(1);
+    this.deliveryClaim?.setVisible(false).setAlpha(1).setFrame(0).setScale(1);
+    for (const layer of this.environmentLayers) {
+      layer.sprite.setAlpha(1);
+    }
+    this.deliveryPhase = advanceDeliveryPresentationPhase(
+      this.deliveryPhase,
+      "reset",
+    );
+    this.deliveryPhaseElapsedMs = 0;
+    this.rewardFlowInvoked = false;
   }
 
   private createTouchControls(): void {
@@ -1072,9 +1631,20 @@ export class GreyboxScene extends Phaser.Scene {
       return;
     }
 
+    if (this.deliveryPhase === "reward-prompt") {
+      this.beginProductTransfer();
+      return;
+    }
+
+    if (this.runState.phase === "defeated") {
+      this.resetRun();
+      return;
+    }
+
     if (
-      this.runState.phase === "defeated" ||
-      this.runState.phase === "delivered"
+      this.runState.phase === "delivered" &&
+      this.deliveryPhase === "complete" &&
+      this.rewardFlowInvoked
     ) {
       this.resetRun();
     }
@@ -1244,15 +1814,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.displayedPhase = phase;
 
     if (phase === "delivered") {
-      this.setUtilityControlsVisible(false);
-      this.setEnvironmentMode("arrival-finite");
-      this.player.stop();
-      this.player.setFrame(0);
-      this.clearObstacles();
-      this.promptTitle.setText("ORDER DELIVERED!");
-      this.promptBody.setText("Greybox route complete.\nPrize roulette comes later.");
-      this.promptButton.setText("PLAY AGAIN");
-      this.promptOverlay.setVisible(true);
+      this.beginDeliveryFinale();
     } else if (phase === "defeated") {
       this.setUtilityControlsVisible(false);
       this.player.stop();
@@ -1272,6 +1834,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.tweens.killTweensOf(this.player);
     this.playerIntroIdleAnimationActive = false;
     this.clearObstacles();
+    this.resetDeliveryFinale();
     this.runState = retryRun(this.runState);
     this.nextObstacleIndex = 0;
     this.laneTweenActive = false;
@@ -1292,7 +1855,7 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private togglePause(): void {
-    if (this.runState.phase !== "playing") {
+    if (!this.canPause()) {
       return;
     }
     if (this.isPaused) {
@@ -1303,7 +1866,7 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private pauseRun(): void {
-    if (this.runState.phase !== "playing" || this.isPaused) {
+    if (!this.canPause() || this.isPaused) {
       return;
     }
     this.isPaused = true;
@@ -1326,6 +1889,15 @@ export class GreyboxScene extends Phaser.Scene {
     for (const obstacle of this.obstacles) {
       obstacle.sprite.anims.resume();
     }
+  }
+
+  private canPause(): boolean {
+    return (
+      this.runState.phase === "playing" ||
+      this.deliveryPhase === "finish-road" ||
+      this.deliveryPhase === "arrival-transition" ||
+      this.deliveryPhase === "reward-prompt"
+    );
   }
 
   private restartPausedRun(): void {

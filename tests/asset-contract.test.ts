@@ -27,6 +27,11 @@ import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.js
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
 import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.json";
 import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v2.json";
+import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-callout-v1.json";
+import deliveryClaimMetadata from "../public/assets/game/ui/ui-017-claim-v1.json";
+import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
+import deliveryGirlMetadata from "../public/assets/game/characters/chr-001-waiting-girl-v1.json";
+import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v1.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
 
@@ -507,5 +512,52 @@ describe("approved-master asset contract", () => {
       },
     });
     expect(pauseCalloutMetadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
+  });
+
+  it("keeps the delivery finale on versioned one-resize asset contracts", () => {
+    for (const metadata of [deliveryHouseMetadata, deliveryGirlMetadata]) {
+      expect(metadata.status).toBe("integrated");
+      expect(metadata.production).toMatchObject({
+        buildScript: "scripts/build_delivery_finale_assets_v1.py",
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
+      });
+      expect(metadata.production.designMasterSha256).toMatch(/^[a-f0-9]{64}$/);
+      expect(metadata.production.runtimeSha256).toMatch(/^[a-f0-9]{64}$/);
+    }
+
+    expect(deliveryProductMetadata).toMatchObject({
+      assetId: "PRD-003",
+      canvas: { width: 32, height: 64 },
+      orientation: "vertical; approved roof tube rotated clockwise",
+      production: {
+        designMaster: "visual-references/veh-001-courier-clean-concept-v7.png",
+        buildScript: "scripts/build_delivery_product_v1.py",
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        phaserTextureFilter: "nearest",
+        runtimeSource: "approved master; not screenshot or runtime sprite",
+      },
+    });
+
+    expect(deliveryCalloutMetadata).toMatchObject({
+      assetId: "UI-016",
+      canvas: { width: 332, height: 132 },
+      copy: "Большое спасибо! Теперь можешь забрать награду!",
+      tailTarget: "CHR-001",
+      production: {
+        offlineResizeCount: 0,
+        antialiasing: false,
+        phaserTextureFilter: "nearest",
+      },
+    });
+    expect(deliveryClaimMetadata).toMatchObject({
+      assetId: "UI-017",
+      frame: { width: 168, height: 36, count: 3 },
+      runtimeCenter: { x: 180, y: 306 },
+      input: ["pointer-anywhere", "Enter", "Space"],
+    });
   });
 });

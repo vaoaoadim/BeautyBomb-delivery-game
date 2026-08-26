@@ -25,6 +25,7 @@ export const TRAFFIC_SAFETY_WINDOW_MS = 1_200;
 export const TRAFFIC_MAX_FORMATION_STAGGER_MS = 200;
 export const CONVOY_SPAWN_GAP_MS = 933;
 export const TRAFFIC_MIN_VISUAL_GAP_PX = 48;
+export const TRAFFIC_FINISH_CLEARANCE_MS = 3_200;
 
 export interface ObstacleSpawn {
   readonly id: number;
@@ -201,13 +202,13 @@ export function createTrafficSchedule(
   let spawnId = 0;
   let groupAtMs = firstGroupAtMs;
 
-  while (groupAtMs < durationMs - 1_000) {
+  while (groupAtMs < durationMs - TRAFFIC_FINISH_CLEARANCE_MS) {
     const template = TRAFFIC_TEMPLATES[groupId % TRAFFIC_TEMPLATES.length]!;
     const rotation = Math.floor(groupId / TRAFFIC_TEMPLATES.length) % 3;
 
     for (const obstacle of template.obstacles) {
       const spawnAtMs = groupAtMs + obstacle.offsetMs;
-      if (spawnAtMs >= durationMs - 700) {
+      if (spawnAtMs >= durationMs - TRAFFIC_FINISH_CLEARANCE_MS) {
         continue;
       }
 

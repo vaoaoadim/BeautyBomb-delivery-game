@@ -4,6 +4,7 @@ import {
   createTrafficSchedule,
   getSameLaneVisibleGapPx,
   TRAFFIC_MAX_FORMATION_STAGGER_MS,
+  TRAFFIC_FINISH_CLEARANCE_MS,
   TRAFFIC_MIN_VISUAL_GAP_PX,
   TRAFFIC_SAFETY_WINDOW_MS,
   type ObstacleSpawn,
@@ -209,5 +210,15 @@ describe("deterministic traffic schedule", () => {
     );
 
     expect(new Set(intervals).size).toBeGreaterThan(5);
+  });
+
+  it("leaves enough time for the final obstacle to exit before delivery", () => {
+    const schedule = createTrafficSchedule(GAMEPLAY_RULES.greyboxRunDurationMs);
+    const lastObstacle = schedule.at(-1);
+
+    expect(lastObstacle).toBeDefined();
+    expect(lastObstacle!.spawnAtMs).toBeLessThanOrEqual(
+      GAMEPLAY_RULES.greyboxRunDurationMs - TRAFFIC_FINISH_CLEARANCE_MS,
+    );
   });
 });

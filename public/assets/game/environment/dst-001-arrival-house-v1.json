@@ -1,0 +1,40 @@
+{
+  "assetId": "DST-001",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "dst-001-arrival-house-v1.png",
+  "canvas": {
+    "width": 176,
+    "height": 176
+  },
+  "visibleBounds": {
+    "x": 4,
+    "y": 9,
+    "width": 168,
+    "height": 167
+  },
+  "runtimePlacement": {
+    "x": 270,
+    "y": 292,
+    "originX": 0.5,
+    "originY": 1
+  },
+  "production": {
+    "designMaster": "visual-references/dst-001-arrival-house-master-v1.png",
+    "designMasterSha256": "02477733bf24b931250bf4bb08730eb17a2c76e2a118521a18de942a9eae4386",
+    "sourceBox": [
+      57,
+      96,
+      1161,
+      1192
+    ],
+    "buildScript": "scripts/build_delivery_finale_assets_v1.py",
+    "alphaCleanup": "threshold existing alpha at 128; no RGB/chroma deletion",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeScale": 1,
+    "runtimeSha256": "a22eb23698cb3bfa230f28545705580e06718287fa7fbc4fd65b823618cf132c"
+  }
+}

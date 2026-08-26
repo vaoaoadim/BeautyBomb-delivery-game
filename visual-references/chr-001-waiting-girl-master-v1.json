@@ -1,0 +1,14 @@
+{
+  "assetId": "CHR-001",
+  "version": "master-v1",
+  "status": "generated-master",
+  "source": "built-in image_gen; two-asset finale batch",
+  "canvas": {
+    "width": 941,
+    "height": 1672
+  },
+  "sha256": "c687fc7019c6a7af2662bc66e3094d9e71ae6942fb1642c44cac19cf08f3d57f",
+  "promptSummary": "One full-body friendly blonde girl in a simple pink dress, turned slightly left, transparent background, empty hands.",
+  "transparentBackgroundRequested": true,
+  "licenseNote": "Original generated artwork for this independent portfolio concept."
+}

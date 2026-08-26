@@ -1,0 +1,29 @@
+{
+  "assetId": "UI-017",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "ui-017-claim-v1.png",
+  "frame": {
+    "width": 168,
+    "height": 36,
+    "count": 3
+  },
+  "runtimeCenter": {
+    "x": 180,
+    "y": 306
+  },
+  "input": [
+    "pointer-anywhere",
+    "Enter",
+    "Space"
+  ],
+  "production": {
+    "buildScript": "scripts/build_delivery_finale_ui_v1.py",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "7dc6e2fb50e41e19e1d226779b6a7908c2f44df63e7ea95edbb2ab10f5d5200d"
+  }
+}
