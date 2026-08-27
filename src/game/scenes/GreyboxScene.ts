@@ -1133,11 +1133,15 @@ export class GreyboxScene extends Phaser.Scene {
 
   private startProductFlight(): void {
     const { anchors, depth, runtime } = DELIVERY_FINALE;
+    const productStart = {
+      x: this.player.x + anchors.productStartOffset.x,
+      y: this.player.y + anchors.productStartOffset.y,
+    };
     this.deliveryProduct?.destroy();
     this.deliveryProduct = this.add
       .image(
-        anchors.productStart.x,
-        anchors.productStart.y,
+        productStart.x,
+        productStart.y,
         DELIVERY_ASSETS.product.textureKey,
       )
       .setOrigin(0.5)
@@ -1146,8 +1150,8 @@ export class GreyboxScene extends Phaser.Scene {
       .setScrollFactor(0);
 
     const control = {
-      x: (anchors.productStart.x + anchors.productTarget.x) / 2,
-      y: Math.min(anchors.productStart.y, anchors.productTarget.y) - 58,
+      x: (productStart.x + anchors.productTarget.x) / 2,
+      y: Math.min(productStart.y, anchors.productTarget.y) - 58,
     };
     const flight = { progress: 0 };
     this.productTween = this.tweens.add({
@@ -1163,10 +1167,10 @@ export class GreyboxScene extends Phaser.Scene {
         const inverse = 1 - progress;
         this.deliveryProduct
           .setPosition(
-            inverse * inverse * anchors.productStart.x +
+            inverse * inverse * productStart.x +
               2 * inverse * progress * control.x +
               progress * progress * anchors.productTarget.x,
-            inverse * inverse * anchors.productStart.y +
+            inverse * inverse * productStart.y +
               2 * inverse * progress * control.y +
               progress * progress * anchors.productTarget.y,
           )

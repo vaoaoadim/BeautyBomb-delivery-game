@@ -17,10 +17,10 @@
   },
   "anchors": {
     "girl": { "x": 290, "y": 324, "originX": 0.5, "originY": 1 },
-    "vehicleStop": { "x": 74, "y": 350 },
+    "vehicleStop": { "x": 74, "y": 322 },
     "callout": { "x": 14, "y": 338 },
     "cta": { "x": 180, "y": 466 },
-    "productStart": { "x": 70, "y": 286 },
+    "productStartOffset": { "x": -4, "y": -64 },
     "productTarget": { "x": 290, "y": 302 }
   },
   "runtime": {

@@ -14,6 +14,14 @@ describe("delivery finale presentation", () => {
     expect(DELIVERY_FINALE.finishRoadDurationMs).toBeLessThanOrEqual(2_000);
   });
 
+  it("parks on the upper road edge and keeps the product start local to the van", () => {
+    expect(DELIVERY_FINALE.anchors.vehicleStop).toEqual({ x: 74, y: 322 });
+    expect(DELIVERY_FINALE.anchors.productStartOffset).toEqual({
+      x: -4,
+      y: -64,
+    });
+  });
+
   it("keeps the recipient and lower reward UI on their approved finale anchors", () => {
     expect(DELIVERY_FINALE.anchors).toMatchObject({
       girl: { x: 290, y: 324 },

@@ -26,7 +26,7 @@ export interface ArrivalAnchors {
   readonly vehicleStop: Readonly<{ x: number; y: number }>;
   readonly callout: Readonly<{ x: number; y: number }>;
   readonly cta: Readonly<{ x: number; y: number }>;
-  readonly productStart: Readonly<{ x: number; y: number }>;
+  readonly productStartOffset: Readonly<{ x: number; y: number }>;
   readonly productTarget: Readonly<{ x: number; y: number }>;
 }
 
