@@ -1,11 +1,16 @@
 {
-  "version": "v3",
+  "version": "v4",
   "finishRoadDurationMs": 1500,
   "arrivalDecelerationMs": 600,
   "arrivalRevealMs": 700,
   "rewardPromptDelayMs": 250,
   "productFlightDurationMs": 900,
   "productDisappearDurationMs": 180,
+  "arrivalFade": {
+    "fadeOutMs": 600,
+    "coveredHoldMs": 100,
+    "fadeInMs": 680
+  },
   "reducedMotion": {
     "finishRoadDurationMs": 900,
     "confettiCount": 18

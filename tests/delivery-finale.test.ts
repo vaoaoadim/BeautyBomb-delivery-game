@@ -14,6 +14,14 @@ describe("delivery finale presentation", () => {
     expect(DELIVERY_FINALE.finishRoadDurationMs).toBeLessThanOrEqual(2_000);
   });
 
+  it("uses one soft state-machine-owned fade to hide the finale panorama switch", () => {
+    expect(DELIVERY_FINALE.arrivalFade).toEqual({
+      fadeOutMs: 600,
+      coveredHoldMs: 100,
+      fadeInMs: 680,
+    });
+  });
+
   it("parks on the upper road edge and keeps the product start local to the van", () => {
     expect(DELIVERY_FINALE.anchors.vehicleStop).toEqual({ x: 74, y: 322 });
     expect(DELIVERY_FINALE.anchors.productStartOffset).toEqual({
@@ -48,12 +56,14 @@ describe("delivery finale presentation", () => {
     const events: readonly DeliveryPresentationEvent[] = [
       "progress-complete",
       "finish-road-complete",
+      "arrival-fade-complete",
       "arrival-complete",
       "product-transfer-complete",
       "claim",
     ];
     const expected: readonly DeliveryPresentationPhase[] = [
       "finish-road",
+      "arrival-fade",
       "arrival-transition",
       "product-transfer",
       "reward-prompt",
@@ -74,6 +84,9 @@ describe("delivery finale presentation", () => {
     expect(
       advanceDeliveryPresentationPhase("arrival-transition", "claim"),
     ).toBe("arrival-transition");
+    expect(
+      advanceDeliveryPresentationPhase("arrival-fade", "arrival-complete"),
+    ).toBe("arrival-fade");
     expect(
       advanceDeliveryPresentationPhase("product-transfer", "claim"),
     ).toBe("product-transfer");
