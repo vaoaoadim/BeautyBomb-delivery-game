@@ -228,6 +228,12 @@ const RENDER_DEPTH = Object.freeze({
   overlay: 100,
 });
 
+const FINALE_FADE_TIMING = Object.freeze({
+  fadeOutMs: 220,
+  coveredHoldMs: 40,
+  fadeInMs: 260,
+});
+
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
   "pink-hatchback": {
     textureKey: "obstacle-pink-hatchback",
@@ -315,6 +321,10 @@ export class GreyboxScene extends Phaser.Scene {
   private deliveryClaimPulseTween: Phaser.Tweens.Tween | null = null;
   private productTween: Phaser.Tweens.Tween | null = null;
   private confettiPieces: Phaser.GameObjects.Rectangle[] = [];
+  private finaleFadeOverlay!: Phaser.GameObjects.Rectangle;
+  private finaleFadeTween: Phaser.Tweens.Tween | null = null;
+  private finaleFadeHoldTimer: Phaser.Time.TimerEvent | null = null;
+  private finaleFadeActive = false;
   private claimInputBound = false;
   private rewardFlowInvoked = false;
 
@@ -502,6 +512,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.createIntroOverlay();
     this.createOutcomeOverlay();
     this.createPauseOverlay();
+    this.createFinaleFadeOverlay();
     this.bindKeyboard();
     this.bindIntroPointerInput();
     this.updateHud();
@@ -833,9 +844,30 @@ export class GreyboxScene extends Phaser.Scene {
       .setScrollFactor(0);
   }
 
+  private createFinaleFadeOverlay(): void {
+    this.finaleFadeOverlay = this.add
+      .rectangle(
+        0,
+        0,
+        GAME_VIEWPORT.width,
+        GAME_VIEWPORT.height,
+        0x000000,
+        1,
+      )
+      .setOrigin(0, 0)
+      .setAlpha(0)
+      .setVisible(false)
+      .setDepth(RENDER_DEPTH.overlay + 11)
+      .setScrollFactor(0);
+  }
+
   private updateDeliveryFinale(delta: number): void {
     if (this.deliveryPhase === "inactive") {
       this.beginDeliveryFinale();
+      return;
+    }
+
+    if (this.finaleFadeActive) {
       return;
     }
 
@@ -872,8 +904,65 @@ export class GreyboxScene extends Phaser.Scene {
     this.laneTweenActive = false;
     this.tweens.killTweensOf(this.player);
     this.player.setAlpha(1).play(PLAYER_DRIVE_ANIMATION);
-    this.showDeliveryDestinationCity();
-    this.startConfetti();
+    this.beginFinaleFade();
+  }
+
+  private beginFinaleFade(): void {
+    if (this.finaleFadeActive) {
+      return;
+    }
+
+    this.finaleFadeActive = true;
+    this.finaleFadeOverlay.setVisible(true).setAlpha(0);
+    this.finaleFadeTween = this.tweens.add({
+      targets: this.finaleFadeOverlay,
+      alpha: 1,
+      duration: FINALE_FADE_TIMING.fadeOutMs,
+      ease: "Sine.InOut",
+      onComplete: () => {
+        this.finaleFadeTween = null;
+        if (!this.finaleFadeActive) {
+          return;
+        }
+
+        this.showDeliveryDestinationCity();
+        this.finaleFadeHoldTimer = this.time.delayedCall(
+          FINALE_FADE_TIMING.coveredHoldMs,
+          () => {
+            this.finaleFadeHoldTimer = null;
+            if (!this.finaleFadeActive) {
+              return;
+            }
+
+            this.finaleFadeTween = this.tweens.add({
+              targets: this.finaleFadeOverlay,
+              alpha: 0,
+              duration: FINALE_FADE_TIMING.fadeInMs,
+              ease: "Sine.InOut",
+              onComplete: () => {
+                this.finaleFadeTween = null;
+                if (!this.finaleFadeActive) {
+                  return;
+                }
+
+                this.finaleFadeOverlay.setAlpha(0).setVisible(false);
+                this.finaleFadeActive = false;
+                this.startConfetti();
+              },
+            });
+          },
+        );
+      },
+    });
+  }
+
+  private resetFinaleFade(): void {
+    this.finaleFadeActive = false;
+    this.finaleFadeTween?.stop();
+    this.finaleFadeTween = null;
+    this.finaleFadeHoldTimer?.remove(false);
+    this.finaleFadeHoldTimer = null;
+    this.finaleFadeOverlay?.setAlpha(0).setVisible(false);
   }
 
   private startConfetti(): void {
@@ -1239,6 +1328,7 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private resetDeliveryFinale(): void {
+    this.resetFinaleFade();
     this.unbindClaimInput();
     this.stopDeliveryClaimPulse();
     this.productTween?.stop();
