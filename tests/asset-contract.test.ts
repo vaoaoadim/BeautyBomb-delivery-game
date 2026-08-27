@@ -29,6 +29,7 @@ import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.js
 import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v2.json";
 import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-callout-v5.json";
 import deliveryClaimMetadata from "../public/assets/game/ui/ui-017-claim-v1.json";
+import rewardCouponMetadata from "../public/assets/game/ui/ui-018-reward-coupon-v1.json";
 import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
 import deliveryGirlMetadata from "../public/assets/game/characters/chr-003-lowpoly-recipient-v1.json";
@@ -598,6 +599,27 @@ describe("approved-master asset contract", () => {
       runtimeCenter: { x: 180, y: 466 },
       input: ["pointer-anywhere", "Enter", "Space"],
     });
+    expect(rewardCouponMetadata).toMatchObject({
+      assetId: "UI-018",
+      version: "v1",
+      status: "integrated",
+      canvas: { width: 304, height: 456 },
+      runtimePlacement: { x: 180, y: 320, originX: 0.5, originY: 0.5 },
+      production: {
+        designMaster: "visual-references/ui-018-reward-coupon-master-v1.png",
+        buildScript: "scripts/build_reward_coupon_v1.py",
+        offlineResizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
+      },
+    });
+    expect(rewardCouponMetadata.production.designMasterSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
+    expect(rewardCouponMetadata.production.runtimeSha256).toMatch(
+      /^[a-f0-9]{64}$/,
+    );
     expect(deliveryDestinationCityMetadata).toMatchObject({
       assetId: "ENV-009",
       version: "v3",

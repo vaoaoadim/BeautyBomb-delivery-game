@@ -216,6 +216,10 @@ const DELIVERY_ASSETS = Object.freeze({
     textureKey: "delivery-product-v1",
     path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
   },
+  rewardCoupon: {
+    textureKey: "delivery-reward-coupon-v1",
+    path: "/assets/game/ui/ui-018-reward-coupon-v1.png",
+  },
 });
 
 const RENDER_DEPTH = Object.freeze({
@@ -232,6 +236,22 @@ const FINALE_FADE_TIMING = Object.freeze({
   fadeOutMs: 220,
   coveredHoldMs: 40,
   fadeInMs: 260,
+});
+
+const COUPON_CODE = "XQZ-20476";
+const COUPON_POPUP_LAYOUT = Object.freeze({
+  centerX: 180,
+  centerY: 320,
+  width: 304,
+  height: 456,
+  codeFieldX: 150,
+  codeFieldY: 305,
+  codeFieldWidth: 184,
+  codeFieldHeight: 44,
+  copyButtonX: 270,
+  copyButtonY: 305,
+  tearOffTextY: 468,
+  continueY: 586,
 });
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -290,9 +310,19 @@ export class GreyboxScene extends Phaser.Scene {
   private introContainer!: Phaser.GameObjects.Container;
   private introTap!: Phaser.GameObjects.Sprite;
   private promptOverlay!: Phaser.GameObjects.Container;
+  private promptPanel!: Phaser.GameObjects.Rectangle;
   private promptTitle!: Phaser.GameObjects.Text;
   private promptBody!: Phaser.GameObjects.Text;
   private promptButton!: Phaser.GameObjects.Text;
+  private couponPanel!: Phaser.GameObjects.Container;
+  private couponCopyButton!: Phaser.GameObjects.Container;
+  private couponCopyIcon!: Phaser.GameObjects.Container;
+  private couponCopyCheck!: Phaser.GameObjects.Container;
+  private couponCopyFeedback!: Phaser.GameObjects.Text;
+  private couponPopupTween: Phaser.Tweens.Tween | null = null;
+  private couponCopyResetTimer: Phaser.Time.TimerEvent | null = null;
+  private couponCopyAccessibleButton: HTMLButtonElement | null = null;
+  private couponCopyAnnouncement: HTMLSpanElement | null = null;
   private pauseOverlay!: Phaser.GameObjects.Container;
   private utilityControls: Phaser.GameObjects.Sprite[] = [];
   private environmentLayers: ActiveEnvironmentLayer[] = [];
@@ -438,6 +468,10 @@ export class GreyboxScene extends Phaser.Scene {
       DELIVERY_ASSETS.product.textureKey,
       DELIVERY_ASSETS.product.path,
     );
+    this.load.image(
+      DELIVERY_ASSETS.rewardCoupon.textureKey,
+      DELIVERY_ASSETS.rewardCoupon.path,
+    );
   }
 
   public create(): void {
@@ -488,6 +522,7 @@ export class GreyboxScene extends Phaser.Scene {
       DELIVERY_ASSETS.girl.textureKey,
       DELIVERY_ASSETS.callout.textureKey,
       DELIVERY_ASSETS.product.textureKey,
+      DELIVERY_ASSETS.rewardCoupon.textureKey,
     ]) {
       this.textures
         .get(textureKey)
@@ -1313,10 +1348,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.rewardFlowInvoked = true;
     this.deliveryCallout.setVisible(false);
     this.deliveryClaim.setVisible(false);
-    this.promptTitle.setText("ORDER DELIVERED!");
-    this.promptBody.setText("Greybox route complete.\nPrize roulette comes later.");
-    this.promptButton.setText("PLAY AGAIN");
-    this.promptOverlay.setVisible(true);
+    this.showCouponReward();
   }
 
   private clearConfetti(): void {
@@ -1329,6 +1361,7 @@ export class GreyboxScene extends Phaser.Scene {
 
   private resetDeliveryFinale(): void {
     this.resetFinaleFade();
+    this.hideCouponReward();
     this.unbindClaimInput();
     this.stopDeliveryClaimPulse();
     this.productTween?.stop();
@@ -1465,8 +1498,8 @@ export class GreyboxScene extends Phaser.Scene {
       COLORS.navy,
       0.78,
     );
-    const panel = this.add.rectangle(180, 322, 302, 238, COLORS.cream, 1);
-    panel.setStrokeStyle(5, COLORS.pink, 1);
+    this.promptPanel = this.add.rectangle(180, 322, 302, 238, COLORS.cream, 1);
+    this.promptPanel.setStrokeStyle(5, COLORS.pink, 1);
 
     this.promptTitle = this.add
       .text(180, 260, "ORDER DELIVERED!", {
@@ -1499,17 +1532,287 @@ export class GreyboxScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
     this.promptButton.on("pointerdown", () => this.activateOverlayAction());
 
+    const couponBackground = this.add
+      .image(
+        COUPON_POPUP_LAYOUT.centerX,
+        COUPON_POPUP_LAYOUT.centerY,
+        DELIVERY_ASSETS.rewardCoupon.textureKey,
+      )
+      .setOrigin(0.5);
+    const codeFieldShadow = this.add.rectangle(
+      COUPON_POPUP_LAYOUT.codeFieldX + 2,
+      COUPON_POPUP_LAYOUT.codeFieldY + 3,
+      COUPON_POPUP_LAYOUT.codeFieldWidth,
+      COUPON_POPUP_LAYOUT.codeFieldHeight,
+      0x982add,
+      1,
+    );
+    const codeField = this.add.rectangle(
+      COUPON_POPUP_LAYOUT.codeFieldX,
+      COUPON_POPUP_LAYOUT.codeFieldY,
+      COUPON_POPUP_LAYOUT.codeFieldWidth,
+      COUPON_POPUP_LAYOUT.codeFieldHeight,
+      COLORS.cream,
+      1,
+    );
+    codeField.setStrokeStyle(3, COLORS.navy, 1);
+    const codeText = this.add
+      .text(COUPON_POPUP_LAYOUT.codeFieldX, COUPON_POPUP_LAYOUT.codeFieldY, COUPON_CODE, {
+        align: "center",
+        color: "#17162f",
+        fontFamily: "monospace",
+        fontSize: "20px",
+        fontStyle: "bold",
+        letterSpacing: 1,
+      })
+      .setOrigin(0.5);
+    this.couponCopyButton = this.createCouponCopyButton(
+      COUPON_POPUP_LAYOUT.copyButtonX,
+      COUPON_POPUP_LAYOUT.copyButtonY,
+    );
+    this.couponCopyFeedback = this.add
+      .text(COUPON_POPUP_LAYOUT.centerX, 354, "", {
+        align: "center",
+        color: "#17162f",
+        fontFamily: "monospace",
+        fontSize: "11px",
+        fontStyle: "bold",
+      })
+      .setOrigin(0.5)
+      .setVisible(false);
+    const tearOffText = this.add
+      .text(
+        COUPON_POPUP_LAYOUT.centerX,
+        COUPON_POPUP_LAYOUT.tearOffTextY,
+        "Ваш купон с 20% скидкой\nна любые товары!\nСкопируйте его!",
+        {
+          align: "center",
+          color: "#17162f",
+          fontFamily: "monospace",
+          fontSize: "13px",
+          fontStyle: "bold",
+          lineSpacing: 5,
+        },
+      )
+      .setOrigin(0.5);
+    this.couponPanel = this.add.container(0, 0, [
+      couponBackground,
+      codeFieldShadow,
+      codeField,
+      codeText,
+      this.couponCopyButton,
+      this.couponCopyFeedback,
+      tearOffText,
+    ]);
+    this.couponPanel.setVisible(false);
+
     this.promptOverlay = this.add.container(0, 0, [
       shade,
-      panel,
+      this.promptPanel,
       this.promptTitle,
       this.promptBody,
       this.promptButton,
+      this.couponPanel,
     ]);
     this.promptOverlay
       .setDepth(RENDER_DEPTH.overlay)
       .setScrollFactor(0)
       .setVisible(false);
+  }
+
+  private createCouponCopyButton(x: number, y: number): Phaser.GameObjects.Container {
+    const shadow = this.add.rectangle(2, 3, 44, 44, 0x982add, 1);
+    const outline = this.add.rectangle(0, 0, 44, 44, COLORS.navy, 1);
+    const face = this.add.rectangle(0, -2, 36, 34, COLORS.pink, 1);
+    this.couponCopyIcon = this.add.container(0, 0, [
+      this.add.rectangle(-4, -5, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
+      this.add.rectangle(3, 3, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
+    ]);
+    this.couponCopyCheck = this.add.container(0, 0, [
+      this.add.rectangle(-8, 0, 4, 4, COLORS.cream, 1),
+      this.add.rectangle(-4, 4, 4, 4, COLORS.cream, 1),
+      this.add.rectangle(0, 0, 4, 4, COLORS.cream, 1),
+      this.add.rectangle(4, -4, 4, 4, COLORS.cream, 1),
+      this.add.rectangle(8, -8, 4, 4, COLORS.cream, 1),
+    ]);
+    this.couponCopyCheck.setVisible(false);
+    const button = this.add.container(x, y, [
+      shadow,
+      outline,
+      face,
+      this.couponCopyIcon,
+      this.couponCopyCheck,
+    ]);
+    let pressed = false;
+    const setPressed = (value: boolean): void => {
+      pressed = value;
+      face.setFillStyle(value ? 0xd9377f : COLORS.pink, 1);
+      face.setY(value ? 1 : -2);
+      this.couponCopyIcon.setY(value ? 3 : 0);
+      this.couponCopyCheck.setY(value ? 3 : 0);
+    };
+
+    button
+      .setSize(44, 44)
+      .setInteractive({ useHandCursor: true })
+      .on("pointerover", () => {
+        if (!pressed) {
+          face.setFillStyle(0xff72b8, 1);
+        }
+      })
+      .on("pointerout", () => {
+        setPressed(false);
+        face.setFillStyle(COLORS.pink, 1);
+      })
+      .on("pointerdown", () => setPressed(true))
+      .on("pointerup", () => {
+        if (!pressed) {
+          return;
+        }
+        setPressed(false);
+        void this.copyCouponCode();
+      });
+    button.disableInteractive();
+    return button;
+  }
+
+  private showCouponReward(): void {
+    this.promptPanel.setVisible(false);
+    this.promptTitle.setVisible(false);
+    this.promptBody.setVisible(false);
+    this.promptButton.setText("PLAY AGAIN").setPosition(180, COUPON_POPUP_LAYOUT.continueY);
+    this.couponPanel.setVisible(true).setAlpha(0).setScale(0.96);
+    this.couponCopyButton.setInteractive({ useHandCursor: true });
+    this.promptOverlay.setVisible(true);
+    this.createCouponCopyAccessibility();
+    this.couponPopupTween?.stop();
+    this.couponPopupTween = this.tweens.add({
+      targets: this.couponPanel,
+      alpha: 1,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 200,
+      ease: "Sine.Out",
+      onComplete: () => {
+        this.couponPopupTween = null;
+      },
+    });
+  }
+
+  private hideCouponReward(): void {
+    this.couponPopupTween?.stop();
+    this.couponPopupTween = null;
+    this.couponCopyResetTimer?.remove(false);
+    this.couponCopyResetTimer = null;
+    if (this.couponPanel) {
+      this.couponPanel.setVisible(false).setAlpha(1).setScale(1);
+      this.couponCopyButton.disableInteractive();
+      this.couponCopyIcon.setVisible(true).setY(0);
+      this.couponCopyCheck.setVisible(false).setY(0);
+      this.couponCopyFeedback.setText("").setVisible(false);
+    }
+    this.removeCouponCopyAccessibility();
+  }
+
+  private async copyCouponCode(): Promise<void> {
+    if (!this.couponPanel.visible) {
+      return;
+    }
+    let copied = false;
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(COUPON_CODE);
+        copied = true;
+      }
+    } catch {
+      copied = false;
+    }
+    if (!copied) {
+      copied = this.copyCouponCodeFallback();
+    }
+    if (!copied || !this.couponPanel.visible) {
+      this.announceCouponCopy("Не удалось скопировать");
+      return;
+    }
+
+    this.couponCopyResetTimer?.remove(false);
+    this.couponCopyIcon.setVisible(false);
+    this.couponCopyCheck.setVisible(true);
+    this.couponCopyFeedback.setText("Скопировано").setVisible(true);
+    this.announceCouponCopy("Скопировано");
+    this.couponCopyResetTimer = this.time.delayedCall(1000, () => {
+      this.couponCopyResetTimer = null;
+      if (!this.couponPanel.visible) {
+        return;
+      }
+      this.couponCopyIcon.setVisible(true);
+      this.couponCopyCheck.setVisible(false);
+      this.couponCopyFeedback.setText("").setVisible(false);
+    });
+  }
+
+  private copyCouponCodeFallback(): boolean {
+    if (typeof document === "undefined" || !document.body) {
+      return false;
+    }
+    const element = document.createElement("textarea");
+    element.value = COUPON_CODE;
+    element.setAttribute("readonly", "");
+    Object.assign(element.style, {
+      position: "fixed",
+      left: "-9999px",
+      top: "0",
+      opacity: "0",
+      pointerEvents: "none",
+    });
+    document.body.appendChild(element);
+    element.select();
+    try {
+      return document.execCommand("copy");
+    } finally {
+      element.remove();
+    }
+  }
+
+  private createCouponCopyAccessibility(): void {
+    if (this.couponCopyAccessibleButton || typeof document === "undefined" || !document.body) {
+      return;
+    }
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label", "Скопировать купон");
+    button.textContent = "Скопировать купон";
+    Object.assign(button.style, {
+      position: "fixed",
+      width: "1px",
+      height: "1px",
+      padding: "0",
+      margin: "-1px",
+      overflow: "hidden",
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+      border: "0",
+    });
+    button.addEventListener("click", () => void this.copyCouponCode());
+    const announcement = document.createElement("span");
+    announcement.setAttribute("aria-live", "polite");
+    Object.assign(announcement.style, button.style);
+    document.body.append(button, announcement);
+    this.couponCopyAccessibleButton = button;
+    this.couponCopyAnnouncement = announcement;
+  }
+
+  private announceCouponCopy(message: string): void {
+    if (this.couponCopyAnnouncement) {
+      this.couponCopyAnnouncement.textContent = message;
+    }
+  }
+
+  private removeCouponCopyAccessibility(): void {
+    this.couponCopyAccessibleButton?.remove();
+    this.couponCopyAnnouncement?.remove();
+    this.couponCopyAccessibleButton = null;
+    this.couponCopyAnnouncement = null;
   }
 
   private startPlayerIntroIdleAnimation(): void {
@@ -1940,9 +2243,13 @@ export class GreyboxScene extends Phaser.Scene {
       this.setUtilityControlsVisible(false);
       this.player.stop();
       this.player.setFrame(0);
+      this.hideCouponReward();
       this.promptTitle.setText("DELIVERY FAILED");
       this.promptBody.setText("No lives left.\nTry the route again.");
-      this.promptButton.setText("RETRY");
+      this.promptPanel.setVisible(true);
+      this.promptTitle.setVisible(true);
+      this.promptBody.setVisible(true);
+      this.promptButton.setText("RETRY").setPosition(180, 382);
       this.promptOverlay.setVisible(true);
     }
   }

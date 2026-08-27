@@ -1,0 +1,63 @@
+{
+  "assetId": "UI-018",
+  "version": "v1",
+  "asset": "delivery reward coupon background",
+  "status": "integrated",
+  "canvas": {
+    "width": 304,
+    "height": 456
+  },
+  "runtimePlacement": {
+    "x": 180,
+    "y": 320,
+    "originX": 0.5,
+    "originY": 0.5
+  },
+  "source": {
+    "master": "visual-references/ui-018-reward-coupon-master-v1.png",
+    "approvedMasterSha256": "c2ddc9f31ab948d25ffeb097d70361c0faab7a844a4779f56bfd0acb229373df",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "transparentBackground": true
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v1.png",
+    "dimensions": {
+      "width": 304,
+      "height": 456
+    },
+    "sha256": "be1638a5f7302b24159f463e7ccc101435ffea94f0bc3f363ecd34299dc5630f",
+    "phaserTextureFilter": "NEAREST",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v1.py",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none"
+  },
+  "production": {
+    "designMaster": "visual-references/ui-018-reward-coupon-master-v1.png",
+    "designMasterSha256": "c2ddc9f31ab948d25ffeb097d70361c0faab7a844a4779f56bfd0acb229373df",
+    "buildScript": "scripts/build_reward_coupon_v1.py",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "be1638a5f7302b24159f463e7ccc101435ffea94f0bc3f363ecd34299dc5630f"
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "Phaser runtime UI",
+    "tearOffText": "Phaser runtime UI"
+  }
+}
