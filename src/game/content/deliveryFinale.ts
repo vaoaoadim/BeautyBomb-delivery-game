@@ -16,22 +16,23 @@ export type DeliveryPresentationEvent =
   | "product-transfer-complete"
   | "reset";
 
+export interface CharacterArrivalAnchors {
+  readonly doorwayStart: Readonly<{ x: number; y: number }>;
+  readonly doorstepEnd: Readonly<{ x: number; y: number }>;
+  readonly productTarget: Readonly<{ x: number; y: number }>;
+}
+
 export interface ArrivalAnchors {
-  readonly girl: Readonly<{
-    x: number;
-    y: number;
-    originX: number;
-    originY: number;
-  }>;
+  readonly girl: Readonly<{ originX: number; originY: number }>;
+  readonly character: CharacterArrivalAnchors;
   readonly vehicleStop: Readonly<{ x: number; y: number }>;
   readonly callout: Readonly<{ x: number; y: number }>;
   readonly cta: Readonly<{ x: number; y: number }>;
   readonly productStartOffset: Readonly<{ x: number; y: number }>;
-  readonly productTarget: Readonly<{ x: number; y: number }>;
 }
 
 export interface DeliveryFinaleContent {
-  readonly version: "v2";
+  readonly version: "v3";
   readonly finishRoadDurationMs: number;
   readonly arrivalDecelerationMs: number;
   readonly arrivalRevealMs: number;
@@ -51,7 +52,6 @@ export interface DeliveryFinaleContent {
   readonly runtime: Readonly<{
     girlScale: number;
     productScale: number;
-    arrivalStartX: number;
     destinationCityStartOffsetTexturePx: number;
     destinationCityReducedMotionOffsetTexturePx: number;
   }>;

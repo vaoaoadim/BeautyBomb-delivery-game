@@ -22,12 +22,16 @@ describe("delivery finale presentation", () => {
     });
   });
 
-  it("keeps the recipient and lower reward UI on their approved finale anchors", () => {
+  it("keeps the recipient doorway arrival and lower reward UI on their approved finale anchors", () => {
     expect(DELIVERY_FINALE.anchors).toMatchObject({
-      girl: { x: 290, y: 324 },
+      girl: { originX: 0.5, originY: 1 },
+      character: {
+        doorwayStart: { x: 307, y: 276 },
+        doorstepEnd: { x: 319, y: 284 },
+        productTarget: { x: 319, y: 262 },
+      },
       callout: { x: 14, y: 338 },
       cta: { x: 180, y: 466 },
-      productTarget: { x: 290, y: 302 },
     });
     expect(DELIVERY_FINALE.runtime.destinationCityStartOffsetTexturePx).toBe(
       526,

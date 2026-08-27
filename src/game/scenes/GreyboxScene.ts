@@ -801,8 +801,8 @@ export class GreyboxScene extends Phaser.Scene {
     const { anchors, depth, runtime } = DELIVERY_FINALE;
     this.deliveryGirl = this.add
       .image(
-        anchors.girl.x + runtime.arrivalStartX,
-        anchors.girl.y,
+        anchors.character.doorwayStart.x,
+        anchors.character.doorwayStart.y,
         DELIVERY_ASSETS.girl.textureKey,
       )
       .setOrigin(anchors.girl.originX, anchors.girl.originY)
@@ -950,7 +950,10 @@ export class GreyboxScene extends Phaser.Scene {
     };
     const { anchors, runtime } = DELIVERY_FINALE;
     this.deliveryGirl
-      .setPosition(anchors.girl.x + runtime.arrivalStartX, anchors.girl.y)
+      .setPosition(
+        anchors.character.doorwayStart.x,
+        anchors.character.doorwayStart.y,
+      )
       .setAlpha(0)
       .setVisible(true);
   }
@@ -971,10 +974,20 @@ export class GreyboxScene extends Phaser.Scene {
     this.animateEnvironment(delta, speedScale);
     this.moveObstacles(delta * speedScale);
 
-    const { anchors, runtime } = DELIVERY_FINALE;
-    const arrivalOffset = runtime.arrivalStartX * (1 - easedReveal);
+    const { anchors } = DELIVERY_FINALE;
     this.deliveryGirl
-      .setX(anchors.girl.x + arrivalOffset)
+      .setPosition(
+        Phaser.Math.Linear(
+          anchors.character.doorwayStart.x,
+          anchors.character.doorstepEnd.x,
+          easedReveal,
+        ),
+        Phaser.Math.Linear(
+          anchors.character.doorwayStart.y,
+          anchors.character.doorstepEnd.y,
+          easedReveal,
+        ),
+      )
       .setAlpha(easedReveal);
 
     const finalPlayerScale =
@@ -1150,8 +1163,8 @@ export class GreyboxScene extends Phaser.Scene {
       .setScrollFactor(0);
 
     const control = {
-      x: (productStart.x + anchors.productTarget.x) / 2,
-      y: Math.min(productStart.y, anchors.productTarget.y) - 58,
+      x: (productStart.x + anchors.character.productTarget.x) / 2,
+      y: Math.min(productStart.y, anchors.character.productTarget.y) - 58,
     };
     const flight = { progress: 0 };
     this.productTween = this.tweens.add({
@@ -1169,10 +1182,10 @@ export class GreyboxScene extends Phaser.Scene {
           .setPosition(
             inverse * inverse * productStart.x +
               2 * inverse * progress * control.x +
-              progress * progress * anchors.productTarget.x,
+              progress * progress * anchors.character.productTarget.x,
             inverse * inverse * productStart.y +
               2 * inverse * progress * control.y +
-              progress * progress * anchors.productTarget.y,
+              progress * progress * anchors.character.productTarget.y,
           )
           .setAngle(
             this.prefersReducedMotion ? 0 : Math.sin(progress * Math.PI) * 5,

@@ -539,7 +539,7 @@ describe("approved-master asset contract", () => {
       status: "integrated",
       canvas: { width: 28, height: 44 },
       visibleBounds: { width: 16, height: 40 },
-      runtimePlacement: { x: 290, y: 324, originX: 0.5, originY: 1 },
+      runtimePlacement: { x: 319, y: 284, originX: 0.5, originY: 1 },
       production: {
         designMaster:
           "visual-references/chr-003-lowpoly-recipient-master-v1.png",

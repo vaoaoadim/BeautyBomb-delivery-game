@@ -17,7 +17,7 @@ OUTPUT = ROOT / "public/assets/game/characters/chr-003-lowpoly-recipient-v1.png"
 APPROVED_MASTER_SHA256 = "b3fc7fbbd8d37851a3a3fc6566c51e7fd168477ecc8a23027770e6ddd55f8ca4"
 CANVAS_SIZE = (28, 44)
 CONTENT_MAX = (24, 40)
-RUNTIME_PLACEMENT = {"x": 290, "y": 324, "originX": 0.5, "originY": 1}
+RUNTIME_PLACEMENT = {"x": 319, "y": 284, "originX": 0.5, "originY": 1}
 
 
 def file_hash(path: Path) -> str:

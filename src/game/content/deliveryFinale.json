@@ -1,5 +1,5 @@
 {
-  "version": "v2",
+  "version": "v3",
   "finishRoadDurationMs": 1500,
   "arrivalDecelerationMs": 600,
   "arrivalRevealMs": 700,
@@ -16,17 +16,20 @@
     "colors": [16707420, 16732075, 5562623, 9972445, 16777215]
   },
   "anchors": {
-    "girl": { "x": 290, "y": 324, "originX": 0.5, "originY": 1 },
+    "girl": { "originX": 0.5, "originY": 1 },
+    "character": {
+      "doorwayStart": { "x": 307, "y": 276 },
+      "doorstepEnd": { "x": 319, "y": 284 },
+      "productTarget": { "x": 319, "y": 262 }
+    },
     "vehicleStop": { "x": 74, "y": 322 },
     "callout": { "x": 14, "y": 338 },
     "cta": { "x": 180, "y": 466 },
-    "productStartOffset": { "x": -4, "y": -64 },
-    "productTarget": { "x": 290, "y": 302 }
+    "productStartOffset": { "x": -4, "y": -64 }
   },
   "runtime": {
     "girlScale": 1,
     "productScale": 1,
-    "arrivalStartX": 380,
     "destinationCityStartOffsetTexturePx": 526,
     "destinationCityReducedMotionOffsetTexturePx": 701
   },
