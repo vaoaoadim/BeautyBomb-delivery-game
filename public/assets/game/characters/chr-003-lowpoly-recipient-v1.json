@@ -1,0 +1,40 @@
+{
+  "assetId": "CHR-003",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "chr-003-lowpoly-recipient-v1.png",
+  "canvas": {
+    "width": 28,
+    "height": 44
+  },
+  "visibleBounds": {
+    "x": 6,
+    "y": 4,
+    "width": 16,
+    "height": 40
+  },
+  "runtimePlacement": {
+    "x": 290,
+    "y": 324,
+    "originX": 0.5,
+    "originY": 1
+  },
+  "production": {
+    "designMaster": "visual-references/chr-003-lowpoly-recipient-master-v1.png",
+    "designMasterSha256": "b3fc7fbbd8d37851a3a3fc6566c51e7fd168477ecc8a23027770e6ddd55f8ca4",
+    "sourceBox": [
+      24,
+      16,
+      87,
+      176
+    ],
+    "buildScript": "scripts/build_delivery_girl_lowpoly_v1.py",
+    "alphaCleanup": "threshold existing alpha at 128; no RGB/chroma deletion",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeScale": 1,
+    "runtimeSha256": "4df3f49f95e2639684ab18d143e8fd40bd89949966ca98fd69069b40ac6538fa"
+  }
+}

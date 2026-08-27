@@ -31,7 +31,7 @@ import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-ca
 import deliveryClaimMetadata from "../public/assets/game/ui/ui-017-claim-v1.json";
 import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
-import deliveryGirlMetadata from "../public/assets/game/characters/chr-001-waiting-girl-v2.json";
+import deliveryGirlMetadata from "../public/assets/game/characters/chr-003-lowpoly-recipient-v1.json";
 import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v1.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
@@ -534,14 +534,16 @@ describe("approved-master asset contract", () => {
     );
 
     expect(deliveryGirlMetadata).toMatchObject({
-      assetId: "CHR-001",
-      version: "v2",
+      assetId: "CHR-003",
+      version: "v1",
       status: "integrated",
       canvas: { width: 28, height: 44 },
-      visibleBounds: { width: 15, height: 40 },
+      visibleBounds: { width: 16, height: 40 },
       runtimePlacement: { x: 290, y: 324, originX: 0.5, originY: 1 },
       production: {
-        buildScript: "scripts/build_delivery_girl_v2.py",
+        designMaster:
+          "visual-references/chr-003-lowpoly-recipient-master-v1.png",
+        buildScript: "scripts/build_delivery_girl_lowpoly_v1.py",
         offlineResizeCount: 1,
         resizeFilter: "nearest-neighbor",
         paletteQuantization: false,

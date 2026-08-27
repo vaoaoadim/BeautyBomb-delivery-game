@@ -1,0 +1,19 @@
+{
+  "assetId": "CHR-003",
+  "version": "master-v1",
+  "status": "approved-generated-master",
+  "source": "built-in image_gen; approved low-poly recipient candidate",
+  "canvas": {
+    "width": 112,
+    "height": 176
+  },
+  "sha256": "b3fc7fbbd8d37851a3a3fc6566c51e7fd168477ecc8a23027770e6ddd55f8ca4",
+  "promptSummary": "Full-body blonde recipient facing left in a simple pink dress; low-poly pixel-art hybrid with large faceted planes and minimal small details.",
+  "transparentBackground": true,
+  "targetRuntimeCanvas": {
+    "width": 28,
+    "height": 44
+  },
+  "approvalDate": "2026-08-27",
+  "licenseNote": "Original generated artwork for this independent portfolio concept."
+}

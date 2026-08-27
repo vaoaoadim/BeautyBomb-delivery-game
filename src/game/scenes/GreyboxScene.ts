@@ -199,8 +199,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/environment/env-009-delivery-destination-city-v3.png",
   },
   girl: {
-    textureKey: "delivery-girl-v2",
-    path: "/assets/game/characters/chr-001-waiting-girl-v2.png",
+    textureKey: "delivery-girl-lowpoly-v1",
+    path: "/assets/game/characters/chr-003-lowpoly-recipient-v1.png",
   },
   callout: {
     textureKey: "delivery-callout-v5",
