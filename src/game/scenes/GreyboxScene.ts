@@ -244,13 +244,14 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   centerY: 320,
   width: 304,
   height: 456,
-  codeFieldX: 153,
+  codeFieldX: 154,
   codeFieldY: 305,
-  codeFieldWidth: 174,
+  codeFieldWidth: 150,
   codeFieldHeight: 44,
-  copyButtonX: 270,
+  copyButtonX: 259,
   copyButtonY: 305,
   tearOffTextY: 468,
+  tearOffTextMaxWidth: 232,
 });
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -1580,9 +1581,13 @@ export class GreyboxScene extends Phaser.Scene {
           align: "center",
           color: "#17162f",
           fontFamily: "monospace",
-          fontSize: "13px",
+          fontSize: "15px",
           fontStyle: "bold",
-          lineSpacing: 5,
+          lineSpacing: 6,
+          wordWrap: {
+            width: COUPON_POPUP_LAYOUT.tearOffTextMaxWidth,
+            useAdvancedWrap: true,
+          },
         },
       )
       .setOrigin(0.5);
