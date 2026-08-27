@@ -314,9 +314,6 @@ export class GreyboxScene extends Phaser.Scene {
   private deliveryProduct: Phaser.GameObjects.Image | null = null;
   private deliveryClaimPulseTween: Phaser.Tweens.Tween | null = null;
   private productTween: Phaser.Tweens.Tween | null = null;
-  private arrivalFadeOverlay!: Phaser.GameObjects.Rectangle;
-  private arrivalFadeTween: Phaser.Tweens.Tween | null = null;
-  private arrivalFadeActive = false;
   private confettiPieces: Phaser.GameObjects.Rectangle[] = [];
   private claimInputBound = false;
   private rewardFlowInvoked = false;
@@ -834,12 +831,6 @@ export class GreyboxScene extends Phaser.Scene {
       .setVisible(false)
       .setDepth(depth.cta)
       .setScrollFactor(0);
-    this.arrivalFadeOverlay = this.add
-      .rectangle(0, 0, GAME_VIEWPORT.width, GAME_VIEWPORT.height, 0x000000, 0)
-      .setOrigin(0, 0)
-      .setDepth(RENDER_DEPTH.overlay + 5)
-      .setScrollFactor(0)
-      .setVisible(false);
   }
 
   private updateDeliveryFinale(delta: number): void {
@@ -856,12 +847,8 @@ export class GreyboxScene extends Phaser.Scene {
         ? DELIVERY_FINALE.reducedMotion.finishRoadDurationMs
         : DELIVERY_FINALE.finishRoadDurationMs;
       if (this.deliveryPhaseElapsedMs >= duration) {
-        this.beginArrivalFade();
+        this.beginArrivalTransition();
       }
-      return;
-    }
-
-    if (this.deliveryPhase === "arrival-fade") {
       return;
     }
 
@@ -885,6 +872,8 @@ export class GreyboxScene extends Phaser.Scene {
     this.laneTweenActive = false;
     this.tweens.killTweensOf(this.player);
     this.player.setAlpha(1).play(PLAYER_DRIVE_ANIMATION);
+    this.showDeliveryDestinationCity();
+    this.startConfetti();
   }
 
   private startConfetti(): void {
@@ -943,74 +932,10 @@ export class GreyboxScene extends Phaser.Scene {
     }
   }
 
-  private beginArrivalFade(): void {
-    const nextPhase = advanceDeliveryPresentationPhase(
-      this.deliveryPhase,
-      "finish-road-complete",
-    );
-    if (nextPhase === this.deliveryPhase) {
-      return;
-    }
-
-    this.deliveryPhase = nextPhase;
-    this.deliveryPhaseElapsedMs = 0;
-    this.clearObstacles();
-    this.arrivalFadeActive = true;
-    this.arrivalFadeOverlay.setAlpha(0).setVisible(true);
-    this.arrivalFadeTween = this.tweens.add({
-      targets: this.arrivalFadeOverlay,
-      alpha: 1,
-      duration: DELIVERY_FINALE.arrivalFade.fadeOutMs,
-      ease: "Sine.InOut",
-      onComplete: () => this.completeArrivalFadeOut(),
-    });
-  }
-
-  private completeArrivalFadeOut(): void {
-    if (!this.arrivalFadeActive || this.deliveryPhase !== "arrival-fade") {
-      return;
-    }
-
-    this.showDeliveryDestinationCity();
-    this.arrivalFadeTween = this.tweens.add({
-      targets: this.arrivalFadeOverlay,
-      alpha: 1,
-      duration: DELIVERY_FINALE.arrivalFade.coveredHoldMs,
-      ease: "Linear",
-      onComplete: () => this.beginArrivalFadeIn(),
-    });
-  }
-
-  private beginArrivalFadeIn(): void {
-    if (!this.arrivalFadeActive || this.deliveryPhase !== "arrival-fade") {
-      return;
-    }
-
-    this.arrivalFadeTween = this.tweens.add({
-      targets: this.arrivalFadeOverlay,
-      alpha: 0,
-      duration: DELIVERY_FINALE.arrivalFade.fadeInMs,
-      ease: "Sine.InOut",
-      onComplete: () => this.completeArrivalFade(),
-    });
-  }
-
-  private completeArrivalFade(): void {
-    if (!this.arrivalFadeActive || this.deliveryPhase !== "arrival-fade") {
-      return;
-    }
-
-    this.arrivalFadeTween = null;
-    this.arrivalFadeActive = false;
-    this.arrivalFadeOverlay.setAlpha(0).setVisible(false);
-    this.startConfetti();
-    this.beginArrivalTransition();
-  }
-
   private beginArrivalTransition(): void {
     const nextPhase = advanceDeliveryPresentationPhase(
       this.deliveryPhase,
-      "arrival-fade-complete",
+      "finish-road-complete",
     );
     if (nextPhase === this.deliveryPhase) {
       return;
@@ -1023,7 +948,7 @@ export class GreyboxScene extends Phaser.Scene {
       y: this.player.y,
       scale: this.player.scaleX,
     };
-    const { anchors } = DELIVERY_FINALE;
+    const { anchors, runtime } = DELIVERY_FINALE;
     this.deliveryGirl
       .setPosition(
         anchors.character.doorwayStart.x,
@@ -1313,14 +1238,6 @@ export class GreyboxScene extends Phaser.Scene {
     this.confettiPieces = [];
   }
 
-  private resetArrivalFade(): void {
-    this.arrivalFadeTween?.stop();
-    this.arrivalFadeTween = null;
-    this.arrivalFadeActive = false;
-    this.tweens.killTweensOf(this.arrivalFadeOverlay);
-    this.arrivalFadeOverlay?.setAlpha(0).setVisible(false);
-  }
-
   private resetDeliveryFinale(): void {
     this.unbindClaimInput();
     this.stopDeliveryClaimPulse();
@@ -1328,7 +1245,6 @@ export class GreyboxScene extends Phaser.Scene {
     this.productTween = null;
     this.deliveryProduct?.destroy();
     this.deliveryProduct = null;
-    this.resetArrivalFade();
     this.clearConfetti();
     this.deliveryGirl?.setVisible(false).setAlpha(0);
     this.deliveryCallout?.setVisible(false).setAlpha(1);

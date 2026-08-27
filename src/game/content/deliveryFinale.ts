@@ -3,7 +3,6 @@ import rawDeliveryFinale from "./deliveryFinale.json";
 export type DeliveryPresentationPhase =
   | "inactive"
   | "finish-road"
-  | "arrival-fade"
   | "arrival-transition"
   | "reward-prompt"
   | "product-transfer"
@@ -12,7 +11,6 @@ export type DeliveryPresentationPhase =
 export type DeliveryPresentationEvent =
   | "progress-complete"
   | "finish-road-complete"
-  | "arrival-fade-complete"
   | "arrival-complete"
   | "claim"
   | "product-transfer-complete"
@@ -34,18 +32,13 @@ export interface ArrivalAnchors {
 }
 
 export interface DeliveryFinaleContent {
-  readonly version: "v4";
+  readonly version: "v3";
   readonly finishRoadDurationMs: number;
   readonly arrivalDecelerationMs: number;
   readonly arrivalRevealMs: number;
   readonly rewardPromptDelayMs: number;
   readonly productFlightDurationMs: number;
   readonly productDisappearDurationMs: number;
-  readonly arrivalFade: Readonly<{
-    fadeOutMs: number;
-    coveredHoldMs: number;
-    fadeInMs: number;
-  }>;
   readonly reducedMotion: Readonly<{
     finishRoadDurationMs: number;
     confettiCount: number;
@@ -84,8 +77,7 @@ const TRANSITIONS: Readonly<
   >
 > = Object.freeze({
   inactive: { "progress-complete": "finish-road" },
-  "finish-road": { "finish-road-complete": "arrival-fade" },
-  "arrival-fade": { "arrival-fade-complete": "arrival-transition" },
+  "finish-road": { "finish-road-complete": "arrival-transition" },
   "arrival-transition": { "arrival-complete": "product-transfer" },
   "product-transfer": { "product-transfer-complete": "reward-prompt" },
   "reward-prompt": { claim: "complete" },
