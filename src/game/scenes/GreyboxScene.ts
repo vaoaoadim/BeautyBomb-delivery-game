@@ -251,7 +251,6 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   copyButtonX: 270,
   copyButtonY: 305,
   tearOffTextY: 468,
-  continueY: 586,
 });
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -319,7 +318,6 @@ export class GreyboxScene extends Phaser.Scene {
   private couponCopyIcon!: Phaser.GameObjects.Container;
   private couponCopyCheck!: Phaser.GameObjects.Container;
   private couponCopyFeedback!: Phaser.GameObjects.Text;
-  private couponPopupTween: Phaser.Tweens.Tween | null = null;
   private couponCopyResetTimer: Phaser.Time.TimerEvent | null = null;
   private couponCopyAccessibleButton: HTMLButtonElement | null = null;
   private couponCopyAnnouncement: HTMLSpanElement | null = null;
@@ -1513,7 +1511,7 @@ export class GreyboxScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     this.promptButton = this.add
-      .text(180, 382, "PLAY AGAIN", {
+      .text(180, 382, "RETRY", {
         backgroundColor: "#d8f34a",
         color: "#17162f",
         fontFamily: "monospace",
@@ -1673,30 +1671,17 @@ export class GreyboxScene extends Phaser.Scene {
     this.promptPanel.setVisible(false);
     this.promptTitle.setVisible(false);
     this.promptBody.setVisible(false);
-    this.promptButton.setText("PLAY AGAIN").setPosition(180, COUPON_POPUP_LAYOUT.continueY);
-    this.couponPanel.setVisible(true).setAlpha(0).setScale(0.96);
+    this.promptButton.disableInteractive().setVisible(false);
+    this.couponPanel.setVisible(true).setAlpha(1).setScale(1);
     this.couponCopyButton.setInteractive({ useHandCursor: true });
     this.promptOverlay.setVisible(true);
     this.createCouponCopyAccessibility();
-    this.couponPopupTween?.stop();
-    this.couponPopupTween = this.tweens.add({
-      targets: this.couponPanel,
-      alpha: 1,
-      scaleX: 1,
-      scaleY: 1,
-      duration: 200,
-      ease: "Sine.Out",
-      onComplete: () => {
-        this.couponPopupTween = null;
-      },
-    });
   }
 
   private hideCouponReward(): void {
-    this.couponPopupTween?.stop();
-    this.couponPopupTween = null;
     this.couponCopyResetTimer?.remove(false);
     this.couponCopyResetTimer = null;
+    this.promptButton.setVisible(true).setInteractive({ useHandCursor: true });
     if (this.couponPanel) {
       this.couponPanel.setVisible(false).setAlpha(1).setScale(1);
       this.couponCopyButton.disableInteractive();
