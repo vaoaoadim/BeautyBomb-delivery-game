@@ -18,9 +18,9 @@
   "anchors": {
     "girl": { "originX": 0.5, "originY": 1 },
     "character": {
-      "doorwayStart": { "x": 307, "y": 276 },
-      "doorstepEnd": { "x": 319, "y": 284 },
-      "productTarget": { "x": 319, "y": 262 }
+      "doorwayStart": { "x": 279, "y": 276 },
+      "doorstepEnd": { "x": 291, "y": 284 },
+      "productTarget": { "x": 291, "y": 262 }
     },
     "vehicleStop": { "x": 74, "y": 322 },
     "callout": { "x": 14, "y": 338 },
