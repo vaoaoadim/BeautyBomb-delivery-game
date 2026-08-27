@@ -1256,23 +1256,9 @@ export class GreyboxScene extends Phaser.Scene {
     this.deliveryPhaseElapsedMs = 0;
     this.unbindClaimInput();
     this.stopDeliveryClaimPulse();
-    const colorPhase = { value: 0 };
-    this.tweens.add({
-      targets: colorPhase,
-      value: 3,
-      duration: 330,
-      ease: "Linear",
-      onUpdate: () => {
-        this.deliveryClaim.setFrame(
-          Math.min(2, Math.floor(colorPhase.value)),
-        );
-      },
-      onComplete: () => {
-        this.deliveryClaim.setVisible(false);
-        this.deliveryCallout.setVisible(false);
-        this.invokeExistingRewardFlow();
-      },
-    });
+    this.deliveryClaim.setVisible(false);
+    this.deliveryCallout.setVisible(false);
+    this.invokeExistingRewardFlow();
   }
 
   private startProductFlight(): void {
