@@ -217,8 +217,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
   },
   rewardCoupon: {
-    textureKey: "delivery-reward-coupon-v1",
-    path: "/assets/game/ui/ui-018-reward-coupon-v1.png",
+    textureKey: "delivery-reward-coupon-v2",
+    path: "/assets/game/ui/ui-018-reward-coupon-v2.png",
   },
 });
 
@@ -244,9 +244,9 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   centerY: 320,
   width: 304,
   height: 456,
-  codeFieldX: 150,
+  codeFieldX: 153,
   codeFieldY: 305,
-  codeFieldWidth: 184,
+  codeFieldWidth: 174,
   codeFieldHeight: 44,
   copyButtonX: 270,
   copyButtonY: 305,

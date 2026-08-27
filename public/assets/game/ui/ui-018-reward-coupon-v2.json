@@ -1,0 +1,80 @@
+{
+  "assetId": "UI-018",
+  "version": "v2",
+  "asset": "delivery reward coupon background",
+  "status": "integrated",
+  "canvas": {
+    "width": 304,
+    "height": 456
+  },
+  "runtimePlacement": {
+    "x": 180,
+    "y": 320,
+    "originX": 0.5,
+    "originY": 0.5
+  },
+  "source": {
+    "master": "visual-references/ui-018-reward-coupon-master-v2.png",
+    "approvedMasterSha256": "b9c7e37d7fd8abb0a223bf6d322205a2190577373659374dcb57d00862e921b0",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "transparentBackground": true,
+    "alpha": "binary"
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v2.png",
+    "dimensions": {
+      "width": 304,
+      "height": 456
+    },
+    "sha256": "4630c84db87979cf416a580d5dc93d51ac3c24d21636859a7c67a44a77ced568",
+    "phaserTextureFilter": "NEAREST",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v2.py",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none after approval"
+  },
+  "production": {
+    "designMaster": "visual-references/ui-018-reward-coupon-master-v2.png",
+    "designMasterSha256": "b9c7e37d7fd8abb0a223bf6d322205a2190577373659374dcb57d00862e921b0",
+    "buildScript": "scripts/build_reward_coupon_v2.py",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "4630c84db87979cf416a580d5dc93d51ac3c24d21636859a7c67a44a77ced568"
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "Phaser runtime UI",
+    "tearOffText": "Phaser runtime UI",
+    "codeField": {
+      "x": 153,
+      "y": 305,
+      "width": 174,
+      "height": 44
+    },
+    "copyButton": {
+      "x": 270,
+      "y": 305,
+      "width": 44,
+      "height": 44
+    },
+    "tearOffTextCenter": {
+      "x": 180,
+      "y": 468
+    }
+  }
+}
