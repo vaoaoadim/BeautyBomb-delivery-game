@@ -877,6 +877,13 @@ export class GreyboxScene extends Phaser.Scene {
       .setVisible(false)
       .setDepth(depth.cta)
       .setScrollFactor(0);
+    this.deliveryClaim
+      .setInteractive({
+        hitArea: new Phaser.Geom.Rectangle(-84, -24, 168, 48),
+        hitAreaCallback: Phaser.Geom.Rectangle.Contains,
+        useHandCursor: true,
+      })
+      .on("pointerdown", () => this.claimDeliveryReward());
   }
 
   private createFinaleFadeOverlay(): void {
