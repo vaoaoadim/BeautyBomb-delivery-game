@@ -217,8 +217,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
   },
   rewardCoupon: {
-    textureKey: "delivery-reward-coupon-v2",
-    path: "/assets/game/ui/ui-018-reward-coupon-v2.png",
+    textureKey: "delivery-reward-coupon-v3",
+    path: "/assets/game/ui/ui-018-reward-coupon-v3.png",
   },
 });
 
