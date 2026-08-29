@@ -1,0 +1,91 @@
+{
+  "assetId": "UI-018",
+  "version": "v5",
+  "asset": "Owner-provided BeautyBomb delivery reward coupon",
+  "status": "integrated",
+  "canvas": {
+    "width": 304,
+    "height": 456
+  },
+  "runtimePlacement": {
+    "x": 180,
+    "y": 320,
+    "originX": 0.5,
+    "originY": 0.5
+  },
+  "source": {
+    "path": "visual-references/ui-018-reward-coupon-source-v5.jpeg",
+    "sha256": "af2e2f28dac3415865454f633ba9ed1ba52c057cf3fa21a13951215523dfa47d",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "role": "sole visual source supplied by the owner"
+  },
+  "master": {
+    "path": "visual-references/ui-018-reward-coupon-master-v5.png",
+    "sha256": "dd811fb66380a5da2233500b9eb3ad8fcfbc9e0d3aa6471cbbb31900653cc7f0",
+    "pixelSha256": "df0577ffc930bea89c2ffa82841629d9704a185e88ebb1dbd68dc745d41c3d16",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "transparentBackground": true,
+    "alpha": "binary; exterior border-connected near-white component only"
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v5.png",
+    "sha256": "5affdadb30139e1b27d8820321d61f5c78f51251ce42e7e62c775705cd9c0285",
+    "pixelSha256": "adfc9cc16ff6b83c6800376b1d9a39f6260ac8fb35af90c9bf6e6dc2ad67d875",
+    "dimensions": {
+      "width": 304,
+      "height": 456
+    },
+    "phaserTextureFilter": "nearest",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "wordmark": {
+    "text": "beautybomb",
+    "logicalBounds": {
+      "x": 76,
+      "y": 100,
+      "width": 151,
+      "height": 15
+    },
+    "logicalTop": 100,
+    "style": "UI-009 yellow face, violet outline, pink lower-right extrusion, cyan-white highlight",
+    "font": "Press Start 2P"
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v5.py",
+    "exteriorRemoval": "border-connected near-white flood fill; enclosed light pixels preserved",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "antialiasing": false
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "unchanged live Phaser and DOM accessibility UI",
+    "tearOffArea": "empty",
+    "codeField": {
+      "x": 154,
+      "y": 305,
+      "width": 150,
+      "height": 44
+    },
+    "copyButton": {
+      "x": 259,
+      "y": 305,
+      "width": 44,
+      "height": 44
+    }
+  }
+}

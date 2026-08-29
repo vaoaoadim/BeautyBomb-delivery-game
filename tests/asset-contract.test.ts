@@ -27,9 +27,10 @@ import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.js
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
 import hudSoundMetadata from "../public/assets/game/ui/ui-012-sound-button-v2.json";
 import pauseCalloutMetadata from "../public/assets/game/ui/ui-015-pause-callout-v2.json";
+import defeatCalloutMetadata from "../public/assets/game/ui/ui-006-defeat-callout-v1.json";
 import deliveryCalloutMetadata from "../public/assets/game/ui/ui-016-delivery-callout-v5.json";
 import deliveryClaimMetadata from "../public/assets/game/ui/ui-017-claim-v1.json";
-import rewardCouponMetadata from "../public/assets/game/ui/ui-018-reward-coupon-v2.json";
+import rewardCouponMetadata from "../public/assets/game/ui/ui-018-reward-coupon-v5.json";
 import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
 import deliveryGirlMetadata from "../public/assets/game/characters/chr-003-lowpoly-recipient-v1.json";
@@ -601,25 +602,60 @@ describe("approved-master asset contract", () => {
     });
     expect(rewardCouponMetadata).toMatchObject({
       assetId: "UI-018",
-      version: "v2",
+      version: "v5",
       status: "integrated",
       canvas: { width: 304, height: 456 },
       runtimePlacement: { x: 180, y: 320, originX: 0.5, originY: 0.5 },
-      production: {
-        designMaster: "visual-references/ui-018-reward-coupon-master-v2.png",
-        buildScript: "scripts/build_reward_coupon_v2.py",
-        offlineResizeCount: 1,
-        resizeFilter: "nearest-neighbor",
-        paletteQuantization: false,
+      master: {
+        path: "visual-references/ui-018-reward-coupon-master-v5.png",
+        transparentBackground: true,
+        alpha: "binary; exterior border-connected near-white component only",
+      },
+      runtime: {
+        path: "public/assets/game/ui/ui-018-reward-coupon-v5.png",
+        dimensions: { width: 304, height: 456 },
         phaserTextureFilter: "nearest",
       },
+      wordmark: {
+        text: "beautybomb",
+        logicalTop: 100,
+      },
+      build: {
+        buildScript: "scripts/build_reward_coupon_v5.py",
+        resizeCount: 1,
+        resizeFilter: "nearest-neighbor",
+      },
+      liveOverlay: {
+        couponCode: "XQZ-20476",
+        tearOffArea: "empty",
+      },
     });
-    expect(rewardCouponMetadata.production.designMasterSha256).toMatch(
+    expect(rewardCouponMetadata.master.sha256).toMatch(
       /^[a-f0-9]{64}$/,
     );
-    expect(rewardCouponMetadata.production.runtimeSha256).toMatch(
+    expect(rewardCouponMetadata.runtime.sha256).toMatch(
       /^[a-f0-9]{64}$/,
     );
+    expect(defeatCalloutMetadata).toMatchObject({
+      assetId: "UI-006",
+      version: "v1",
+      canvas: { width: 332, height: 272 },
+      copy: "ДТП!\nДавай еще раз!",
+      font: { family: "Press Start 2P", sizePx: 15 },
+      production: {
+        buildScript: "scripts/build_defeat_callout_v1.py",
+        styleSource: "UI-015 v2 exact panel geometry and palette",
+        offlineResizeCount: 0,
+        antialiasing: false,
+        phaserTextureFilter: "nearest",
+      },
+      runtime: {
+        center: { x: 180, y: 318 },
+        restartButtonCenter: { x: 180, y: 394 },
+        restartButtonLabel: "заново",
+        restartFlow: "existing resetRun",
+      },
+    });
     expect(deliveryDestinationCityMetadata).toMatchObject({
       assetId: "ENV-009",
       version: "v3",

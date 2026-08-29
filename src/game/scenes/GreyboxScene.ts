@@ -207,6 +207,15 @@ const PAUSE_ASSETS = Object.freeze({
   },
 });
 
+const DEFEAT_ASSETS = Object.freeze({
+  callout: {
+    textureKey: "defeat-callout-v1",
+    path: "/assets/game/ui/ui-006-defeat-callout-v1.png",
+    x: 180,
+    y: 318,
+  },
+});
+
 const DELIVERY_ASSETS = Object.freeze({
   destinationCity: {
     textureKey: "delivery-destination-city-v3",
@@ -231,8 +240,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
   },
   rewardCoupon: {
-    textureKey: "delivery-reward-coupon-v2",
-    path: "/assets/game/ui/ui-018-reward-coupon-v2.png",
+    textureKey: "delivery-reward-coupon-v5",
+    path: "/assets/game/ui/ui-018-reward-coupon-v5.png",
   },
 });
 
@@ -264,86 +273,7 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   codeFieldHeight: 44,
   copyButtonX: 259,
   copyButtonY: 305,
-  tearOffTextY: 468,
-  tearOffTextMaxWidth: 232,
-  brandTitleY: 148,
-  brandTitleCropX: 0,
-  brandTitleCropWidth: 136,
-  brandTitleCropHeight: 28,
 });
-
-type CouponPatternKey = "bombEmblem" | "burstSeal" | "kaleidoscopeTile";
-
-interface CouponPatternPlacement {
-  readonly key: CouponPatternKey;
-  readonly x: number;
-  readonly y: number;
-  readonly pixelSize: number;
-}
-
-const COUPON_PATTERN_COLORS: Readonly<Record<string, number>> = Object.freeze({
-  C: 0x00b7d6,
-  N: 0x1e1d3e,
-  P: 0xff4fab,
-  Y: 0xffef5c,
-});
-
-// This is the fully opaque core of the stepped ticket, in scene coordinates.
-// Keeping every decorative raster inside it avoids transparent edge pixels.
-const COUPON_PATTERN_SAFE_BOUNDS = Object.freeze({
-  left: 64,
-  top: 134,
-  right: 296,
-  bottom: 411,
-});
-
-const COUPON_PATTERN_GLYPHS: Readonly<Record<CouponPatternKey, readonly string[]>> =
-  Object.freeze({
-    bombEmblem: [
-      ".....Y...",
-      "....Y....",
-      "...NN....",
-      "..NNNN...",
-      ".NNPNN...",
-      ".NNNNNN..",
-      "..NNNN...",
-      "...NN....",
-    ],
-    burstSeal: [
-      "Y...P...Y",
-      ".Y..P..Y.",
-      "..Y.P.Y..",
-      "...YCY...",
-      "PPCCNCCPP",
-      "...YCY...",
-      "..Y.P.Y..",
-      ".Y..P..Y.",
-      "Y...P...Y",
-    ],
-    kaleidoscopeTile: [
-      "NNNNNNN",
-      "NYYPYYN",
-      "NYCPCYN",
-      "NPPCPPN",
-      "NYCPCYN",
-      "NYYPYYN",
-      "NNNNNNN",
-    ],
-  });
-
-const COUPON_PATTERN_PLACEMENTS: readonly CouponPatternPlacement[] = Object.freeze([
-  { key: "bombEmblem", x: 70, y: 134, pixelSize: 3 },
-  { key: "bombEmblem", x: 263, y: 134, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 68, y: 178, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 271, y: 178, pixelSize: 3 },
-  { key: "burstSeal", x: 167, y: 202, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 68, y: 240, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 271, y: 240, pixelSize: 3 },
-  { key: "bombEmblem", x: 70, y: 356, pixelSize: 3 },
-  { key: "bombEmblem", x: 263, y: 356, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 68, y: 390, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 271, y: 390, pixelSize: 3 },
-]);
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
   "pink-hatchback": {
@@ -414,6 +344,7 @@ export class GreyboxScene extends Phaser.Scene {
   private couponCopyAccessibleButton: HTMLButtonElement | null = null;
   private couponCopyAnnouncement: HTMLSpanElement | null = null;
   private pauseOverlay!: Phaser.GameObjects.Container;
+  private defeatOverlay!: Phaser.GameObjects.Container;
   private utilityControls: Phaser.GameObjects.Sprite[] = [];
   private soundControl: Phaser.GameObjects.Sprite | null = null;
   private soundMuteSlash: Phaser.GameObjects.Container | null = null;
@@ -561,6 +492,10 @@ export class GreyboxScene extends Phaser.Scene {
       PAUSE_ASSETS.callout.path,
     );
     this.load.image(
+      DEFEAT_ASSETS.callout.textureKey,
+      DEFEAT_ASSETS.callout.path,
+    );
+    this.load.image(
       DELIVERY_ASSETS.destinationCity.textureKey,
       DELIVERY_ASSETS.destinationCity.path,
     );
@@ -632,6 +567,7 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
       PAUSE_ASSETS.callout.textureKey,
+      DEFEAT_ASSETS.callout.textureKey,
       DELIVERY_ASSETS.destinationCity.textureKey,
       DELIVERY_ASSETS.girl.textureKey,
       DELIVERY_ASSETS.callout.textureKey,
@@ -663,6 +599,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.createIntroOverlay();
     this.createOutcomeOverlay();
     this.createPauseOverlay();
+    this.createDefeatOverlay();
     this.createFinaleFadeOverlay();
     this.bindKeyboard();
     this.bindIntroPointerInput();
@@ -684,6 +621,8 @@ export class GreyboxScene extends Phaser.Scene {
         this.onReducedMotionChange,
       );
       this.reducedMotionMediaQuery = null;
+      this.pauseOverlay?.setVisible(false);
+      this.defeatOverlay?.setVisible(false);
     });
   }
 
@@ -1779,20 +1718,6 @@ export class GreyboxScene extends Phaser.Scene {
         DELIVERY_ASSETS.rewardCoupon.textureKey,
       )
       .setOrigin(0.5);
-    const couponPatternLayer = this.createCouponPatternLayer();
-    const couponBrandTitle = this.add
-      .image(
-        COUPON_POPUP_LAYOUT.centerX - COUPON_POPUP_LAYOUT.brandTitleCropWidth / 2,
-        COUPON_POPUP_LAYOUT.brandTitleY,
-        HUD_ASSETS.title.textureKey,
-      )
-      .setOrigin(0, 0.5)
-      .setCrop(
-        COUPON_POPUP_LAYOUT.brandTitleCropX,
-        0,
-        COUPON_POPUP_LAYOUT.brandTitleCropWidth,
-        COUPON_POPUP_LAYOUT.brandTitleCropHeight,
-      );
     const codeFieldShadow = this.add.rectangle(
       COUPON_POPUP_LAYOUT.codeFieldX + 2,
       COUPON_POPUP_LAYOUT.codeFieldY + 3,
@@ -1834,35 +1759,13 @@ export class GreyboxScene extends Phaser.Scene {
       })
       .setOrigin(0.5)
       .setVisible(false);
-    const tearOffText = this.add
-      .text(
-        COUPON_POPUP_LAYOUT.centerX,
-        COUPON_POPUP_LAYOUT.tearOffTextY,
-        "Ваш купон с 20% скидкой\nна любые товары!\nСкопируйте его!",
-        {
-          align: "center",
-          color: "#17162f",
-          fontFamily: "monospace",
-          fontSize: "15px",
-          fontStyle: "bold",
-          lineSpacing: 6,
-          wordWrap: {
-            width: COUPON_POPUP_LAYOUT.tearOffTextMaxWidth,
-            useAdvancedWrap: true,
-          },
-        },
-      )
-      .setOrigin(0.5);
     this.couponPanel = this.add.container(0, 0, [
       couponBackground,
-      couponPatternLayer,
-      couponBrandTitle,
       codeFieldShadow,
       codeField,
       codeText,
       this.couponCopyButton,
       this.couponCopyFeedback,
-      tearOffText,
     ]);
     this.couponPanel.setVisible(false);
 
@@ -1878,46 +1781,6 @@ export class GreyboxScene extends Phaser.Scene {
       .setDepth(RENDER_DEPTH.overlay)
       .setScrollFactor(0)
       .setVisible(false);
-  }
-
-  private createCouponPatternLayer(): Phaser.GameObjects.Container {
-    const pixels: Phaser.GameObjects.Rectangle[] = [];
-
-    for (const placement of COUPON_PATTERN_PLACEMENTS) {
-      const glyph = COUPON_PATTERN_GLYPHS[placement.key];
-      const glyphWidth = Math.max(...glyph.map((row) => row.length)) * placement.pixelSize;
-      const glyphHeight = glyph.length * placement.pixelSize;
-      if (
-        placement.x < COUPON_PATTERN_SAFE_BOUNDS.left ||
-        placement.y < COUPON_PATTERN_SAFE_BOUNDS.top ||
-        placement.x + glyphWidth > COUPON_PATTERN_SAFE_BOUNDS.right ||
-        placement.y + glyphHeight > COUPON_PATTERN_SAFE_BOUNDS.bottom
-      ) {
-        throw new Error(`Coupon decoration ${placement.key} exceeds the opaque ticket core.`);
-      }
-      for (const [row, glyphRow] of glyph.entries()) {
-        for (const [column, symbol] of Array.from(glyphRow).entries()) {
-          const color = COUPON_PATTERN_COLORS[symbol];
-          if (color === undefined) {
-            continue;
-          }
-          pixels.push(
-            this.add
-              .rectangle(
-                placement.x + column * placement.pixelSize,
-                placement.y + row * placement.pixelSize,
-                placement.pixelSize,
-                placement.pixelSize,
-                color,
-                1,
-              )
-              .setOrigin(0),
-          );
-        }
-      }
-    }
-
-    return this.add.container(0, 0, pixels);
   }
 
   private createCouponCopyButton(x: number, y: number): Phaser.GameObjects.Container {
@@ -2274,6 +2137,39 @@ export class GreyboxScene extends Phaser.Scene {
       .setVisible(false);
   }
 
+  private createDefeatOverlay(): void {
+    const shade = this.add
+      .rectangle(
+        GAME_VIEWPORT.width / 2,
+        GAME_VIEWPORT.height / 2,
+        GAME_VIEWPORT.width,
+        GAME_VIEWPORT.height,
+        COLORS.navy,
+        0.78,
+      )
+      .setInteractive();
+    const callout = this.add.image(
+      DEFEAT_ASSETS.callout.x,
+      DEFEAT_ASSETS.callout.y,
+      DEFEAT_ASSETS.callout.textureKey,
+    );
+    const restartButton = this.createPauseMenuButton(
+      394,
+      "заново",
+      () => this.resetRun(),
+    );
+
+    this.defeatOverlay = this.add.container(0, 0, [
+      shade,
+      callout,
+      restartButton,
+    ]);
+    this.defeatOverlay
+      .setDepth(RENDER_DEPTH.overlay + 10)
+      .setScrollFactor(0)
+      .setVisible(false);
+  }
+
   private createPauseMenuButton(
     y: number,
     label: string,
@@ -2535,13 +2431,8 @@ export class GreyboxScene extends Phaser.Scene {
       this.player.stop();
       this.player.setFrame(0);
       this.hideCouponReward();
-      this.promptTitle.setText("DELIVERY FAILED");
-      this.promptBody.setText("No lives left.\nTry the route again.");
-      this.promptPanel.setVisible(true);
-      this.promptTitle.setVisible(true);
-      this.promptBody.setVisible(true);
-      this.promptButton.setText("RETRY").setPosition(180, 382);
-      this.promptOverlay.setVisible(true);
+      this.promptOverlay.setVisible(false);
+      this.defeatOverlay.setVisible(true);
     }
   }
 
@@ -2549,6 +2440,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.stopGameplayMusic();
     this.isPaused = false;
     this.pauseOverlay.setVisible(false);
+    this.defeatOverlay.setVisible(false);
     this.setUtilityControlsVisible(true);
     this.tweens.resumeAll();
     this.tweens.killTweensOf(this.player);
