@@ -1,0 +1,57 @@
+{
+  "assetId": "ENV-010",
+  "version": "v1",
+  "status": "integrated",
+  "texture": "env-010-control-panel-cobblestone-v1.png",
+  "canvas": {
+    "width": 512,
+    "height": 128
+  },
+  "paletteSource": {
+    "runtime": "public/assets/game/environment/env-006-road-v6.png",
+    "sampledRows": [
+      0,
+      5,
+      388,
+      397
+    ],
+    "role": "neutral white road curb"
+  },
+  "production": {
+    "designMaster": "visual-references/env-010-control-panel-cobblestone-master-v1.png",
+    "designMasterSha256": "c49f7f58a0b37f42e846af98de51f777b24358d4bf2e7e520d886be59074da92",
+    "buildScript": "scripts/build_control_panel_cobblestone_v1.py",
+    "assetMode": "authored-low-resolution-pixel-art",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "paletteQuantization": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "c49f7f58a0b37f42e846af98de51f777b24358d4bf2e7e520d886be59074da92"
+  },
+  "seamContract": {
+    "mode": "periodic-wrap-aware-cobblestone",
+    "loopPeriodTexturePx": 512,
+    "edgeMismatchRows": {
+      "cycleWrap": 0
+    },
+    "mirrored": false,
+    "review": "visual-references/qa/env-010-control-panel-cobblestone-v1-seam-review.png",
+    "reviewCopies": 3
+  },
+  "runtime": {
+    "position": {
+      "x": 0,
+      "y": 520
+    },
+    "viewport": {
+      "width": 360,
+      "height": 120
+    },
+    "roadOverlapPx": 2,
+    "fixedToCamera": true,
+    "displaySpeedPxPerSecond": 92.16,
+    "speedMultiplier": 1.28,
+    "reducedMotion": "freeze",
+    "layering": "below UI-004 controls; directly adjacent to road"
+  }
+}

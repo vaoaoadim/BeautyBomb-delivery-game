@@ -147,6 +147,7 @@ Layer stack from back to front:
 | Coherent city | `0.56` | varied neighborhood facades, medium blocks, restrained skyline, trees, and sidewalk as one composition | `2048 × 512` approved-alpha POT cycle |
 | Road markings | `1.00` | approved v3 lane marks, full-height asphalt, and white top/bottom curbs | `1792 × 406` panorama in a `2048 × 512` POT cycle |
 | Foreground accents | `1.15` | control-safe neutral pavement | `1792 × 128` panorama in a `2048 × 128` POT cycle |
+| Control-panel cobblestone | `1.28` | simple curb-gray pixel pavers behind the fixed lane controls | `512 × 128` direct POT cycle, clipped to `360 × 118` UI panel |
 
 Rules:
 
@@ -184,7 +185,7 @@ Rules:
 - Three hot-pink sticker hearts sit at top-left without a `LIVES` label; lost lives switch to the matching pale-violet empty frame instead of disappearing.
 - The `324 × 16` progress bar remains across the upper safe area: turquoise base, acid-yellow fill, deep-violet stepped frame, one small end sparkle, and a white pixel highlight at the live fill edge.
 - Yellow touch buttons retain their native `76 × 48` pixel-art frames and separate up/down normal and pressed states, but render at `1.5×` with matching `114 × 72` hit areas. The v2 treatment uses a clean yellow face, solid black arrow, stepped black frame, and one restrained pink extrusion. Down is centered at `111, 572` on the left; up is centered at `249, 572` on the right, leaving a `24 px` gap between buttons and `32 px` of free space below the `y=522–640` control panel.
-- The fixed `360 × 118` lower control console begins at `y=522`, uses the courier cyan field with a thin yellow/violet/cyan top edge and no `MOVE` label.
+- The fixed lower control console ends at the bottom of the viewport. `ENV-010` fills it with simple curb-gray cobblestone and overlaps the road by exactly `2 px`, so no underlay or color strip can appear at the join. The cobblestone starts only with active gameplay, pauses with the existing parallax lifecycle, freezes under reduced motion, and never moves the buttons or their `114 × 72` hit areas.
 - `UI-010` v2 and `UI-012` v2 are compact top-right `32 × 32` yellow utility controls with black icons, a dark stepped frame, and restrained pink extrusion. Pause sits at `x=332, y=32`; sound sits directly below at `x=332, y=78`. Both use `44 × 44` hit areas; the visible gap and hit areas remain separate from the title and progress bar. Pause uses the existing pause flow. During gameplay, sound toggles the background track and its muted state adds a crisp red seven-step pixel slash over the existing icon without moving, scaling, redrawing, or changing the hit area of the approved button. Keyboard `P` and `Esc` retain their existing pause entry point.
 - The title stays horizontally centered at `x=180, y=38`.
 - The game uses no decorative outer frame; the logical `360 × 640` canvas remains visually unframed against the host background.

@@ -13,6 +13,7 @@ import environmentSkyMetadata from "../public/assets/game/environment/env-001-sk
 import environmentCoherentCityMetadata from "../public/assets/game/environment/env-004-neighborhood-city-v8.json";
 import environmentRoadMetadata from "../public/assets/game/environment/env-006-road-v6.json";
 import environmentForegroundMetadata from "../public/assets/game/environment/env-008-foreground-accents-v5.json";
+import controlPanelCobblestoneMetadata from "../public/assets/game/environment/env-010-control-panel-cobblestone-v1.json";
 import environmentSkyV4Metadata from "../public/assets/game/environment/env-001-sky-v4.json";
 import environmentRoadV4Metadata from "../public/assets/game/environment/env-006-road-v4.json";
 import environmentForegroundV4Metadata from "../public/assets/game/environment/env-008-foreground-accents-v4.json";
@@ -21,7 +22,6 @@ import environmentNeighborhoodMasterMetadata from "../visual-references/env-001-
 import hudHeartMetadata from "../public/assets/game/ui/ico-001-life-heart-v1.json";
 import hudProgressMetadata from "../public/assets/game/ui/ui-003-progress-bar-v1.json";
 import hudControlsMetadata from "../public/assets/game/ui/ui-004-touch-controls-v2.json";
-import hudPanelMetadata from "../public/assets/game/ui/ui-008-control-panel-v1.json";
 import hudTitleMetadata from "../public/assets/game/ui/ui-009-game-title-v1.json";
 import hudPauseMetadata from "../public/assets/game/ui/ui-010-pause-button-v2.json";
 import hudExitMetadata from "../public/assets/game/ui/ui-011-exit-button-v1.json";
@@ -344,7 +344,6 @@ describe("approved-master asset contract", () => {
       [hudHeartMetadata, "scripts/build_hud_ui_v1.py"],
       [hudProgressMetadata, "scripts/build_hud_ui_v1.py"],
       [hudControlsMetadata, "scripts/build_touch_controls_v2.py"],
-      [hudPanelMetadata, "scripts/build_hud_ui_v1.py"],
       [hudTitleMetadata, "scripts/build_hud_ui_v1.py"],
       [hudPauseMetadata, "scripts/build_utility_buttons_v2.py"],
       [hudExitMetadata, "scripts/build_hud_ui_v1.py"],
@@ -418,12 +417,34 @@ describe("approved-master asset contract", () => {
         bottomClearancePx: 32,
       },
     });
-    expect(hudPanelMetadata).toMatchObject({
-      assetId: "UI-008",
-      canvas: { width: 360, height: 118 },
+    expect(controlPanelCobblestoneMetadata).toMatchObject({
+      assetId: "ENV-010",
+      version: "v1",
+      canvas: { width: 512, height: 128 },
+      seamContract: {
+        mode: "periodic-wrap-aware-cobblestone",
+        loopPeriodTexturePx: 512,
+        edgeMismatchRows: { cycleWrap: 0 },
+        mirrored: false,
+        reviewCopies: 3,
+      },
       runtime: {
-        position: { x: 0, y: 522 },
+        position: { x: 0, y: 520 },
+        viewport: { width: 360, height: 120 },
+        roadOverlapPx: 2,
         fixedToCamera: true,
+        displaySpeedPxPerSecond: 92.16,
+        speedMultiplier: 1.28,
+        reducedMotion: "freeze",
+        layering: "below UI-004 controls; directly adjacent to road",
+      },
+      production: {
+        buildScript: "scripts/build_control_panel_cobblestone_v1.py",
+        assetMode: "authored-low-resolution-pixel-art",
+        offlineResizeCount: 0,
+        antialiasing: false,
+        paletteQuantization: false,
+        phaserTextureFilter: "nearest",
       },
     });
     expect(hudTitleMetadata).toMatchObject({

@@ -155,12 +155,6 @@ const HUD_ASSETS = Object.freeze({
     upX: 249,
     y: 572,
   },
-  panel: {
-    textureKey: "hud-control-panel-v1",
-    path: "/assets/game/ui/ui-008-control-panel-v1.png",
-    x: 0,
-    y: 522,
-  },
   pause: {
     textureKey: "hud-pause-button-v2",
     path: "/assets/game/ui/ui-010-pause-button-v2.png",
@@ -179,6 +173,17 @@ const HUD_ASSETS = Object.freeze({
     y: 78,
     hitAreaSize: 44,
   },
+});
+
+const CONTROL_PANEL_COBBLESTONE = Object.freeze({
+  textureKey: "environment-control-panel-cobblestone-v1",
+  path: "/assets/game/environment/env-010-control-panel-cobblestone-v1.png",
+  x: 0,
+  y: 520,
+  width: GAME_VIEWPORT.width,
+  height: 120,
+  textureWidth: 512,
+  texturePixelsPerSecond: 92.16,
 });
 
 const INTRO_ASSETS = Object.freeze({
@@ -352,6 +357,8 @@ export class GreyboxScene extends Phaser.Scene {
   private isMusicMuted = false;
   private musicPausedForVisibility = false;
   private environmentLayers: ActiveEnvironmentLayer[] = [];
+  private controlPanelCobblestone!: Phaser.GameObjects.TileSprite;
+  private controlPanelCobblestoneArrivalEndOffsetTexturePx = 0;
   private environmentMode: ParallaxMovementMode = "route-loop";
   private prefersReducedMotion = false;
   private reducedMotionMediaQuery: MediaQueryList | null = null;
@@ -465,7 +472,10 @@ export class GreyboxScene extends Phaser.Scene {
         frameHeight: HUD_ASSETS.controls.frameHeight,
       },
     );
-    this.load.image(HUD_ASSETS.panel.textureKey, HUD_ASSETS.panel.path);
+    this.load.image(
+      CONTROL_PANEL_COBBLESTONE.textureKey,
+      CONTROL_PANEL_COBBLESTONE.path,
+    );
     this.load.image(HUD_ASSETS.title.textureKey, HUD_ASSETS.title.path);
     this.load.spritesheet(HUD_ASSETS.pause.textureKey, HUD_ASSETS.pause.path, {
       frameWidth: HUD_ASSETS.pause.frameWidth,
@@ -562,7 +572,7 @@ export class GreyboxScene extends Phaser.Scene {
       HUD_ASSETS.hearts.textureKey,
       HUD_ASSETS.progress.textureKey,
       HUD_ASSETS.controls.textureKey,
-      HUD_ASSETS.panel.textureKey,
+      CONTROL_PANEL_COBBLESTONE.textureKey,
       HUD_ASSETS.pause.textureKey,
       HUD_ASSETS.sound.textureKey,
       INTRO_ASSETS.callout.textureKey,
@@ -833,6 +843,27 @@ export class GreyboxScene extends Phaser.Scene {
         arrivalEndOffsetTexturePx: layer.arrivalEndOffsetTexturePx,
       });
     }
+    this.animateControlPanelCobblestone(delta, speedScale);
+  }
+
+  private animateControlPanelCobblestone(
+    delta: number,
+    speedScale: number,
+  ): void {
+    if (this.prefersReducedMotion) {
+      return;
+    }
+
+    this.controlPanelCobblestone.tilePositionX = advanceParallaxOffset({
+      currentOffsetTexturePx: this.controlPanelCobblestone.tilePositionX,
+      texturePixelsPerSecond:
+        CONTROL_PANEL_COBBLESTONE.texturePixelsPerSecond,
+      deltaMs: delta * speedScale,
+      mode: this.environmentMode,
+      loopPeriodTexturePx: CONTROL_PANEL_COBBLESTONE.textureWidth,
+      arrivalEndOffsetTexturePx:
+        this.controlPanelCobblestoneArrivalEndOffsetTexturePx,
+    });
   }
 
   private resetEnvironment(): void {
@@ -841,6 +872,8 @@ export class GreyboxScene extends Phaser.Scene {
       layer.sprite.tilePositionX = 0;
       layer.arrivalEndOffsetTexturePx = 0;
     }
+    this.controlPanelCobblestone.tilePositionX = 0;
+    this.controlPanelCobblestoneArrivalEndOffsetTexturePx = 0;
   }
 
   private setEnvironmentMode(mode: ParallaxMovementMode): void {
@@ -852,6 +885,8 @@ export class GreyboxScene extends Phaser.Scene {
     for (const layer of this.environmentLayers) {
       layer.arrivalEndOffsetTexturePx = layer.sprite.tilePositionX;
     }
+    this.controlPanelCobblestoneArrivalEndOffsetTexturePx =
+      this.controlPanelCobblestone.tilePositionX;
   }
 
   private getEnvironmentTextureSpeed(layer: EnvironmentLayerSpec): number {
@@ -1539,14 +1574,16 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private createTouchControls(): void {
-    this.add
-      .image(
-        HUD_ASSETS.panel.x,
-        HUD_ASSETS.panel.y,
-        HUD_ASSETS.panel.textureKey,
+    this.controlPanelCobblestone = this.add
+      .tileSprite(
+        CONTROL_PANEL_COBBLESTONE.x,
+        CONTROL_PANEL_COBBLESTONE.y,
+        CONTROL_PANEL_COBBLESTONE.width,
+        CONTROL_PANEL_COBBLESTONE.height,
+        CONTROL_PANEL_COBBLESTONE.textureKey,
       )
       .setOrigin(0, 0)
-      .setDepth(RENDER_DEPTH.controls - 1)
+      .setDepth(RENDER_DEPTH.controls - 2)
       .setScrollFactor(0);
 
     const up = this.createControlButton(HUD_ASSETS.controls.upX, HUD_ASSETS.controls.y, -1);
