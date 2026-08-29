@@ -26,9 +26,9 @@ describe("delivery finale presentation", () => {
     expect(DELIVERY_FINALE.anchors).toMatchObject({
       girl: { originX: 0.5, originY: 1 },
       character: {
-        doorwayStart: { x: 279, y: 276 },
-        doorstepEnd: { x: 291, y: 284 },
-        productTarget: { x: 291, y: 262 },
+        doorwayStart: { x: 243, y: 276 },
+        doorstepEnd: { x: 255, y: 284 },
+        productTarget: { x: 255, y: 262 },
       },
       callout: { x: 14, y: 338 },
       cta: { x: 180, y: 466 },

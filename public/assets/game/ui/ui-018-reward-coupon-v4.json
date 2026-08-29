@@ -1,0 +1,64 @@
+{
+  "assetId": "UI-018",
+  "version": "v4",
+  "status": "integrated",
+  "asset": "Beauty Bomb reward coupon with full main-body pattern",
+  "canvas": {
+    "width": 304,
+    "height": 456
+  },
+  "source": {
+    "baseRuntime": "public/assets/game/ui/ui-018-reward-coupon-v3.png",
+    "baseRuntimeSha256": "12e8feb8afd2adc65b7e911c81a50e5a4adb3f503952dc5305455e22e2afdae6",
+    "master": "visual-references/ui-018-reward-coupon-master-v4.png",
+    "masterSha256": "0e9cfdabaa27082e502e78d6c17827c2f3c817d49753c642f82bc4f77189831a",
+    "dimensions": {
+      "width": 1216,
+      "height": 1824
+    },
+    "transparentBackground": true,
+    "alpha": "binary"
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v4.png",
+    "dimensions": {
+      "width": 304,
+      "height": 456
+    },
+    "sha256": "d10d1c38d70713109987a2952d1c8b0742b05a0c7950554e4bc37b3397dd90b8",
+    "phaserTextureFilter": "NEAREST",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "brandLayer": {
+    "wordmark": "BEAUTY BOMB",
+    "motifs": [
+      "pixel hearts",
+      "starbursts",
+      "neon ribbons",
+      "cosmic grids",
+      "gamepad sticker",
+      "pixel constellation",
+      "mini-confetti band"
+    ],
+    "patternCoverage": "entire main body, including below the code, stopping above the dotted tear line",
+    "tearLineTop": 328,
+    "tearOffAreaDecorated": false
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v4.py",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor"
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "unchanged",
+    "tearOffText": "unchanged"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "assetId": "UI-018",
+  "version": "v3",
+  "asset": "Beauty Bomb branded delivery reward coupon background",
+  "status": "integrated",
+  "canvas": {
+    "width": 304,
+    "height": 456
+  },
+  "runtimePlacement": {
+    "x": 180,
+    "y": 320,
+    "originX": 0.5,
+    "originY": 0.5
+  },
+  "source": {
+    "baseRuntime": "public/assets/game/ui/ui-018-reward-coupon-v2.png",
+    "baseRuntimeSha256": "4630c84db87979cf416a580d5dc93d51ac3c24d21636859a7c67a44a77ced568",
+    "master": "visual-references/ui-018-reward-coupon-master-v3.png",
+    "masterSha256": "1fd2294358a3262894728f0f4a9e6ecb17ed6f2cfdf1cb16114ec929de3e5327",
+    "dimensions": {
+      "width": 1216,
+      "height": 1824
+    },
+    "transparentBackground": true,
+    "alpha": "binary"
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v3.png",
+    "dimensions": {
+      "width": 304,
+      "height": 456
+    },
+    "sha256": "12e8feb8afd2adc65b7e911c81a50e5a4adb3f503952dc5305455e22e2afdae6",
+    "phaserTextureFilter": "NEAREST",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "brandLayer": {
+    "wordmark": "BEAUTY BOMB",
+    "titleStyle": "UI-009 pixel title at a larger 3px glyph scale",
+    "reference": "https://beautybomb.ru/",
+    "motifs": [
+      "pixel hearts",
+      "starbursts",
+      "neon ribbons",
+      "cosmic grids",
+      "gamepad sticker"
+    ],
+    "tearOffAreaDecorated": false
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v3.py",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none"
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "unchanged Phaser runtime UI",
+    "tearOffText": "unchanged Phaser runtime UI",
+    "codeField": {
+      "x": 154,
+      "y": 305,
+      "width": 150,
+      "height": 44
+    },
+    "copyButton": {
+      "x": 259,
+      "y": 305,
+      "width": 44,
+      "height": 44
+    },
+    "tearOffTextCenter": {
+      "x": 180,
+      "y": 468
+    }
+  }
+}
