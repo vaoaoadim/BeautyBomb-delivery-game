@@ -175,6 +175,11 @@ const HUD_ASSETS = Object.freeze({
   },
 });
 
+const EXIT_CONTROL = Object.freeze({
+  className: "game-exit-stub",
+  ariaLabel: "Закрыть игру",
+});
+
 const CONTROL_PANEL_COBBLESTONE = Object.freeze({
   textureKey: "environment-control-panel-cobblestone-v1",
   path: "/assets/game/environment/env-010-control-panel-cobblestone-v1.png",
@@ -351,6 +356,7 @@ export class GreyboxScene extends Phaser.Scene {
   private pauseOverlay!: Phaser.GameObjects.Container;
   private defeatOverlay!: Phaser.GameObjects.Container;
   private utilityControls: Phaser.GameObjects.Sprite[] = [];
+  private exitControl: HTMLButtonElement | null = null;
   private soundControl: Phaser.GameObjects.Sprite | null = null;
   private soundMuteSlash: Phaser.GameObjects.Container | null = null;
   private gameplayMusic: GameplayMusic | null = null;
@@ -626,6 +632,8 @@ export class GreyboxScene extends Phaser.Scene {
       this.stopPlayerIntroIdleAnimation(false);
       this.unbindGameplayMusicVisibility();
       this.destroyGameplayMusic();
+      this.exitControl?.remove();
+      this.exitControl = null;
       this.reducedMotionMediaQuery?.removeEventListener(
         "change",
         this.onReducedMotionChange,
@@ -1593,6 +1601,7 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private createUtilityControls(): void {
+    this.exitControl = this.createExitControl();
     const pause = this.createUtilityButton(HUD_ASSETS.pause, () => {
       this.pauseRun();
     });
@@ -1603,6 +1612,22 @@ export class GreyboxScene extends Phaser.Scene {
     this.soundMuteSlash = this.createSoundMuteSlash();
     this.utilityControls = [pause, sound];
     this.setUtilityControlsVisible(false);
+  }
+
+  private createExitControl(): HTMLButtonElement {
+    const gameRoot = this.game.canvas.parentElement;
+    if (!gameRoot) {
+      throw new Error("Game root element was not found for the exit placeholder");
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = EXIT_CONTROL.className;
+    button.setAttribute("aria-label", EXIT_CONTROL.ariaLabel);
+    button.hidden = true;
+    button.addEventListener("pointerdown", (event) => event.stopPropagation());
+    gameRoot.appendChild(button);
+    return button;
   }
 
   private createSoundMuteSlash(): Phaser.GameObjects.Container {
@@ -1649,6 +1674,9 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private setUtilityControlsVisible(visible: boolean): void {
+    if (this.exitControl) {
+      this.exitControl.hidden = !visible;
+    }
     for (const button of this.utilityControls) {
       button.setVisible(visible);
     }
