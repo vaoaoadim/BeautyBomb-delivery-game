@@ -1,0 +1,31 @@
+{
+  "assetId": "AUD-001",
+  "version": "v1",
+  "status": "integrated",
+  "asset": "Gameplay background music",
+  "source": {
+    "master": "visual-references/bgm-gameplay-master-v1.mp3",
+    "sha256": "a9f028fdf5ba76dba45e4493fd3901238a30c40c2a6eb3af76d0da56606b1df2",
+    "userProvided": true,
+    "license": "Deployment rights must be confirmed by the owner before a public release"
+  },
+  "runtime": {
+    "path": "public/assets/game/audio/bgm-gameplay-v1.mp3",
+    "format": "MP3",
+    "mpegVersion": "MPEG-1 Layer III",
+    "durationSeconds": 272,
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "averageBitrateKbps": 189,
+    "sha256": "a9f028fdf5ba76dba45e4493fd3901238a30c40c2a6eb3af76d0da56606b1df2",
+    "phaser": {
+      "key": "bgm-gameplay-v1",
+      "loop": true,
+      "volume": 0.35
+    }
+  },
+  "processing": {
+    "transcoded": false,
+    "runtimeCopyMatchesMaster": true
+  }
+}

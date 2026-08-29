@@ -39,6 +39,7 @@ import {
   advanceParallaxOffset,
   type ParallaxMovementMode,
 } from "../systems/parallax";
+import { canPlayGameplayMusic } from "../systems/gameplayMusic";
 
 interface CollisionSpec {
   readonly x: number;
@@ -75,6 +76,10 @@ interface ActiveEnvironmentLayer {
   arrivalEndOffsetTexturePx: number;
 }
 
+interface GameplayMusic extends Phaser.Sound.BaseSound {
+  mute: boolean;
+}
+
 const COLORS = Object.freeze({
   sky: 0x73e6f7,
   cream: 0xf8f1df,
@@ -82,6 +87,7 @@ const COLORS = Object.freeze({
   pink: 0xff4d91,
   navy: 0x17162f,
   danger: 0xff5b5b,
+  brandRed: 0xe30613,
 });
 
 const PLAYER_X = 74;
@@ -105,6 +111,14 @@ const PLAYER_INTRO_IDLE_ASSET = Object.freeze({
   frameHeight: 160,
 });
 const PLAYER_INTRO_IDLE_ANIMATION = "courier-clean-intro-idle-loop";
+
+const GAMEPLAY_AUDIO = Object.freeze({
+  music: {
+    textureKey: "bgm-gameplay-v1",
+    path: "/assets/game/audio/bgm-gameplay-v1.mp3",
+    volume: 0.35,
+  },
+});
 
 const HUD_ASSETS = Object.freeze({
   title: {
@@ -401,6 +415,11 @@ export class GreyboxScene extends Phaser.Scene {
   private couponCopyAnnouncement: HTMLSpanElement | null = null;
   private pauseOverlay!: Phaser.GameObjects.Container;
   private utilityControls: Phaser.GameObjects.Sprite[] = [];
+  private soundControl: Phaser.GameObjects.Sprite | null = null;
+  private soundMuteSlash: Phaser.GameObjects.Container | null = null;
+  private gameplayMusic: GameplayMusic | null = null;
+  private isMusicMuted = false;
+  private musicPausedForVisibility = false;
   private environmentLayers: ActiveEnvironmentLayer[] = [];
   private environmentMode: ParallaxMovementMode = "route-loop";
   private prefersReducedMotion = false;
@@ -440,6 +459,24 @@ export class GreyboxScene extends Phaser.Scene {
 
   private readonly onClaimPointerDown = (): void => {
     this.claimDeliveryReward();
+  };
+
+  private readonly onVisibilityChange = (): void => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    if (document.hidden) {
+      this.musicPausedForVisibility = this.pauseGameplayMusic();
+      return;
+    }
+
+    if (!this.musicPausedForVisibility) {
+      return;
+    }
+
+    this.musicPausedForVisibility = false;
+    this.resumeGameplayMusic();
   };
 
   private readonly onReducedMotionChange = (
@@ -548,6 +585,7 @@ export class GreyboxScene extends Phaser.Scene {
       DELIVERY_ASSETS.rewardCoupon.textureKey,
       DELIVERY_ASSETS.rewardCoupon.path,
     );
+    this.load.audio(GAMEPLAY_AUDIO.music.textureKey, GAMEPLAY_AUDIO.music.path);
   }
 
   public create(): void {
@@ -613,6 +651,8 @@ export class GreyboxScene extends Phaser.Scene {
     this.ensurePlayerDriveAnimation();
     this.ensurePlayerIntroIdleAnimation();
     this.ensureObstacleDriveAnimations();
+    this.createGameplayMusic();
+    this.bindGameplayMusicVisibility();
 
     this.createEnvironment();
     this.createHud();
@@ -637,6 +677,8 @@ export class GreyboxScene extends Phaser.Scene {
       this.stopIntroTransitionTween(false);
       this.stopIntroPulseTween(false);
       this.stopPlayerIntroIdleAnimation(false);
+      this.unbindGameplayMusicVisibility();
+      this.destroyGameplayMusic();
       this.reducedMotionMediaQuery?.removeEventListener(
         "change",
         this.onReducedMotionChange,
@@ -676,6 +718,110 @@ export class GreyboxScene extends Phaser.Scene {
 
     if (this.runState.phase !== previousPhase) {
       this.showPhase(this.runState.phase);
+    }
+  }
+
+  private createGameplayMusic(): void {
+    this.sound.pauseOnBlur = false;
+    this.gameplayMusic = this.sound.add(
+      GAMEPLAY_AUDIO.music.textureKey,
+      {
+        loop: true,
+        volume: GAMEPLAY_AUDIO.music.volume,
+        mute: this.isMusicMuted,
+      },
+    ) as GameplayMusic;
+  }
+
+  private destroyGameplayMusic(): void {
+    const music = this.gameplayMusic;
+    this.gameplayMusic = null;
+    this.musicPausedForVisibility = false;
+    if (!music) {
+      return;
+    }
+
+    music.stop();
+    this.sound.remove(music);
+  }
+
+  private unlockGameplayAudio(): void {
+    const soundManager = this.sound as unknown as {
+      readonly locked: boolean;
+      unlock?: () => void;
+    };
+    if (soundManager.locked) {
+      soundManager.unlock?.();
+    }
+  }
+
+  private startGameplayMusic(): void {
+    const music = this.gameplayMusic;
+    if (!music || !canPlayGameplayMusic(this.runState.phase, this.isPaused, this.isMusicMuted)) {
+      return;
+    }
+
+    if (music.isPlaying || music.isPaused) {
+      music.stop();
+    }
+    music.mute = false;
+    music.play();
+  }
+
+  private pauseGameplayMusic(): boolean {
+    const music = this.gameplayMusic;
+    if (!music?.isPlaying) {
+      return false;
+    }
+
+    music.pause();
+    return true;
+  }
+
+  private resumeGameplayMusic(): void {
+    const music = this.gameplayMusic;
+    if (
+      !music ||
+      !music.isPaused ||
+      !canPlayGameplayMusic(this.runState.phase, this.isPaused, this.isMusicMuted)
+    ) {
+      return;
+    }
+
+    music.resume();
+  }
+
+  private stopGameplayMusic(): void {
+    this.musicPausedForVisibility = false;
+    this.gameplayMusic?.stop();
+  }
+
+  private toggleGameplayMusicMuted(): void {
+    if (this.runState.phase !== "playing" || this.isPaused) {
+      return;
+    }
+
+    this.isMusicMuted = !this.isMusicMuted;
+    if (this.gameplayMusic) {
+      this.gameplayMusic.mute = this.isMusicMuted;
+    }
+    if (this.isMusicMuted) {
+      this.pauseGameplayMusic();
+    } else {
+      this.resumeGameplayMusic();
+    }
+    this.updateSoundControlVisual();
+  }
+
+  private bindGameplayMusicVisibility(): void {
+    if (typeof document !== "undefined") {
+      document.addEventListener("visibilitychange", this.onVisibilityChange);
+    }
+  }
+
+  private unbindGameplayMusicVisibility(): void {
+    if (typeof document !== "undefined") {
+      document.removeEventListener("visibilitychange", this.onVisibilityChange);
     }
   }
 
@@ -1474,9 +1620,27 @@ export class GreyboxScene extends Phaser.Scene {
     const pause = this.createUtilityButton(HUD_ASSETS.pause, () => {
       this.pauseRun();
     });
-    const sound = this.createUtilityButton(HUD_ASSETS.sound);
+    const sound = this.createUtilityButton(HUD_ASSETS.sound, () => {
+      this.toggleGameplayMusicMuted();
+    });
+    this.soundControl = sound;
+    this.soundMuteSlash = this.createSoundMuteSlash();
     this.utilityControls = [pause, sound];
     this.setUtilityControlsVisible(false);
+  }
+
+  private createSoundMuteSlash(): Phaser.GameObjects.Container {
+    const pixels = Array.from({ length: 7 }, (_, index) =>
+      this.add
+        .rectangle(-9 + index * 3, 9 - index * 3, 4, 4, COLORS.brandRed, 1)
+        .setOrigin(0.5),
+    );
+
+    return this.add
+      .container(HUD_ASSETS.sound.x, HUD_ASSETS.sound.y, pixels)
+      .setDepth(RENDER_DEPTH.controls + 2)
+      .setScrollFactor(0)
+      .setVisible(false);
   }
 
   private createUtilityButton(
@@ -1512,6 +1676,13 @@ export class GreyboxScene extends Phaser.Scene {
     for (const button of this.utilityControls) {
       button.setVisible(visible);
     }
+    this.updateSoundControlVisual();
+  }
+
+  private updateSoundControlVisual(): void {
+    this.soundMuteSlash?.setVisible(
+      this.isMusicMuted && Boolean(this.soundControl?.visible),
+    );
   }
 
   private createControlButton(
@@ -2003,6 +2174,7 @@ export class GreyboxScene extends Phaser.Scene {
     }
 
     this.introTransitionActive = true;
+    this.unlockGameplayAudio();
     this.unbindIntroPointerInput();
     this.stopIntroPulseTween(true);
 
@@ -2049,6 +2221,7 @@ export class GreyboxScene extends Phaser.Scene {
     this.player
       .setTexture(PLAYER_ASSET.textureKey, 0)
       .play(PLAYER_DRIVE_ANIMATION);
+    this.startGameplayMusic();
     this.updateHud();
   }
 
@@ -2354,8 +2527,10 @@ export class GreyboxScene extends Phaser.Scene {
     this.displayedPhase = phase;
 
     if (phase === "delivered") {
+      this.stopGameplayMusic();
       this.beginDeliveryFinale();
     } else if (phase === "defeated") {
+      this.stopGameplayMusic();
       this.setUtilityControlsVisible(false);
       this.player.stop();
       this.player.setFrame(0);
@@ -2371,6 +2546,7 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private resetRun(): void {
+    this.stopGameplayMusic();
     this.isPaused = false;
     this.pauseOverlay.setVisible(false);
     this.setUtilityControlsVisible(true);
@@ -2395,6 +2571,7 @@ export class GreyboxScene extends Phaser.Scene {
       .play(PLAYER_DRIVE_ANIMATION);
     this.resetEnvironment();
     this.promptOverlay.setVisible(false);
+    this.startGameplayMusic();
     this.updateHud();
   }
 
@@ -2414,6 +2591,7 @@ export class GreyboxScene extends Phaser.Scene {
       return;
     }
     this.isPaused = true;
+    this.pauseGameplayMusic();
     this.tweens.pauseAll();
     this.player.anims.pause();
     for (const obstacle of this.obstacles) {
@@ -2433,6 +2611,7 @@ export class GreyboxScene extends Phaser.Scene {
     for (const obstacle of this.obstacles) {
       obstacle.sprite.anims.resume();
     }
+    this.resumeGameplayMusic();
   }
 
   private canPause(): boolean {

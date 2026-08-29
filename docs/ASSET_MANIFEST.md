@@ -96,14 +96,22 @@ Environment runtime v8 removes the remaining cyan street-level interval at the c
 | `UI-009` | Gameplay title | `242 × 28`, static | integrated (v1 candidate) |
 | `UI-010` | Top-right pause control | `32 × 32`, `2` idle/pressed frames | integrated (`v2`; v1 retained) |
 | `UI-011` | Top-left exit placeholder | `32 × 32`, `2` idle/pressed frames | retained, not rendered |
-| `UI-012` | Top-right sound placeholder control | `32 × 32`, `2` idle/pressed frames | integrated (`v2`; v1 retained) |
+| `UI-012` | Top-right sound control | `32 × 32`, `2` idle/pressed frames + runtime mute slash | integrated (`v2`; v1 retained) |
 | `UI-013` | Russian intro comic callout | `332 × 207`, static | verified (`v2` runtime; v1 retained) |
 | `UI-014` | Intro `ЖМИ` prompt | `112 × 36`, `3` color frames | verified |
 | `UI-015` | Pause comic callout | `332 × 272`, static | integrated (`v2`; v1 retained) |
 
 Required icon coverage: heart, progress/route, sound, pause, up, down, retry, home, parcel, star, and location pin.
 
-The branded HUD v1 candidate is authored directly on the runtime pixel grid by `scripts/build_hud_ui_v1.py`; it performs no resize, antialiasing, or palette quantization. Runtime files and adjacent metadata live in `public/assets/game/ui/`. `UI-004` v2 is independently authored by `scripts/build_touch_controls_v2.py` on the same immutable `76 × 48` runtime grid: four normal/pressed frames use the project yellow face, solid black arrows, a restrained Beauty Bomb pink extrusion, and no micro-detail. It renders at `1.5×` with matching `114 × 72` hit areas centered at `111/249, 572`; down is left and up is right, while the lower panel keeps `32 px` of bottom clearance. `UI-010` and `UI-012` v2 derive from the generated immutable `visual-references/ui-005-utility-buttons-master-v1.png` through one nearest-neighbor resize per frame. Both retain a `32 × 32` visual grid and a `44 × 44` hit area; pause is at `332, 32`, sound is directly below at `332, 78`. Pause enters the existing pause flow; sound remains the documented visual-only placeholder until a real audio contract exists. Review evidence: `visual-references/ui-utility-buttons-v2-review.png`.
+The branded HUD v1 candidate is authored directly on the runtime pixel grid by `scripts/build_hud_ui_v1.py`; it performs no resize, antialiasing, or palette quantization. Runtime files and adjacent metadata live in `public/assets/game/ui/`. `UI-004` v2 is independently authored by `scripts/build_touch_controls_v2.py` on the same immutable `76 × 48` runtime grid: four normal/pressed frames use the project yellow face, solid black arrows, a restrained Beauty Bomb pink extrusion, and no micro-detail. It renders at `1.5×` with matching `114 × 72` hit areas centered at `111/249, 572`; down is left and up is right, while the lower panel keeps `32 px` of bottom clearance. `UI-010` and `UI-012` v2 derive from the generated immutable `visual-references/ui-005-utility-buttons-master-v1.png` through one nearest-neighbor resize per frame. Both retain a `32 × 32` visual grid and a `44 × 44` hit area; pause is at `332, 32`, sound is directly below at `332, 78`. Pause enters the existing pause flow. During active gameplay `UI-012` toggles the music; its muted state retains the exact approved button and adds only a seven-step pixel red slash above the icon, with unchanged bounds and hit area. Review evidence: `visual-references/ui-utility-buttons-v2-review.png`.
+
+## Batch D1 — audio
+
+| ID | Asset | Runtime format | Status |
+|---|---|---|---|
+| `AUD-001` | User-provided gameplay music | MP3, 48 kHz stereo, 272 s | integrated v1 |
+
+`AUD-001` retains the byte-identical user-provided master `visual-references/bgm-gameplay-master-v1.mp3` and its runtime copy `public/assets/game/audio/bgm-gameplay-v1.mp3`; both have SHA-256 `a9f028fdf5ba76dba45e4493fd3901238a30c40c2a6eb3af76d0da56606b1df2`. No transcoding or additional runtime dependency is introduced. Phaser preloads one looping sound instance at volume `0.35`; it starts only after the user begins an active run and is stopped before delivery, defeat, reward, and coupon states.
 
 `UI-009` is the one-line `BEAUTY BOMB DELIVERY` gameplay title authored by the same deterministic HUD script. Its acid-yellow face, deep-violet outline, hot-pink lower-right extrusion, and small cyan-white highlights are drawn directly on a transparent `242 × 28` runtime grid. Phaser renders the PNG at native size with `NEAREST`, centered at `x=180, y=38`, six logical pixels below the utility-button centerline; no system font or runtime text effect is involved. Review evidence: `visual-references/ui-game-title-v1-review.png`.
 
@@ -148,6 +156,7 @@ public/assets/game/
   vehicles/
   environment/
   ui/
+  audio/
   characters/
   vfx/
 ```
