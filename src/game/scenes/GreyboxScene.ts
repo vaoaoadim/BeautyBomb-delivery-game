@@ -252,7 +252,75 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   copyButtonY: 305,
   tearOffTextY: 468,
   tearOffTextMaxWidth: 232,
+  brandTitleY: 148,
+  brandTitleCropX: 0,
+  brandTitleCropWidth: 136,
+  brandTitleCropHeight: 28,
 });
+
+type CouponPatternKey = "bombEmblem" | "burstSeal" | "kaleidoscopeTile";
+
+interface CouponPatternPlacement {
+  readonly key: CouponPatternKey;
+  readonly x: number;
+  readonly y: number;
+  readonly pixelSize: number;
+}
+
+const COUPON_PATTERN_COLORS: Readonly<Record<string, number>> = Object.freeze({
+  C: 0x00b7d6,
+  N: 0x1e1d3e,
+  P: 0xff4fab,
+  Y: 0xffef5c,
+});
+
+const COUPON_PATTERN_GLYPHS: Readonly<Record<CouponPatternKey, readonly string[]>> =
+  Object.freeze({
+    bombEmblem: [
+      ".....Y...",
+      "....Y....",
+      "...NN....",
+      "..NNNN...",
+      ".NNPNN...",
+      ".NNNNNN..",
+      "..NNNN...",
+      "...NN....",
+    ],
+    burstSeal: [
+      "Y...P...Y",
+      ".Y..P..Y.",
+      "..Y.P.Y..",
+      "...YCY...",
+      "PPCCNCCPP",
+      "...YCY...",
+      "..Y.P.Y..",
+      ".Y..P..Y.",
+      "Y...P...Y",
+    ],
+    kaleidoscopeTile: [
+      "NNNNNNN",
+      "NYYPYYN",
+      "NYCPCYN",
+      "NPPCPPN",
+      "NYCPCYN",
+      "NYYPYYN",
+      "NNNNNNN",
+    ],
+  });
+
+const COUPON_PATTERN_PLACEMENTS: readonly CouponPatternPlacement[] = Object.freeze([
+  { key: "bombEmblem", x: 50, y: 116, pixelSize: 3 },
+  { key: "bombEmblem", x: 283, y: 116, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 48, y: 178, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 291, y: 178, pixelSize: 3 },
+  { key: "burstSeal", x: 167, y: 202, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 48, y: 240, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 291, y: 240, pixelSize: 3 },
+  { key: "bombEmblem", x: 50, y: 356, pixelSize: 3 },
+  { key: "bombEmblem", x: 283, y: 356, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 48, y: 390, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 291, y: 390, pixelSize: 3 },
+]);
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
   "pink-hatchback": {
@@ -1531,6 +1599,20 @@ export class GreyboxScene extends Phaser.Scene {
         DELIVERY_ASSETS.rewardCoupon.textureKey,
       )
       .setOrigin(0.5);
+    const couponPatternLayer = this.createCouponPatternLayer();
+    const couponBrandTitle = this.add
+      .image(
+        COUPON_POPUP_LAYOUT.centerX - COUPON_POPUP_LAYOUT.brandTitleCropWidth / 2,
+        COUPON_POPUP_LAYOUT.brandTitleY,
+        HUD_ASSETS.title.textureKey,
+      )
+      .setOrigin(0, 0.5)
+      .setCrop(
+        COUPON_POPUP_LAYOUT.brandTitleCropX,
+        0,
+        COUPON_POPUP_LAYOUT.brandTitleCropWidth,
+        COUPON_POPUP_LAYOUT.brandTitleCropHeight,
+      );
     const codeFieldShadow = this.add.rectangle(
       COUPON_POPUP_LAYOUT.codeFieldX + 2,
       COUPON_POPUP_LAYOUT.codeFieldY + 3,
@@ -1593,6 +1675,8 @@ export class GreyboxScene extends Phaser.Scene {
       .setOrigin(0.5);
     this.couponPanel = this.add.container(0, 0, [
       couponBackground,
+      couponPatternLayer,
+      couponBrandTitle,
       codeFieldShadow,
       codeField,
       codeText,
@@ -1614,6 +1698,36 @@ export class GreyboxScene extends Phaser.Scene {
       .setDepth(RENDER_DEPTH.overlay)
       .setScrollFactor(0)
       .setVisible(false);
+  }
+
+  private createCouponPatternLayer(): Phaser.GameObjects.Container {
+    const pixels: Phaser.GameObjects.Rectangle[] = [];
+
+    for (const placement of COUPON_PATTERN_PLACEMENTS) {
+      const glyph = COUPON_PATTERN_GLYPHS[placement.key];
+      for (const [row, glyphRow] of glyph.entries()) {
+        for (const [column, symbol] of Array.from(glyphRow).entries()) {
+          const color = COUPON_PATTERN_COLORS[symbol];
+          if (color === undefined) {
+            continue;
+          }
+          pixels.push(
+            this.add
+              .rectangle(
+                placement.x + column * placement.pixelSize,
+                placement.y + row * placement.pixelSize,
+                placement.pixelSize,
+                placement.pixelSize,
+                color,
+                1,
+              )
+              .setOrigin(0),
+          );
+        }
+      }
+    }
+
+    return this.add.container(0, 0, pixels);
   }
 
   private createCouponCopyButton(x: number, y: number): Phaser.GameObjects.Container {

@@ -60,14 +60,41 @@
     "couponCode": "XQZ-20476",
     "codeAndCopyControl": "Phaser runtime UI",
     "tearOffText": "Phaser runtime UI",
+    "brandTitle": {
+      "sourceTexture": "ui-009-game-title-v1.png",
+      "text": "BEAUTY BOMB",
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "width": 136,
+        "height": 28
+      },
+      "center": {
+        "x": 180,
+        "y": 148
+      }
+    },
+    "pixelPatterns": {
+      "rendering": "native-grid Phaser rectangles",
+      "motifs": ["bomb emblem", "burst seal", "framed kaleidoscope tile"],
+      "palette": ["#00B7D6", "#1E1D3E", "#FF4FAB", "#FFEF5C"],
+      "zone": {
+        "top": 112,
+        "right": 307,
+        "bottom": 380,
+        "left": 46
+      },
+      "excludes": ["brand title", "code row", "copy feedback", "perforation", "tear-off copy"],
+      "composition": "mirrored pairs around the exact UI-009 title crop, one central seal, and paired lower marks above the perforation"
+    },
     "codeField": {
-      "x": 153,
+      "x": 154,
       "y": 305,
-      "width": 174,
+      "width": 150,
       "height": 44
     },
     "copyButton": {
-      "x": 270,
+      "x": 259,
       "y": 305,
       "width": 44,
       "height": 44
@@ -75,6 +102,11 @@
     "tearOffTextCenter": {
       "x": 180,
       "y": 468
+    },
+    "tearOffTextStyle": {
+      "fontSize": 15,
+      "lineSpacing": 6,
+      "maxWidth": 232
     }
   }
 }
