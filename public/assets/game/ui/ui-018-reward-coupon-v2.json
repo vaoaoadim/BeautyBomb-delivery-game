@@ -79,10 +79,10 @@
       "motifs": ["bomb emblem", "burst seal", "framed kaleidoscope tile"],
       "palette": ["#00B7D6", "#1E1D3E", "#FF4FAB", "#FFEF5C"],
       "zone": {
-        "top": 112,
-        "right": 307,
-        "bottom": 380,
-        "left": 46
+        "top": 134,
+        "right": 296,
+        "bottom": 411,
+        "left": 64
       },
       "excludes": ["brand title", "code row", "copy feedback", "perforation", "tear-off copy"],
       "composition": "mirrored pairs around the exact UI-009 title crop, one central seal, and paired lower marks above the perforation"

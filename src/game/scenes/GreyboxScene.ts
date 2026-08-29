@@ -274,6 +274,15 @@ const COUPON_PATTERN_COLORS: Readonly<Record<string, number>> = Object.freeze({
   Y: 0xffef5c,
 });
 
+// This is the fully opaque core of the stepped ticket, in scene coordinates.
+// Keeping every decorative raster inside it avoids transparent edge pixels.
+const COUPON_PATTERN_SAFE_BOUNDS = Object.freeze({
+  left: 64,
+  top: 134,
+  right: 296,
+  bottom: 411,
+});
+
 const COUPON_PATTERN_GLYPHS: Readonly<Record<CouponPatternKey, readonly string[]>> =
   Object.freeze({
     bombEmblem: [
@@ -309,17 +318,17 @@ const COUPON_PATTERN_GLYPHS: Readonly<Record<CouponPatternKey, readonly string[]
   });
 
 const COUPON_PATTERN_PLACEMENTS: readonly CouponPatternPlacement[] = Object.freeze([
-  { key: "bombEmblem", x: 50, y: 116, pixelSize: 3 },
-  { key: "bombEmblem", x: 283, y: 116, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 48, y: 178, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 291, y: 178, pixelSize: 3 },
+  { key: "bombEmblem", x: 70, y: 134, pixelSize: 3 },
+  { key: "bombEmblem", x: 263, y: 134, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 68, y: 178, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 271, y: 178, pixelSize: 3 },
   { key: "burstSeal", x: 167, y: 202, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 48, y: 240, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 291, y: 240, pixelSize: 3 },
-  { key: "bombEmblem", x: 50, y: 356, pixelSize: 3 },
-  { key: "bombEmblem", x: 283, y: 356, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 48, y: 390, pixelSize: 3 },
-  { key: "kaleidoscopeTile", x: 291, y: 390, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 68, y: 240, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 271, y: 240, pixelSize: 3 },
+  { key: "bombEmblem", x: 70, y: 356, pixelSize: 3 },
+  { key: "bombEmblem", x: 263, y: 356, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 68, y: 390, pixelSize: 3 },
+  { key: "kaleidoscopeTile", x: 271, y: 390, pixelSize: 3 },
 ]);
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -1705,6 +1714,16 @@ export class GreyboxScene extends Phaser.Scene {
 
     for (const placement of COUPON_PATTERN_PLACEMENTS) {
       const glyph = COUPON_PATTERN_GLYPHS[placement.key];
+      const glyphWidth = Math.max(...glyph.map((row) => row.length)) * placement.pixelSize;
+      const glyphHeight = glyph.length * placement.pixelSize;
+      if (
+        placement.x < COUPON_PATTERN_SAFE_BOUNDS.left ||
+        placement.y < COUPON_PATTERN_SAFE_BOUNDS.top ||
+        placement.x + glyphWidth > COUPON_PATTERN_SAFE_BOUNDS.right ||
+        placement.y + glyphHeight > COUPON_PATTERN_SAFE_BOUNDS.bottom
+      ) {
+        throw new Error(`Coupon decoration ${placement.key} exceeds the opaque ticket core.`);
+      }
       for (const [row, glyphRow] of glyph.entries()) {
         for (const [column, symbol] of Array.from(glyphRow).entries()) {
           const color = COUPON_PATTERN_COLORS[symbol];
