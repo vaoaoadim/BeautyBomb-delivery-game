@@ -1,0 +1,55 @@
+{
+  "assetId": "UI-006",
+  "version": "v2",
+  "status": "integrated",
+  "texture": "ui-006-defeat-callout-v2.png",
+  "canvas": {
+    "width": 332,
+    "height": 272
+  },
+  "copy": "ДТП!\nДавай еще раз!\nВнимательно следи за дорогой и не врезайся.",
+  "renderedCopy": [
+    "ДТП!",
+    "Давай еще раз!",
+    "Внимательно следи",
+    "за дорогой и",
+    "не врезайся."
+  ],
+  "font": {
+    "family": "Press Start 2P",
+    "titleSizePx": 15,
+    "bodySizePx": 15
+  },
+  "production": {
+    "buildScript": "scripts/build_defeat_callout_v2.py",
+    "styleSource": "UI-015 v2 exact panel geometry and palette",
+    "fontSource": "visual-references/fonts/press-start-2p/PressStart2P-Regular.ttf",
+    "fontSha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+    "offlineResizeCount": 0,
+    "antialiasing": false,
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "ab9f479c2fa1ea08807f72b99d544021fd0dd80784772bcab17679026e82a8d9",
+    "runtimePixelSha256": "ef44d4ed6832a8c5efe0bc16809b83a09ba3b2bc4d3148f2c5db358d85aa26e1"
+  },
+  "runtime": {
+    "center": {
+      "x": 180,
+      "y": 318
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "depth": "RENDER_DEPTH.overlay + 10",
+    "dimOverlay": {
+      "color": "#17162f",
+      "alpha": 0.78
+    },
+    "restartButtonCenter": {
+      "x": 180,
+      "y": 394
+    },
+    "restartButtonLabel": "заново",
+    "restartFlow": "existing resetRun"
+  }
+}

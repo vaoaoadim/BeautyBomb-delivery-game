@@ -209,8 +209,8 @@ const PAUSE_ASSETS = Object.freeze({
 
 const DEFEAT_ASSETS = Object.freeze({
   callout: {
-    textureKey: "defeat-callout-v1",
-    path: "/assets/game/ui/ui-006-defeat-callout-v1.png",
+    textureKey: "defeat-callout-v2",
+    path: "/assets/game/ui/ui-006-defeat-callout-v2.png",
     x: 180,
     y: 318,
   },
@@ -240,8 +240,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
   },
   rewardCoupon: {
-    textureKey: "delivery-reward-coupon-v5",
-    path: "/assets/game/ui/ui-018-reward-coupon-v5.png",
+    textureKey: "delivery-reward-coupon-v6",
+    path: "/assets/game/ui/ui-018-reward-coupon-v6.png",
   },
 });
 
@@ -267,12 +267,12 @@ const COUPON_POPUP_LAYOUT = Object.freeze({
   centerY: 320,
   width: 304,
   height: 456,
-  codeFieldX: 154,
-  codeFieldY: 305,
-  codeFieldWidth: 150,
-  codeFieldHeight: 44,
-  copyButtonX: 259,
-  copyButtonY: 305,
+  codeFieldX: 156,
+  codeFieldY: 470,
+  codeFieldWidth: 112,
+  codeFieldHeight: 40,
+  copyButtonX: 240,
+  copyButtonY: 470,
 });
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -1685,7 +1685,7 @@ export class GreyboxScene extends Phaser.Scene {
         align: "center",
         color: "#17162f",
         fontFamily: "monospace",
-        fontSize: "20px",
+        fontSize: "15px",
         fontStyle: "bold",
       })
       .setOrigin(0.5);
@@ -1750,7 +1750,7 @@ export class GreyboxScene extends Phaser.Scene {
       COUPON_POPUP_LAYOUT.copyButtonY,
     );
     this.couponCopyFeedback = this.add
-      .text(COUPON_POPUP_LAYOUT.centerX, 354, "", {
+      .text(COUPON_POPUP_LAYOUT.centerX, 508, "", {
         align: "center",
         color: "#17162f",
         fontFamily: "monospace",
@@ -1784,9 +1784,9 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private createCouponCopyButton(x: number, y: number): Phaser.GameObjects.Container {
-    const shadow = this.add.rectangle(2, 3, 44, 44, 0x982add, 1);
-    const outline = this.add.rectangle(0, 0, 44, 44, COLORS.navy, 1);
-    const face = this.add.rectangle(0, -2, 36, 34, COLORS.pink, 1);
+    const shadow = this.add.rectangle(2, 3, 40, 40, 0x982add, 1);
+    const outline = this.add.rectangle(0, 0, 40, 40, COLORS.navy, 1);
+    const face = this.add.rectangle(0, -2, 32, 30, COLORS.pink, 1);
     this.couponCopyIcon = this.add.container(0, 0, [
       this.add.rectangle(-4, -5, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
       this.add.rectangle(3, 3, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
@@ -1946,7 +1946,7 @@ export class GreyboxScene extends Phaser.Scene {
     button.addEventListener("click", () => void this.copyCouponCode());
     const announcement = document.createElement("span");
     announcement.setAttribute("aria-live", "polite");
-    Object.assign(announcement.style, button.style);
+    announcement.style.cssText = button.style.cssText;
     document.body.append(button, announcement);
     this.couponCopyAccessibleButton = button;
     this.couponCopyAnnouncement = announcement;
