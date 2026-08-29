@@ -1624,7 +1624,7 @@ export class GreyboxScene extends Phaser.Scene {
     button.type = "button";
     button.className = EXIT_CONTROL.className;
     button.setAttribute("aria-label", EXIT_CONTROL.ariaLabel);
-    button.hidden = true;
+    button.hidden = false;
     button.addEventListener("pointerdown", (event) => event.stopPropagation());
     gameRoot.appendChild(button);
     return button;
@@ -1674,9 +1674,6 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private setUtilityControlsVisible(visible: boolean): void {
-    if (this.exitControl) {
-      this.exitControl.hidden = !visible;
-    }
     for (const button of this.utilityControls) {
       button.setVisible(visible);
     }
