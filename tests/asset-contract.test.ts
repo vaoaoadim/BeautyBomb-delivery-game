@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import driveMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-drive-v6.json";
-import introIdleMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v1.json";
-import staticMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-static-v5.json";
+import driveMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-drive-v7.json";
+import introIdleMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v2.json";
+import staticMetadata from "../public/assets/game/vehicles/veh-001-courier-clean-static-v6.json";
 import greenWagonMetadata from "../public/assets/game/vehicles/obs-003-green-wagon-static-v2.json";
 import pinkHatchbackMetadata from "../public/assets/game/vehicles/obs-001-pink-hatchback-static-v2.json";
 import yellowSedanMetadata from "../public/assets/game/vehicles/obs-002-yellow-sedan-static-v2.json";
@@ -34,7 +34,7 @@ import rewardCouponMetadata from "../public/assets/game/ui/ui-018-reward-coupon-
 import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
 import deliveryGirlMetadata from "../public/assets/game/characters/chr-003-lowpoly-recipient-v1.json";
-import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v1.json";
+import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v2.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
 
@@ -45,7 +45,7 @@ describe("approved-master asset contract", () => {
     expect(staticMetadata.collision.includesRoofProduct).toBe(false);
     expect(staticMetadata.production).toMatchObject({
       designMaster:
-        "visual-references/veh-001-courier-clean-concept-v7.png",
+        "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
       buildScript: "scripts/build_courier_clean_asset.py",
       assetMode: "high-detail-pixel-style-raster",
       offlineResizeCount: 1,
@@ -71,8 +71,8 @@ describe("approved-master asset contract", () => {
     expect(driveMetadata.collision.includesRoofProduct).toBe(false);
     expect(driveMetadata.production).toMatchObject({
       designMaster:
-        "visual-references/veh-001-courier-clean-concept-v7.png",
-      approvedStaticTexture: "veh-001-courier-clean-static-v5.png",
+        "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
+      approvedStaticTexture: "veh-001-courier-clean-static-v6.png",
       staticRuntimeUsage: "approval anchor only; not an export input",
       buildScript: "scripts/build_courier_clean_asset.py",
       offlineResizeCountPerFrame: 1,
@@ -99,13 +99,13 @@ describe("approved-master asset contract", () => {
     expect(introIdleMetadata.animation).toMatchObject({
       frameRate: 9,
       loop: true,
-      bodyAndTubeMotion: "matches-drive-v6",
+      bodyAndTubeMotion: "matches-drive-v7",
       wheelHubs: "frozen-from-approved-static-frame",
       firstFrameMatchesApprovedStatic: true,
     });
     expect(introIdleMetadata.production).toMatchObject({
       designMaster:
-        "visual-references/veh-001-courier-clean-concept-v7.png",
+        "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
       buildScript: "scripts/build_courier_clean_asset.py",
       offlineResizeCountPerFrame: 1,
       resizeFilter: "nearest-neighbor",
@@ -430,8 +430,9 @@ describe("approved-master asset contract", () => {
       },
       runtime: {
         position: { x: 0, y: 520 },
-        viewport: { width: 360, height: 120 },
+        viewport: { width: 360, height: 122 },
         roadOverlapPx: 2,
+        bottomOverscanPx: 2,
         fixedToCamera: true,
         displaySpeedPxPerSecond: 92.16,
         speedMultiplier: 1.28,
@@ -584,14 +585,14 @@ describe("approved-master asset contract", () => {
     expect(deliveryProductMetadata).toMatchObject({
       assetId: "PRD-003",
       canvas: { width: 32, height: 64 },
-      orientation: "vertical; approved roof tube rotated clockwise",
+      orientation: "vertical; flip-top roof tube rotated clockwise",
       production: {
-        designMaster: "visual-references/veh-001-courier-clean-concept-v7.png",
-        buildScript: "scripts/build_delivery_product_v1.py",
+        designMaster: "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
+        buildScript: "scripts/build_delivery_product_v2.py",
         offlineResizeCount: 1,
         resizeFilter: "nearest-neighbor",
         phaserTextureFilter: "nearest",
-        runtimeSource: "approved master; not screenshot or runtime sprite",
+        runtimeSource: "versioned master; not screenshot or runtime sprite",
       },
     });
 

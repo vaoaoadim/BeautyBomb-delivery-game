@@ -14,16 +14,16 @@ from build_courier_waterbomb_brand_sprite import (
 )
 
 
-MASTER = ROOT / "visual-references/veh-001-courier-clean-concept-v7.png"
-STATIC_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-static-v5.png"
-STATIC_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-static-v5.json"
-DRIVE_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v6.png"
-DRIVE_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v6.json"
-IDLE_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v1.png"
-IDLE_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v1.json"
-STATIC_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-static-v5-preview-4x.png"
-DRIVE_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-drive-v6-preview-4x.png"
-IDLE_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-intro-idle-v1-preview-4x.png"
+MASTER = ROOT / "visual-references/veh-001-courier-clean-concept-v8-flip-top.png"
+STATIC_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-static-v6.png"
+STATIC_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-static-v6.json"
+DRIVE_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v7.png"
+DRIVE_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v7.json"
+IDLE_OUTPUT = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v2.png"
+IDLE_METADATA = ROOT / "public/assets/game/vehicles/veh-001-courier-clean-intro-idle-v2.json"
+STATIC_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-static-v6-preview-4x.png"
+DRIVE_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-drive-v7-preview-4x.png"
+IDLE_PREVIEW = ROOT / "visual-references/veh-001-courier-clean-intro-idle-v2-preview-4x.png"
 
 FRAME_COUNT = 4
 FRAME_RATE = 9
@@ -77,7 +77,7 @@ def compose_master_frame(
 def save_static_metadata(static: Image.Image) -> None:
     metadata = {
         "id": "VEH-001",
-        "version": 5,
+        "version": 6,
         "texture": STATIC_OUTPUT.name,
         "canvas": {"width": static.width, "height": static.height},
         "visibleBounds": visible_bounds(static),
@@ -111,7 +111,7 @@ def save_static_metadata(static: Image.Image) -> None:
 def save_drive_metadata(frames: list[Image.Image]) -> None:
     metadata = {
         "id": "VEH-001",
-        "version": 6,
+        "version": 7,
         "texture": DRIVE_OUTPUT.name,
         "frame": {"width": CANVAS_SIZE[0], "height": CANVAS_SIZE[1], "count": FRAME_COUNT},
         "frameVisibleBounds": [visible_bounds(frame) for frame in frames],
@@ -153,7 +153,7 @@ def save_intro_idle_metadata(frames: list[Image.Image]) -> None:
     metadata = {
         "id": "VEH-001",
         "variant": "intro-idle-no-wheel-rotation",
-        "version": 1,
+        "version": 2,
         "texture": IDLE_OUTPUT.name,
         "frame": {"width": CANVAS_SIZE[0], "height": CANVAS_SIZE[1], "count": FRAME_COUNT},
         "frameVisibleBounds": [visible_bounds(frame) for frame in frames],
@@ -168,7 +168,7 @@ def save_intro_idle_metadata(frames: list[Image.Image]) -> None:
         "animation": {
             "frameRate": FRAME_RATE,
             "loop": True,
-            "bodyAndTubeMotion": "matches-drive-v6",
+            "bodyAndTubeMotion": "matches-drive-v7",
             "wheelHubs": "frozen-from-approved-static-frame",
             "firstFrameMatchesApprovedStatic": True,
         },

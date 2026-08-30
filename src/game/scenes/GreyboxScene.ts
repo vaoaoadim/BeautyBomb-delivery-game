@@ -94,7 +94,7 @@ const PLAYER_X = 74;
 const OBSTACLE_SPAWN_X = GAME_VIEWPORT.width + 72;
 const PLAYER_ASSET = Object.freeze({
   textureKey: "courier-clean-drive",
-  path: "/assets/game/vehicles/veh-001-courier-clean-drive-v6.png",
+  path: "/assets/game/vehicles/veh-001-courier-clean-drive-v7.png",
   frameWidth: 208,
   frameHeight: 160,
   canvasHeight: 160,
@@ -106,7 +106,7 @@ const PLAYER_ASSET = Object.freeze({
 const PLAYER_DRIVE_ANIMATION = "courier-clean-drive-loop";
 const PLAYER_INTRO_IDLE_ASSET = Object.freeze({
   textureKey: "courier-clean-intro-idle",
-  path: "/assets/game/vehicles/veh-001-courier-clean-intro-idle-v1.png",
+  path: "/assets/game/vehicles/veh-001-courier-clean-intro-idle-v2.png",
   frameWidth: 208,
   frameHeight: 160,
 });
@@ -186,7 +186,7 @@ const CONTROL_PANEL_COBBLESTONE = Object.freeze({
   x: 0,
   y: 520,
   width: GAME_VIEWPORT.width,
-  height: 120,
+  height: 122,
   textureWidth: 512,
   texturePixelsPerSecond: 92.16,
 });
@@ -246,8 +246,8 @@ const DELIVERY_ASSETS = Object.freeze({
     frameHeight: 36,
   },
   product: {
-    textureKey: "delivery-product-v1",
-    path: "/assets/game/products/prd-003-delivery-transfer-v1.png",
+    textureKey: "delivery-product-v2",
+    path: "/assets/game/products/prd-003-delivery-transfer-v2.png",
   },
   rewardCoupon: {
     textureKey: "delivery-reward-coupon-v6",

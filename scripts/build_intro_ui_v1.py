@@ -345,7 +345,7 @@ def build_ready_scene() -> Image.Image:
         paste_rgba(scene, frame, (center_x - 57, 536))
 
     player_sheet = Image.open(
-        ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v6.png"
+        ROOT / "public/assets/game/vehicles/veh-001-courier-clean-drive-v7.png"
     ).convert("RGBA")
     player_scale = 1.22 * 0.5
     player = player_sheet.crop((0, 0, 208, 160)).resize(

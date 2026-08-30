@@ -115,7 +115,7 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 - Turquoise/blue body, facing right.
 - Near side profile with only a narrow front plane, keeping the long side panel dominant.
 - Use only the specified two-line `BEAUTY BOMB` side treatment: acid-yellow lettering (`#FFEF5C`) with a deep-violet outline (`#1E1D3E`) and, if retained by the review candidate, a restrained pink shadow. Do not add flowers, further lettering, or replacement symbols.
-- Waterbomb tube lies horizontally on the roof, cap facing left/back, with no intermediate neck between the cap and body.
+- Waterbomb tube lies horizontally on the roof, its closed flip-top cap facing left/back, with no intermediate neck between the cap and body.
 - Each wheel uses one small triangular pale highlight as a rotation phase marker.
 - Product must be secured by a simple rack or straps so it does not look pasted onto the roof.
 - Silhouette must remain readable at all three lane scales.
@@ -123,7 +123,7 @@ Never place yellow text on white, cyan text on sky cyan, or pink text on purple.
 
 ### Waterbomb tube
 
-- Preserve the reference tube silhouette when shown vertically; in the horizontal gameplay version, use a broad turquoise face-cream body, a wide ribbed white cap, a direct cap-to-body seam, and full-length gradual widening with no toothpaste-like narrow neck or sudden shoulder.
+- Preserve the reference tube silhouette when shown vertically; in the horizontal gameplay version, use a broad turquoise face-cream body, a wide white flip-top cap with a recessed thumb-lift and hinge seam, a direct cap-to-body seam, and full-length gradual widening with no toothpaste-like narrow neck or sudden shoulder.
 - `VEH-001 v6` may retain the reference-derived `WATERBOMB` / `BEAUTY BOMB` package hierarchy because it is part of the owner-requested review candidate. A later standalone hero product still requires its own approval gate.
 - Do not invent claims or packaging copy beyond the approved reference-derived hierarchy.
 - No invented claims or packaging copy.
@@ -185,7 +185,7 @@ Rules:
 - Three hot-pink sticker hearts sit at top-left without a `LIVES` label; lost lives switch to the matching pale-violet empty frame instead of disappearing.
 - The `324 × 16` progress bar remains across the upper safe area: turquoise base, acid-yellow fill, deep-violet stepped frame, one small end sparkle, and a white pixel highlight at the live fill edge.
 - Yellow touch buttons retain their native `76 × 48` pixel-art frames and separate up/down normal and pressed states, but render at `1.5×` with matching `114 × 72` hit areas. The v2 treatment uses a clean yellow face, solid black arrow, stepped black frame, and one restrained pink extrusion. Down is centered at `111, 572` on the left; up is centered at `249, 572` on the right, leaving a `24 px` gap between buttons and `32 px` of free space below the `y=522–640` control panel.
-- The fixed lower control console ends at the bottom of the viewport. `ENV-010` fills it with simple curb-gray cobblestone and overlaps the road by exactly `2 px`, so no underlay or color strip can appear at the join. The cobblestone starts only with active gameplay, pauses with the existing parallax lifecycle, freezes under reduced motion, and never moves the buttons or their `114 × 72` hit areas.
+- The fixed lower control console ends beyond the bottom canvas edge: `ENV-010` fills it with simple curb-gray cobblestone, overlaps the road by exactly `2 px`, and has a clipped `2 px` bottom overscan, so no underlay or color strip can appear at either boundary. The cobblestone starts only with active gameplay, pauses with the existing parallax lifecycle, freezes under reduced motion, and never moves the buttons or their `114 × 72` hit areas.
 - `UI-010` v2 and `UI-012` v2 are compact top-right `32 × 32` yellow utility controls with black icons, a dark stepped frame, and restrained pink extrusion. Pause sits at `x=332, y=32`; sound sits directly below at `x=332, y=78`. Both use `44 × 44` hit areas; the visible gap and hit areas remain separate from the title and progress bar. Pause uses the existing pause flow. During gameplay, sound toggles the background track and its muted state adds a crisp red seven-step pixel slash over the existing icon without moving, scaling, redrawing, or changing the hit area of the approved button. Keyboard `P` and `Esc` retain their existing pause entry point.
 - The exit placeholder is a direct HTML/CSS control rather than the retained pixel-art `UI-011` texture: a simple anti-aliased red `×` with a `1 px` black outline, no background or shadow, at logical center `x=28, y=32`. Its transparent logical `44 × 44` hit target scales with the game surface, stays clear of the title and progress HUD, and intentionally has no exit behavior yet. It remains visible above every game state: intro, active gameplay, pause, finale, and reward screens.
 - The title stays horizontally centered at `x=180, y=38`.

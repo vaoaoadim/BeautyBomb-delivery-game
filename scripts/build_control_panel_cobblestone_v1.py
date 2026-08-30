@@ -19,7 +19,7 @@ COBBLESTONE_METADATA = COBBLESTONE_RUNTIME.with_suffix(".json")
 SEAM_REVIEW = REFERENCE / "qa/env-010-control-panel-cobblestone-v1-seam-review.png"
 
 TEXTURE_SIZE = (512, 128)
-PANEL_SIZE = (360, 118)
+PANEL_SIZE = (360, 120)
 PALETTE = {
     "curb_highlight": (241, 241, 241, 255),
     "curb_face": (196, 196, 196, 255),
@@ -141,6 +141,7 @@ def main() -> None:
                 "position": {"x": 0, "y": 520},
                 "viewport": {"width": PANEL_SIZE[0], "height": PANEL_SIZE[1] + 2},
                 "roadOverlapPx": 2,
+                "bottomOverscanPx": 2,
                 "fixedToCamera": True,
                 "displaySpeedPxPerSecond": 92.16,
                 "speedMultiplier": 1.28,

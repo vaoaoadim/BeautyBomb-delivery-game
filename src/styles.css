@@ -18,12 +18,18 @@ body {
 }
 
 body {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
 }
 
 .app-shell {
   display: grid;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
   min-height: 100dvh;
   place-items: center;
   padding: 12px;
@@ -31,11 +37,17 @@ body {
 
 #game-root {
   position: relative;
-  width: min(100%, 360px);
+  width: min(360px, calc(100vw - 24px), calc(56.25dvh - 13.5px));
   aspect-ratio: 9 / 16;
   overflow: hidden;
   background: #0aaeb8;
   box-shadow: 0 24px 80px rgb(0 0 0 / 35%);
+}
+
+@supports not (height: 100dvh) {
+  #game-root {
+    width: min(360px, calc(100vw - 24px), calc(56.25vh - 13.5px));
+  }
 }
 
 #game-root canvas {

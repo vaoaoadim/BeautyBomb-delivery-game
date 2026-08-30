@@ -45,9 +45,10 @@
     },
     "viewport": {
       "width": 360,
-      "height": 120
+      "height": 122
     },
     "roadOverlapPx": 2,
+    "bottomOverscanPx": 2,
     "fixedToCamera": true,
     "displaySpeedPxPerSecond": 92.16,
     "speedMultiplier": 1.28,
