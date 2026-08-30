@@ -4,10 +4,16 @@ This independent concept can be opened in a portfolio popup through an iframe. T
 
 ## Game URL and build configuration
 
-Open the deployed game with `?embed=portfolio` and build the game with the exact origin of the future portfolio site:
+The public iframe build is hosted at:
 
 ```text
-VITE_PORTFOLIO_PARENT_ORIGIN=https://portfolio.example.com
+https://beautybomb-delivery.vercel.app/?embed=portfolio
+```
+
+Build the game with the exact origin of the portfolio site:
+
+```text
+VITE_PORTFOLIO_PARENT_ORIGIN=https://vao-dev-portfolio.bsdvbk.chatgpt.site
 ```
 
 The value must be an origin, not a path, and must not use `*`. Without it, the game remains safe but the close message is intentionally not sent.
@@ -16,7 +22,7 @@ The value must be an origin, not a path, and must not use `*`. Without it, the g
 
 ```html
 <iframe
-  src="https://GAME-ORIGIN.example/?embed=portfolio"
+  src="https://beautybomb-delivery.vercel.app/?embed=portfolio"
   title="BeautyBomb Delivery — интерактивный игровой концепт"
   allow="autoplay; clipboard-write"
   referrerpolicy="strict-origin-when-cross-origin"
@@ -44,7 +50,7 @@ The host must validate the iframe window, the game origin, and the complete payl
 
 ```ts
 window.addEventListener("message", (event) => {
-  if (event.origin !== "https://GAME-ORIGIN.example") return;
+  if (event.origin !== "https://beautybomb-delivery.vercel.app") return;
   if (event.source !== gameIframe.contentWindow) return;
 
   const message = event.data;

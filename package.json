@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:vercel": "node scripts/clean-vercel-dist.mjs && tsc --noEmit && vite build --mode vercel && node scripts/prepare-vercel-build.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --reporter=dot",
     "test:watch": "vitest",

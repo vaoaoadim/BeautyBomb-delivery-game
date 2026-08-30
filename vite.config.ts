@@ -1,11 +1,19 @@
 import { defineConfig } from "vite";
 
 export default defineConfig(async ({ mode }) => {
-  if (mode === "test") {
+  const isVercelBuild = mode === "vercel";
+  const publicDir: string | false = isVercelBuild ? false : "public";
+
+  if (mode === "test" || isVercelBuild) {
     return {
+      publicDir,
       build: {
-        outDir: "dist",
-        sourcemap: true,
+        emptyOutDir: true,
+        outDir: isVercelBuild ? "dist-vercel" : "dist",
+        sourcemap: !isVercelBuild,
+      },
+      server: {
+        host: "0.0.0.0",
       },
     };
   }

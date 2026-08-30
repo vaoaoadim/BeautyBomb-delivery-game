@@ -81,6 +81,11 @@ Rules:
 
 Preferred production embedding is an iframe-backed widget because it isolates canvas sizing, dependencies, styles, and failures from the client's website.
 
+The public portfolio embed is deployed as a separate static Vite project on
+Vercel. Its response permits framing only by the configured portfolio origin
+through `Content-Security-Policy: frame-ancestors`; the existing Sites build
+remains a standalone publication and is not used as the iframe source.
+
 The future host contract should expose:
 
 - commands: open, close, pause, resume, configure campaign;

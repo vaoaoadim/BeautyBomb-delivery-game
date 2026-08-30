@@ -1,0 +1,13 @@
+.git/
+.openai/
+.wrangler/
+coverage/
+dist/
+dist-vercel/
+docs/
+tests/
+visual-references/
+worker/
+AGENTS.md
+PRODUCT.md
+program.md

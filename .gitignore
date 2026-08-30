@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-vercel/
 coverage/
 .vite/
 *.tsbuildinfo
@@ -7,6 +8,7 @@ coverage/
 .env
 .env.*
 !.env.example
+.vercel/
 .DS_Store
 Thumbs.db
 tmp/
