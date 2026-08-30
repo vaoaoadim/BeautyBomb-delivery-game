@@ -40,6 +40,7 @@ import {
   type ParallaxMovementMode,
 } from "../systems/parallax";
 import { canPlayGameplayMusic } from "../systems/gameplayMusic";
+import { requestPortfolioEmbedClose } from "../../integration/portfolioEmbed";
 
 interface CollisionSpec {
   readonly x: number;
@@ -365,6 +366,7 @@ export class GreyboxScene extends Phaser.Scene {
   private gameplayMusic: GameplayMusic | null = null;
   private isMusicMuted = false;
   private musicPausedForVisibility = false;
+  private musicPausedForEmbed = false;
   private environmentLayers: ActiveEnvironmentLayer[] = [];
   private controlPanelCobblestone!: Phaser.GameObjects.TileSprite;
   private controlPanelCobblestoneArrivalEndOffsetTexturePx = 0;
@@ -423,6 +425,20 @@ export class GreyboxScene extends Phaser.Scene {
     }
 
     this.musicPausedForVisibility = false;
+    this.resumeGameplayMusic();
+  };
+
+  private readonly onPortfolioEmbedActivity = (active: boolean): void => {
+    if (!active) {
+      this.musicPausedForEmbed = this.pauseGameplayMusic();
+      return;
+    }
+
+    if (!this.musicPausedForEmbed) {
+      return;
+    }
+
+    this.musicPausedForEmbed = false;
     this.resumeGameplayMusic();
   };
 
@@ -608,6 +624,10 @@ export class GreyboxScene extends Phaser.Scene {
     this.ensureObstacleDriveAnimations();
     this.createGameplayMusic();
     this.bindGameplayMusicVisibility();
+    this.game.events.on(
+      "portfolio-embed-activity",
+      this.onPortfolioEmbedActivity,
+    );
 
     this.createEnvironment();
     this.createHud();
@@ -634,6 +654,10 @@ export class GreyboxScene extends Phaser.Scene {
       this.stopIntroPulseTween(false);
       this.stopPlayerIntroIdleAnimation(false);
       this.unbindGameplayMusicVisibility();
+      this.game.events.off(
+        "portfolio-embed-activity",
+        this.onPortfolioEmbedActivity,
+      );
       this.destroyGameplayMusic();
       this.exitControl?.remove();
       this.exitControl = null;
@@ -1633,6 +1657,10 @@ export class GreyboxScene extends Phaser.Scene {
     button.setAttribute("aria-label", EXIT_CONTROL.ariaLabel);
     button.hidden = false;
     button.addEventListener("pointerdown", (event) => event.stopPropagation());
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      requestPortfolioEmbedClose();
+    });
     gameRoot.appendChild(button);
     return button;
   }

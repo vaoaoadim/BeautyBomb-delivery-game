@@ -35,6 +35,10 @@ body {
   padding: 12px;
 }
 
+.game-frame {
+  display: contents;
+}
+
 #game-root {
   position: relative;
   width: min(360px, calc(100vw - 24px), calc(56.25dvh - 13.5px));
@@ -96,4 +100,54 @@ body {
 .game-exit-stub:focus-visible {
   outline: 2px solid #fff3dc;
   outline-offset: 2px;
+}
+
+.portfolio-embed {
+  background: transparent;
+}
+
+.portfolio-embed body {
+  min-width: 0;
+  background: transparent;
+}
+
+.portfolio-embed .app-shell {
+  width: 100vw;
+  min-width: 0;
+  padding: 12px;
+  background: transparent;
+}
+
+.portfolio-embed .game-frame {
+  --embed-frame-width: clamp(3px, 0.8vw, 5px);
+  display: grid;
+  width: min(
+    380px,
+    calc(100vw - 24px),
+    calc((100dvh - 24px) * 9 / 16 + 20px)
+  );
+  padding: var(--embed-frame-width);
+  border: var(--embed-frame-width) solid #1e1d3e;
+  border-radius: 12px;
+  background: #00b7d6;
+  box-shadow:
+    0 0 0 2px #ff4fab,
+    0 0 0 4px #1e1d3e;
+}
+
+.portfolio-embed #game-root {
+  width: min(360px, 100%);
+  max-width: none;
+  justify-self: center;
+  box-shadow: none;
+}
+
+@supports not (height: 100dvh) {
+  .portfolio-embed .game-frame {
+    width: min(
+      380px,
+      calc(100vw - 24px),
+      calc((100vh - 24px) * 9 / 16 + 20px)
+    );
+  }
 }
