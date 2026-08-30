@@ -31,19 +31,17 @@ TITLE_TEXT = "BeautyBomb"
 TITLE_TOP_LOGICAL_PX = 94
 TITLE_FONT_SIZE_LOGICAL_PX = 17
 INFO_LINES = (
-    "Спасибо",
-    "за помощь",
-    "нашему",
-    "курьеру!",
+    "Спасибо за помощь",
+    "нашему курьеру!",
+    "",
     "Скопируйте",
     "подарочный",
-    "промокод",
-    "20% на все",
-    "товары.",
+    "промокод 20%",
+    "на все товары.",
 )
-INFO_TOP_LOGICAL_PX = 132
+INFO_TOP_LOGICAL_PX = 130
 INFO_FONT_SIZE_LOGICAL_PX = 12
-INFO_LINE_HEIGHT_LOGICAL_PX = 16
+INFO_LINE_HEIGHT_LOGICAL_PX = 18
 
 PALETTE = {
     "violet": (30, 29, 62, 255),
