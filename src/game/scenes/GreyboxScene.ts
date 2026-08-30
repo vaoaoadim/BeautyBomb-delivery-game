@@ -250,8 +250,8 @@ const DELIVERY_ASSETS = Object.freeze({
     path: "/assets/game/products/prd-003-delivery-transfer-v2.png",
   },
   rewardCoupon: {
-    textureKey: "delivery-reward-coupon-v6",
-    path: "/assets/game/ui/ui-018-reward-coupon-v6.png",
+    textureKey: "delivery-reward-coupon-v7",
+    path: "/assets/game/ui/ui-018-reward-coupon-v7.png",
   },
 });
 
@@ -275,14 +275,17 @@ const COUPON_CODE = "XQZ-20476";
 const COUPON_POPUP_LAYOUT = Object.freeze({
   centerX: 180,
   centerY: 320,
-  width: 304,
-  height: 456,
-  codeFieldX: 156,
-  codeFieldY: 470,
-  codeFieldWidth: 112,
-  codeFieldHeight: 40,
-  copyButtonX: 240,
-  copyButtonY: 470,
+  width: 332,
+  height: 498,
+  codeFieldX: 154,
+  codeFieldY: 484,
+  codeFieldWidth: 122,
+  codeFieldHeight: 44,
+  copyButtonX: 246,
+  copyButtonY: 484,
+  copyButtonSize: 44,
+  copyButtonHitArea: 48,
+  copyFeedbackY: 526,
 });
 
 const OBSTACLE_ASSETS: Readonly<Record<ObstacleKind, ObstacleAssetSpec>> = {
@@ -1802,7 +1805,7 @@ export class GreyboxScene extends Phaser.Scene {
         align: "center",
         color: "#17162f",
         fontFamily: "monospace",
-        fontSize: "20px",
+        fontSize: "22px",
         fontStyle: "bold",
         letterSpacing: 1,
       })
@@ -1812,7 +1815,7 @@ export class GreyboxScene extends Phaser.Scene {
       COUPON_POPUP_LAYOUT.copyButtonY,
     );
     this.couponCopyFeedback = this.add
-      .text(COUPON_POPUP_LAYOUT.centerX, 508, "", {
+      .text(COUPON_POPUP_LAYOUT.centerX, COUPON_POPUP_LAYOUT.copyFeedbackY, "", {
         align: "center",
         color: "#17162f",
         fontFamily: "monospace",
@@ -1846,9 +1849,10 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   private createCouponCopyButton(x: number, y: number): Phaser.GameObjects.Container {
-    const shadow = this.add.rectangle(2, 3, 40, 40, 0x982add, 1);
-    const outline = this.add.rectangle(0, 0, 40, 40, COLORS.navy, 1);
-    const face = this.add.rectangle(0, -2, 32, 30, COLORS.pink, 1);
+    const { copyButtonSize, copyButtonHitArea } = COUPON_POPUP_LAYOUT;
+    const shadow = this.add.rectangle(2, 3, copyButtonSize, copyButtonSize, 0x982add, 1);
+    const outline = this.add.rectangle(0, 0, copyButtonSize, copyButtonSize, COLORS.navy, 1);
+    const face = this.add.rectangle(0, -2, 36, 34, COLORS.pink, 1);
     this.couponCopyIcon = this.add.container(0, 0, [
       this.add.rectangle(-4, -5, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
       this.add.rectangle(3, 3, 13, 15, COLORS.cream, 1).setStrokeStyle(2, COLORS.navy),
@@ -1878,7 +1882,7 @@ export class GreyboxScene extends Phaser.Scene {
     };
 
     button
-      .setSize(44, 44)
+      .setSize(copyButtonHitArea, copyButtonHitArea)
       .setInteractive({ useHandCursor: true })
       .on("pointerover", () => {
         if (!pressed) {

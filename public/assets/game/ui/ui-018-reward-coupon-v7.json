@@ -1,0 +1,115 @@
+{
+  "assetId": "UI-018",
+  "version": "v7",
+  "asset": "Owner-provided BeautyBomb delivery reward coupon",
+  "status": "integrated",
+  "canvas": {
+    "width": 332,
+    "height": 498
+  },
+  "runtimePlacement": {
+    "x": 180,
+    "y": 320,
+    "originX": 0.5,
+    "originY": 0.5
+  },
+  "source": {
+    "path": "visual-references/ui-018-reward-coupon-source-v5.jpeg",
+    "sha256": "af2e2f28dac3415865454f633ba9ed1ba52c057cf3fa21a13951215523dfa47d",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "role": "sole visual source supplied by the owner"
+  },
+  "master": {
+    "path": "visual-references/ui-018-reward-coupon-master-v7.png",
+    "sha256": "63b72a20973f13e44e69e91f5b8aa9ba89dd39aaad7fb421a36b79cea4386cc6",
+    "pixelSha256": "1fc4bd3d41f09408b937606163f7f5458f026c8d353bb58fe05920cb04958a6b",
+    "dimensions": {
+      "width": 1024,
+      "height": 1536
+    },
+    "transparentBackground": true,
+    "alpha": "binary; exterior border-connected near-white component only"
+  },
+  "runtime": {
+    "path": "public/assets/game/ui/ui-018-reward-coupon-v7.png",
+    "sha256": "38ce3320721d770adc18b82966a2764eadabb733fc6ca5e900b8ae27a38cfc10",
+    "pixelSha256": "04fcecb71a0fccc15350d186fe96b0b5acf6aa26e4e8dcb00eda56d14e2f3165",
+    "dimensions": {
+      "width": 332,
+      "height": 498
+    },
+    "phaserTextureFilter": "nearest",
+    "origin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "placement": {
+      "x": 180,
+      "y": 320
+    }
+  },
+  "wordmark": {
+    "text": "BeautyBomb",
+    "logicalBounds": {
+      "x": 82,
+      "y": 94,
+      "width": 169,
+      "height": 17
+    },
+    "logicalTop": 94,
+    "style": "UI-009 yellow face, violet outline, pink lower-right extrusion, cyan-white highlight",
+    "font": "Press Start 2P"
+  },
+  "informationCopy": {
+    "text": "Спасибо за помощь нашему курьеру! Скопируйте подарочный промокод 20% на все товары.",
+    "renderedLines": [
+      "Спасибо",
+      "за помощь",
+      "нашему курьеру!",
+      "Скопируйте",
+      "подарочный",
+      "промокод 20%",
+      "на все товары."
+    ],
+    "logicalBounds": {
+      "x": 76,
+      "y": 136,
+      "width": 180,
+      "height": 132
+    },
+    "font": {
+      "family": "Press Start 2P",
+      "sizePx": 12
+    },
+    "align": "center"
+  },
+  "build": {
+    "buildScript": "scripts/build_reward_coupon_v7.py",
+    "exteriorRemoval": "border-connected near-white flood fill; enclosed light pixels preserved",
+    "resizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": "none",
+    "antialiasing": false
+  },
+  "liveOverlay": {
+    "couponCode": "XQZ-20476",
+    "codeAndCopyControl": "compact live Phaser and DOM accessibility UI in the lower tear-off",
+    "tearOffArea": "contains only the code row, copy control, and transient copy confirmation",
+    "codeField": {
+      "x": 154,
+      "y": 484,
+      "width": 122,
+      "height": 44
+    },
+    "copyButton": {
+      "x": 246,
+      "y": 484,
+      "width": 44,
+      "height": 44,
+      "hitArea": 48
+    }
+  }
+}
