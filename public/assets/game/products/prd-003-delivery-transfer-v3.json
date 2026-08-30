@@ -1,0 +1,40 @@
+{
+  "assetId": "PRD-003",
+  "version": "v3",
+  "status": "integrated",
+  "texture": "prd-003-delivery-transfer-v3.png",
+  "canvas": {
+    "width": 32,
+    "height": 64
+  },
+  "visibleBounds": {
+    "x": 5,
+    "y": 5,
+    "width": 22,
+    "height": 54
+  },
+  "orientation": "vertical; shadow-free flip-top roof tube rotated clockwise",
+  "origin": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "runtimeScale": 1,
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
+    "designMasterSha256": "05cf34de50f85d87b17e0db96a6f79c0ea4890c9702dfa4f1176a5e2955bb531",
+    "sourceBox": [
+      270,
+      78,
+      1138,
+      432
+    ],
+    "buildScript": "scripts/build_delivery_product_v3.py",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "paletteQuantization": false,
+    "shadowTreatment": "fixed native-grid upper-left cap cast shadow removed",
+    "phaserTextureFilter": "nearest",
+    "runtimeSha256": "c633f8e988d95c1d7380fbb9eb6cb64421536102a970b84d92ba737f441d9307",
+    "runtimeSource": "versioned master; not screenshot or runtime sprite"
+  }
+}

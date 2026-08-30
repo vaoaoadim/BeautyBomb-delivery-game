@@ -246,8 +246,8 @@ const DELIVERY_ASSETS = Object.freeze({
     frameHeight: 36,
   },
   product: {
-    textureKey: "delivery-product-v2",
-    path: "/assets/game/products/prd-003-delivery-transfer-v2.png",
+    textureKey: "delivery-product-v3",
+    path: "/assets/game/products/prd-003-delivery-transfer-v3.png",
   },
   rewardCoupon: {
     textureKey: "delivery-reward-coupon-v7",
@@ -1286,7 +1286,12 @@ export class GreyboxScene extends Phaser.Scene {
       y: this.player.y,
       scale: this.player.scaleX,
     };
-    const { anchors, runtime } = DELIVERY_FINALE;
+    // Keep the house doorway stationary while its recipient resolves into view.
+    // The previous shared interval let the parallax drift behind her, which
+    // read as a sudden relative jump even though her own interpolation was valid.
+    this.setEnvironmentMode("arrival-finite");
+
+    const { anchors } = DELIVERY_FINALE;
     this.deliveryGirl
       .setPosition(
         anchors.character.doorwayStart.x,
@@ -1307,7 +1312,7 @@ export class GreyboxScene extends Phaser.Scene {
       0,
       1,
     );
-    const easedReveal = 1 - (1 - revealProgress) ** 3;
+    const easedReveal = Phaser.Math.Easing.Sine.Out(revealProgress);
     const speedScale = (1 - decelerationProgress) ** 2;
     this.animateEnvironment(delta, speedScale);
     this.moveObstacles(delta * speedScale);
@@ -1353,7 +1358,6 @@ export class GreyboxScene extends Phaser.Scene {
       .setDepth(RENDER_DEPTH.playerBase);
 
     if (revealProgress >= 1 && this.player.anims.isPlaying) {
-      this.setEnvironmentMode("arrival-finite");
       this.player.stop().setFrame(0);
       this.clearObstacles();
     }
