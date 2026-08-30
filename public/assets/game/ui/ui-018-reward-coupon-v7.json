@@ -24,8 +24,8 @@
   },
   "master": {
     "path": "visual-references/ui-018-reward-coupon-master-v7.png",
-    "sha256": "63b72a20973f13e44e69e91f5b8aa9ba89dd39aaad7fb421a36b79cea4386cc6",
-    "pixelSha256": "1fc4bd3d41f09408b937606163f7f5458f026c8d353bb58fe05920cb04958a6b",
+    "sha256": "5bb7d0f662c5daabc4849c1f88100debedb493d4f0cf907f6b80648b4bcd10d6",
+    "pixelSha256": "9ec1a3ea89297b6ac6d68d753356251a6bab36f89689832f6fa76076486482c9",
     "dimensions": {
       "width": 1024,
       "height": 1536
@@ -35,8 +35,8 @@
   },
   "runtime": {
     "path": "public/assets/game/ui/ui-018-reward-coupon-v7.png",
-    "sha256": "38ce3320721d770adc18b82966a2764eadabb733fc6ca5e900b8ae27a38cfc10",
-    "pixelSha256": "04fcecb71a0fccc15350d186fe96b0b5acf6aa26e4e8dcb00eda56d14e2f3165",
+    "sha256": "e57774fbbaa915aaad605066c659bc85b98c29e37c018879d522b45050665152",
+    "pixelSha256": "b551f9c5bf301016acaa47cb2f18f5aa39d8724291036dfa14318eed78c998e9",
     "dimensions": {
       "width": 332,
       "height": 498
@@ -68,17 +68,19 @@
     "renderedLines": [
       "Спасибо",
       "за помощь",
-      "нашему курьеру!",
+      "нашему",
+      "курьеру!",
       "Скопируйте",
       "подарочный",
-      "промокод 20%",
-      "на все товары."
+      "промокод",
+      "20% на все",
+      "товары."
     ],
     "logicalBounds": {
-      "x": 76,
-      "y": 136,
-      "width": 180,
-      "height": 132
+      "x": 106,
+      "y": 132,
+      "width": 120,
+      "height": 140
     },
     "font": {
       "family": "Press Start 2P",

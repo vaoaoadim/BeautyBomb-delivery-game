@@ -33,15 +33,17 @@ TITLE_FONT_SIZE_LOGICAL_PX = 17
 INFO_LINES = (
     "Спасибо",
     "за помощь",
-    "нашему курьеру!",
+    "нашему",
+    "курьеру!",
     "Скопируйте",
     "подарочный",
-    "промокод 20%",
-    "на все товары.",
+    "промокод",
+    "20% на все",
+    "товары.",
 )
-INFO_TOP_LOGICAL_PX = 136
+INFO_TOP_LOGICAL_PX = 132
 INFO_FONT_SIZE_LOGICAL_PX = 12
-INFO_LINE_HEIGHT_LOGICAL_PX = 20
+INFO_LINE_HEIGHT_LOGICAL_PX = 16
 
 PALETTE = {
     "violet": (30, 29, 62, 255),
