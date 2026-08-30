@@ -24,8 +24,8 @@
   },
   "master": {
     "path": "visual-references/ui-018-reward-coupon-master-v7.png",
-    "sha256": "e137ba7796146c681cabb8d3b0d4e9b1647eda5305391d23fcea84f4757369a0",
-    "pixelSha256": "eb7b76659a14490530e68ed329c6084685d39644a82aab8d845e8aea61355923",
+    "sha256": "f6a5c1ef570c030ccd6ffe1e024cc148cf59578a61a1ede49b7230f1abaf6153",
+    "pixelSha256": "b6e3fc0bdabb5d307f7ea6383bc9619efe76b3336048ee77674d3acc6f3d49ac",
     "dimensions": {
       "width": 1024,
       "height": 1536
@@ -35,8 +35,8 @@
   },
   "runtime": {
     "path": "public/assets/game/ui/ui-018-reward-coupon-v7.png",
-    "sha256": "0a2768d0e9679456d1e432dbb4f4ea1973117b6aac1b8f0b82e593b58e61307a",
-    "pixelSha256": "5e0fccdb75ac172036a6bd1d75b8af1f4d920f49522a0e6a32346350b829e54d",
+    "sha256": "8486e59970b3bb55b63ff661dffd57c5aee9574ccc484ef44ddd4d7193e3c564",
+    "pixelSha256": "586fc6cc9629843cb8b02f51a52c1b5ebff774ebcf2323fb11814bbbcbe98d65",
     "dimensions": {
       "width": 332,
       "height": 498
@@ -85,6 +85,22 @@
       "sizePx": 12
     },
     "align": "center"
+  },
+  "discountLabel": {
+    "text": "20%",
+    "logicalBounds": {
+      "x": 106,
+      "y": 270,
+      "width": 120,
+      "height": 40
+    },
+    "logicalTop": 270,
+    "style": "same Press Start 2P yellow face, violet outline, pink extrusion, and cyan-white highlight as the coupon wordmark",
+    "font": {
+      "family": "Press Start 2P",
+      "sizePx": 40
+    },
+    "maxWidthPx": 169
   },
   "build": {
     "buildScript": "scripts/build_reward_coupon_v7.py",

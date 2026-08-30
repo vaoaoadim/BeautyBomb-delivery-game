@@ -30,6 +30,10 @@ RUNTIME_SIZE = (332, 498)
 TITLE_TEXT = "BeautyBomb"
 TITLE_TOP_LOGICAL_PX = 94
 TITLE_FONT_SIZE_LOGICAL_PX = 17
+DISCOUNT_TEXT = "20%"
+DISCOUNT_TOP_LOGICAL_PX = 270
+DISCOUNT_FONT_SIZE_LOGICAL_PX = 40
+MAX_DISCOUNT_WIDTH_LOGICAL_PX = 169
 INFO_LINES = (
     "Спасибо за помощь",
     "нашему курьеру!",
@@ -90,17 +94,22 @@ def colorize(mask: Image.Image, color: tuple[int, int, int, int]) -> Image.Image
     return layer
 
 
-def add_wordmark(master: Image.Image) -> dict[str, int]:
+def add_branded_text(
+    master: Image.Image,
+    text: str,
+    logical_top: int,
+    font_size_logical_px: int,
+) -> dict[str, int]:
     scale = master.width / RUNTIME_SIZE[0]
-    font = ImageFont.truetype(FONT_PATH, round(TITLE_FONT_SIZE_LOGICAL_PX * scale))
+    font = ImageFont.truetype(FONT_PATH, round(font_size_logical_px * scale))
     probe = ImageDraw.Draw(Image.new("L", (1, 1), 0))
-    bbox = probe.textbbox((0, 0), TITLE_TEXT, font=font)
+    bbox = probe.textbbox((0, 0), text, font=font)
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
     face = Image.new("L", master.size, 0)
     x = round((master.width - text_width) / 2 - bbox[0])
-    y = round(TITLE_TOP_LOGICAL_PX * scale - bbox[1])
-    ImageDraw.Draw(face).text((x, y), TITLE_TEXT, font=font, fill=255)
+    y = round(logical_top * scale - bbox[1])
+    ImageDraw.Draw(face).text((x, y), text, font=font, fill=255)
     face = threshold_mask(face)
 
     outline_radius = max(1, round(2 * scale))
@@ -122,22 +131,43 @@ def add_wordmark(master: Image.Image) -> dict[str, int]:
     highlight.rectangle(
         (
             x + round(scale),
-            round(TITLE_TOP_LOGICAL_PX * scale),
+            round(logical_top * scale),
             x + round(2 * scale),
-            round((TITLE_TOP_LOGICAL_PX + 1) * scale),
+            round((logical_top + 1) * scale),
         ),
         fill=(255, 255, 255, 255),
     )
     highlight.point(
-        (x + round(3 * scale), round(TITLE_TOP_LOGICAL_PX * scale)),
+        (x + round(3 * scale), round(logical_top * scale)),
         fill=PALETTE["cyan_light"],
     )
     return {
         "x": round(x / scale),
-        "y": TITLE_TOP_LOGICAL_PX,
+        "y": logical_top,
         "width": round(text_width / scale),
         "height": round(text_height / scale),
     }
+
+
+def add_wordmark(master: Image.Image) -> dict[str, int]:
+    return add_branded_text(
+        master,
+        TITLE_TEXT,
+        TITLE_TOP_LOGICAL_PX,
+        TITLE_FONT_SIZE_LOGICAL_PX,
+    )
+
+
+def add_discount_label(master: Image.Image) -> dict[str, int]:
+    bounds = add_branded_text(
+        master,
+        DISCOUNT_TEXT,
+        DISCOUNT_TOP_LOGICAL_PX,
+        DISCOUNT_FONT_SIZE_LOGICAL_PX,
+    )
+    if bounds["width"] > MAX_DISCOUNT_WIDTH_LOGICAL_PX:
+        raise RuntimeError("The reward discount label exceeds the BeautyBomb wordmark width")
+    return bounds
 
 
 def add_information_copy(master: Image.Image) -> dict[str, int]:
@@ -188,6 +218,7 @@ def main() -> None:
     master.putalpha(alpha)
     title_bounds = add_wordmark(master)
     information_bounds = add_information_copy(master)
+    discount_bounds = add_discount_label(master)
     assert_binary_alpha(master)
 
     MASTER.parent.mkdir(parents=True, exist_ok=True)
@@ -240,6 +271,14 @@ def main() -> None:
             "logicalBounds": information_bounds,
             "font": {"family": "Press Start 2P", "sizePx": INFO_FONT_SIZE_LOGICAL_PX},
             "align": "center",
+        },
+        "discountLabel": {
+            "text": DISCOUNT_TEXT,
+            "logicalBounds": discount_bounds,
+            "logicalTop": DISCOUNT_TOP_LOGICAL_PX,
+            "style": "same Press Start 2P yellow face, violet outline, pink extrusion, and cyan-white highlight as the coupon wordmark",
+            "font": {"family": "Press Start 2P", "sizePx": DISCOUNT_FONT_SIZE_LOGICAL_PX},
+            "maxWidthPx": MAX_DISCOUNT_WIDTH_LOGICAL_PX,
         },
         "build": {
             "buildScript": "scripts/build_reward_coupon_v7.py",
