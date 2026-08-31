@@ -13,3 +13,6 @@ coverage/
 Thumbs.db
 tmp/
 visual-references/beautybomb-reference-moodboard.png
+
+.vercel
+.env*
