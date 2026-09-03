@@ -16,7 +16,29 @@
   <body>
     <main class="app-shell">
       <div class="game-frame">
-        <div id="game-root" aria-label="Игровое окно BeautyBomb Delivery"></div>
+        <div id="game-root" aria-label="Игровое окно BeautyBomb Delivery">
+          <section
+            id="game-loading"
+            class="game-loading"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <p class="game-loading__copy">
+              <span aria-hidden="true">Курьер забирает товар</span><span class="game-loading__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+              <span class="game-loading__sr-only">Курьер забирает товар…</span>
+            </p>
+            <div
+              class="game-loading__progress game-loading__progress--indeterminate"
+              role="progressbar"
+              aria-label="Загрузка игры"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <span></span>
+            </div>
+            <p class="game-loading__error" hidden>Не удалось загрузить игру</p>
+          </section>
+        </div>
       </div>
     </main>
     <script type="module" src="/src/main.ts"></script>
