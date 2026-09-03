@@ -103,7 +103,7 @@ body {
 .game-loading__dots i {
   display: inline-block;
   width: 0.34em;
-  color: #ff4fab;
+  color: #000;
   font-style: normal;
   opacity: 0.16;
   animation: game-loading-dot 1.5s steps(1, end) infinite;
@@ -268,6 +268,7 @@ body {
     calc((100dvh - 24px) * 9 / 16 + 20px)
   );
   padding: var(--embed-frame-width);
+  overflow: hidden;
   border: var(--embed-frame-width) solid #1e1d3e;
   border-radius: 12px;
   background: #00b7d6;
