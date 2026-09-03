@@ -40,7 +40,10 @@ import {
   type ParallaxMovementMode,
 } from "../systems/parallax";
 import { canPlayGameplayMusic } from "../systems/gameplayMusic";
-import { requestPortfolioEmbedClose } from "../../integration/portfolioEmbed";
+import {
+  PORTFOLIO_EMBED_LIFECYCLE_EVENTS,
+  requestPortfolioEmbedClose,
+} from "../../integration/portfolioEmbed";
 
 interface CollisionSpec {
   readonly x: number;
@@ -401,6 +404,7 @@ export class GreyboxScene extends Phaser.Scene {
   private finaleFadeActive = false;
   private claimInputBound = false;
   private rewardFlowInvoked = false;
+  private preloadFailed = false;
 
   private readonly onIntroPointerDown = (): void => {
     this.beginIntroTransition();
@@ -463,6 +467,26 @@ export class GreyboxScene extends Phaser.Scene {
   }
 
   public preload(): void {
+    this.preloadFailed = false;
+
+    const reportPreloadProgress = (progress: number): void => {
+      this.game.events.emit(
+        PORTFOLIO_EMBED_LIFECYCLE_EVENTS.preloadProgress,
+        progress,
+      );
+    };
+    const reportPreloadError = (): void => {
+      this.preloadFailed = true;
+      this.game.events.emit(PORTFOLIO_EMBED_LIFECYCLE_EVENTS.preloadError);
+    };
+
+    this.load.on(Phaser.Loader.Events.PROGRESS, reportPreloadProgress);
+    this.load.on(Phaser.Loader.Events.FILE_LOAD_ERROR, reportPreloadError);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.load.off(Phaser.Loader.Events.PROGRESS, reportPreloadProgress);
+      this.load.off(Phaser.Loader.Events.FILE_LOAD_ERROR, reportPreloadError);
+    });
+
     for (const layer of ENVIRONMENT_PARALLAX.layers) {
       this.load.image(layer.textureKey, layer.runtimePath);
     }
@@ -645,6 +669,12 @@ export class GreyboxScene extends Phaser.Scene {
     this.updateHud();
     this.startPlayerIntroIdleAnimation();
     this.startIntroPulseTween();
+
+    if (!this.preloadFailed) {
+      this.game.events.once(Phaser.Core.Events.POST_RENDER, () => {
+        this.game.events.emit(PORTFOLIO_EMBED_LIFECYCLE_EVENTS.ready);
+      });
+    }
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.unbindIntroPointerInput();

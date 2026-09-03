@@ -8,11 +8,41 @@ export const PORTFOLIO_CLOSE_REQUEST = Object.freeze({
   type: "request-close",
 } as const);
 
+const PORTFOLIO_EMBED_GAME_EVENTS = Object.freeze({
+  preloadProgress: "portfolio-embed-preload-progress",
+  preloadError: "portfolio-embed-preload-error",
+  ready: "portfolio-embed-ready",
+});
+
 type PortfolioHostActivityMessage = Readonly<{
   source: "portfolio-host";
   version: 1;
   type: "set-game-active";
   active: boolean;
+}>;
+
+type PortfolioGameMessage =
+  | Readonly<{
+      source: typeof PORTFOLIO_EMBED_SOURCE;
+      version: typeof PORTFOLIO_EMBED_VERSION;
+      type: "progress";
+      progress: number;
+    }>
+  | Readonly<{
+      source: typeof PORTFOLIO_EMBED_SOURCE;
+      version: typeof PORTFOLIO_EMBED_VERSION;
+      type: "ready";
+    }>
+  | Readonly<{
+      source: typeof PORTFOLIO_EMBED_SOURCE;
+      version: typeof PORTFOLIO_EMBED_VERSION;
+      type: "error";
+      reason: "preload" | "startup";
+    }>;
+
+type GameEventEmitter = Readonly<{
+  on: (eventName: string, listener: (...args: unknown[]) => void) => unknown;
+  off: (eventName: string, listener: (...args: unknown[]) => void) => unknown;
 }>;
 
 type PortfolioEmbedOptions = Readonly<{
@@ -57,13 +87,28 @@ export function isPortfolioHostActivityMessage(
 
 export function installPortfolioEmbedBridge(
   options: PortfolioEmbedOptions,
-): Readonly<{ isEmbedded: boolean; dispose: () => void }> {
+): Readonly<{
+  isEmbedded: boolean;
+  bindGameEvents: (events: GameEventEmitter) => void;
+  reportStartupError: () => void;
+  dispose: () => void;
+}> {
   const isEmbedded = isPortfolioEmbedSearch(window.location.search);
   const parentOrigin = normalizePortfolioParentOrigin(
     import.meta.env.VITE_PORTFOLIO_PARENT_ORIGIN,
   );
   const parentWindow = window.parent;
   let closeRequested = false;
+  let gameEvents: GameEventEmitter | null = null;
+
+  const postToHost = (message: PortfolioGameMessage): boolean => {
+    if (!isEmbedded || !parentOrigin || parentWindow === window) {
+      return false;
+    }
+
+    parentWindow.postMessage(message, parentOrigin);
+    return true;
+  };
 
   const requestClose = (): boolean => {
     if (
@@ -94,13 +139,73 @@ export function installPortfolioEmbedBridge(
     options.onHostActivityChange(event.data.active);
   };
 
+  const onPreloadProgress = (value: unknown): void => {
+    if (typeof value !== "number" || !Number.isFinite(value)) {
+      return;
+    }
+
+    postToHost({
+      source: PORTFOLIO_EMBED_SOURCE,
+      version: PORTFOLIO_EMBED_VERSION,
+      type: "progress",
+      progress: Math.min(1, Math.max(0, value)),
+    });
+  };
+
+  const onPreloadError = (): void => {
+    postToHost({
+      source: PORTFOLIO_EMBED_SOURCE,
+      version: PORTFOLIO_EMBED_VERSION,
+      type: "error",
+      reason: "preload",
+    });
+  };
+
+  const onReady = (): void => {
+    postToHost({
+      source: PORTFOLIO_EMBED_SOURCE,
+      version: PORTFOLIO_EMBED_VERSION,
+      type: "ready",
+    });
+  };
+
+  const unbindGameEvents = (): void => {
+    if (!gameEvents) {
+      return;
+    }
+
+    gameEvents.off(PORTFOLIO_EMBED_GAME_EVENTS.preloadProgress, onPreloadProgress);
+    gameEvents.off(PORTFOLIO_EMBED_GAME_EVENTS.preloadError, onPreloadError);
+    gameEvents.off(PORTFOLIO_EMBED_GAME_EVENTS.ready, onReady);
+    gameEvents = null;
+  };
+
   window.addEventListener("message", onMessage);
   activeCloseRequest = requestClose;
 
   return {
     isEmbedded,
+    bindGameEvents: (events) => {
+      unbindGameEvents();
+      gameEvents = events;
+      gameEvents.on(
+        PORTFOLIO_EMBED_GAME_EVENTS.preloadProgress,
+        onPreloadProgress,
+      );
+      gameEvents.on(PORTFOLIO_EMBED_GAME_EVENTS.preloadError, onPreloadError);
+      gameEvents.on(PORTFOLIO_EMBED_GAME_EVENTS.ready, onReady);
+    },
+    reportStartupError: () => {
+      postToHost({
+        source: PORTFOLIO_EMBED_SOURCE,
+        version: PORTFOLIO_EMBED_VERSION,
+        type: "error",
+        reason: "startup",
+      });
+    },
     dispose: () => {
       window.removeEventListener("message", onMessage);
+      unbindGameEvents();
       if (activeCloseRequest === requestClose) {
         activeCloseRequest = null;
       }
@@ -111,3 +216,5 @@ export function installPortfolioEmbedBridge(
 export function requestPortfolioEmbedClose(): boolean {
   return activeCloseRequest?.() ?? false;
 }
+
+export const PORTFOLIO_EMBED_LIFECYCLE_EVENTS = PORTFOLIO_EMBED_GAME_EVENTS;

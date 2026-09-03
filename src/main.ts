@@ -30,7 +30,14 @@ const embedBridge = installPortfolioEmbedBridge({
 
 document.documentElement.classList.toggle("portfolio-embed", embedBridge.isEmbedded);
 
-game = createGame(gameRoot);
+try {
+  game = createGame(gameRoot);
+  embedBridge.bindGameEvents(game.events);
+} catch (error) {
+  embedBridge.reportStartupError();
+  throw error;
+}
+
 game.canvas.tabIndex = 0;
 
 const focusGame = (): void => {
