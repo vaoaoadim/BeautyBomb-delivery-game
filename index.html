@@ -2,6 +2,13 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Select the frame before first paint, without waiting for Phaser to load.
+      document.documentElement.classList.toggle(
+        "portfolio-embed",
+        new URLSearchParams(window.location.search).get("embed") === "portfolio",
+      );
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
