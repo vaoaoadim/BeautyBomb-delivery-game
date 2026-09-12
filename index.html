@@ -2,6 +2,13 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Select the frame before first paint, without waiting for Phaser to load.
+      document.documentElement.classList.toggle(
+        "portfolio-embed",
+        new URLSearchParams(window.location.search).get("embed") === "portfolio",
+      );
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -16,7 +23,29 @@
   <body>
     <main class="app-shell">
       <div class="game-frame">
-        <div id="game-root" aria-label="Игровое окно BeautyBomb Delivery"></div>
+        <div id="game-root" aria-label="Игровое окно BeautyBomb Delivery">
+          <section
+            id="game-loading"
+            class="game-loading"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <p class="game-loading__copy">
+              <span aria-hidden="true">Курьер забирает товар</span><span class="game-loading__dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+              <span class="game-loading__sr-only">Курьер забирает товар…</span>
+            </p>
+            <div
+              class="game-loading__progress game-loading__progress--indeterminate"
+              role="progressbar"
+              aria-label="Загрузка игры"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <span></span>
+            </div>
+            <p class="game-loading__error" hidden>Не удалось загрузить игру</p>
+          </section>
+        </div>
       </div>
     </main>
     <script type="module" src="/src/main.ts"></script>
