@@ -94,6 +94,8 @@ Working colors are concept colors, not an official brand book:
 
 ## Current phase
 
+Finale correction (D-080): recipient reveal and transfer target derive from the ENV-009 door sill `(1535,500)` in texture space, transformed using the actual stopped city position. This supersedes the fixed character screen anchors below. PRD-003 v4 replaces v3 with a cap-down, hardware-free extraction from the same approved roof master; its `64 × 128` backing texture renders at `0.5` with unchanged world size and flight timing.
+
 The deterministic greybox and varied traffic schedule are implemented. The Pixel Art Bible and Asset Manifest are specified from the approved references and stable traits observed on the official BeautyBomb site.
 
 The approved intro uses `UI-013` v3 for the Russian comic callout and `UI-014` for the centered three-color `ЖМИ` prompt. UI-013 v3 preserves the approved callout and replaces only the small yellow decorative mark in its lower-right interior with the opaque lavender bubble surface. Its `ready → transition → playing` flow is integrated and verified at logical `360 × 640` and CSS widths of approximately `320` and `360 px`; no runtime font download is required.
