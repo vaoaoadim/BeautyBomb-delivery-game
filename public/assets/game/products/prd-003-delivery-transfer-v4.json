@@ -1,0 +1,82 @@
+{
+  "assetId": "PRD-003",
+  "version": "v4",
+  "status": "integrated",
+  "canvas": {
+    "width": 64,
+    "height": 128
+  },
+  "runtimeScale": 0.5,
+  "orientation": "vertical; identical roof tube rotated counterclockwise, cap down",
+  "production": {
+    "designMaster": "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
+    "designMasterSha256": "05cf34de50f85d87b17e0db96a6f79c0ea4890c9702dfa4f1176a5e2955bb531",
+    "sourceContour": [
+      [
+        265,
+        164
+      ],
+      [
+        281,
+        149
+      ],
+      [
+        359,
+        149
+      ],
+      [
+        375,
+        161
+      ],
+      [
+        379,
+        144
+      ],
+      [
+        1055,
+        78
+      ],
+      [
+        1055,
+        412
+      ],
+      [
+        1009,
+        412
+      ],
+      [
+        1009,
+        395
+      ],
+      [
+        379,
+        354
+      ],
+      [
+        373,
+        362
+      ],
+      [
+        360,
+        375
+      ],
+      [
+        280,
+        375
+      ],
+      [
+        265,
+        358
+      ]
+    ],
+    "occlusionRepair": "x819:870 y360:397 copied from adjacent tube column x818 before mask",
+    "buildScript": "scripts/build_delivery_product_v4.py",
+    "assetMode": "high-detail-pixel-style-raster",
+    "offlineResizeCount": 1,
+    "resizeFilter": "nearest-neighbor",
+    "phaserTextureFilter": "nearest",
+    "paletteQuantization": false,
+    "runtimeSource": "versioned master; not screenshot or runtime sprite",
+    "runtimeSha256": "f53b404bc3ee42673d74a5163b0ec86f706e559d46eb443b63eb7bd051298b98"
+  }
+}

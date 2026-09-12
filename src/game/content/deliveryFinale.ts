@@ -68,6 +68,22 @@ export const DELIVERY_FINALE = Object.freeze(
   rawDeliveryFinale as DeliveryFinaleContent,
 );
 
+/** Door sill measured in ENV-009 v3 texture pixels, not screen coordinates. */
+export function resolveRecipientAnchors(city: {
+  x: number; y: number; tilePositionX: number; tilePositionY: number;
+  tileScaleX: number; tileScaleY: number;
+}): CharacterArrivalAnchors {
+  const doorwayStart = {
+    x: city.x + (1535 - city.tilePositionX) * city.tileScaleX,
+    y: city.y + (500 - city.tilePositionY) * city.tileScaleY,
+  };
+  return {
+    doorwayStart,
+    doorstepEnd: { x: doorwayStart.x + 10, y: doorwayStart.y + 8 },
+    productTarget: { x: doorwayStart.x + 10, y: doorwayStart.y - 14 },
+  };
+}
+
 const TRANSITIONS: Readonly<
   Partial<
     Record<

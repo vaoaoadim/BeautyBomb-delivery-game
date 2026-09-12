@@ -34,7 +34,7 @@ import rewardCouponMetadata from "../public/assets/game/ui/ui-018-reward-coupon-
 import deliveryDestinationCityMetadata from "../public/assets/game/environment/env-009-delivery-destination-city-v3.json";
 import deliveryHouseMetadata from "../public/assets/game/environment/dst-001-arrival-house-v1.json";
 import deliveryGirlMetadata from "../public/assets/game/characters/chr-003-lowpoly-recipient-v1.json";
-import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v2.json";
+import deliveryProductMetadata from "../public/assets/game/products/prd-003-delivery-transfer-v4.json";
 import { GAME_VIEWPORT, LANE_VISUAL_SCALES } from "../src/game/config";
 import { ENVIRONMENT_PARALLAX } from "../src/game/content/environmentParallax";
 
@@ -584,11 +584,12 @@ describe("approved-master asset contract", () => {
 
     expect(deliveryProductMetadata).toMatchObject({
       assetId: "PRD-003",
-      canvas: { width: 32, height: 64 },
-      orientation: "vertical; flip-top roof tube rotated clockwise",
+      canvas: { width: 64, height: 128 },
+      runtimeScale: 0.5,
+      orientation: "vertical; identical roof tube rotated counterclockwise, cap down",
       production: {
         designMaster: "visual-references/veh-001-courier-clean-concept-v8-flip-top.png",
-        buildScript: "scripts/build_delivery_product_v2.py",
+        buildScript: "scripts/build_delivery_product_v4.py",
         offlineResizeCount: 1,
         resizeFilter: "nearest-neighbor",
         phaserTextureFilter: "nearest",

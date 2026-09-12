@@ -21,6 +21,8 @@ import {
 import {
   advanceDeliveryPresentationPhase,
   DELIVERY_FINALE,
+  resolveRecipientAnchors,
+  type CharacterArrivalAnchors,
   type DeliveryPresentationPhase,
 } from "../content/deliveryFinale";
 import {
@@ -247,8 +249,8 @@ const DELIVERY_ASSETS = Object.freeze({
     frameHeight: 36,
   },
   product: {
-    textureKey: "delivery-product-v3",
-    path: "/assets/game/products/prd-003-delivery-transfer-v3.png",
+    textureKey: "delivery-product-v4",
+    path: "/assets/game/products/prd-003-delivery-transfer-v4.png",
   },
   rewardCoupon: {
     textureKey: "delivery-reward-coupon-v7",
@@ -394,6 +396,7 @@ export class GreyboxScene extends Phaser.Scene {
   private deliveryProduct: Phaser.GameObjects.Image | null = null;
   private deliveryClaimPulseTween: Phaser.Tweens.Tween | null = null;
   private productTween: Phaser.Tweens.Tween | null = null;
+  private recipientAnchors: CharacterArrivalAnchors = DELIVERY_FINALE.anchors.character;
   private confettiPieces: Phaser.GameObjects.Rectangle[] = [];
   private finaleFadeOverlay!: Phaser.GameObjects.Rectangle;
   private finaleFadeTween: Phaser.Tweens.Tween | null = null;
@@ -1315,11 +1318,13 @@ export class GreyboxScene extends Phaser.Scene {
     // read as a sudden relative jump even though her own interpolation was valid.
     this.setEnvironmentMode("arrival-finite");
 
-    const { anchors } = DELIVERY_FINALE;
+    const city = this.getCoherentCityLayer();
+    if (city) this.recipientAnchors = resolveRecipientAnchors(city.sprite);
+
     this.deliveryGirl
       .setPosition(
-        anchors.character.doorwayStart.x,
-        anchors.character.doorwayStart.y,
+        this.recipientAnchors.doorwayStart.x,
+        this.recipientAnchors.doorwayStart.y,
       )
       .setAlpha(0)
       .setVisible(true);
@@ -1345,13 +1350,13 @@ export class GreyboxScene extends Phaser.Scene {
     this.deliveryGirl
       .setPosition(
         Phaser.Math.Linear(
-          anchors.character.doorwayStart.x,
-          anchors.character.doorstepEnd.x,
+          this.recipientAnchors.doorwayStart.x,
+          this.recipientAnchors.doorstepEnd.x,
           easedReveal,
         ),
         Phaser.Math.Linear(
-          anchors.character.doorwayStart.y,
-          anchors.character.doorstepEnd.y,
+          this.recipientAnchors.doorwayStart.y,
+          this.recipientAnchors.doorstepEnd.y,
           easedReveal,
         ),
       )
@@ -1515,8 +1520,8 @@ export class GreyboxScene extends Phaser.Scene {
       .setScrollFactor(0);
 
     const control = {
-      x: (productStart.x + anchors.character.productTarget.x) / 2,
-      y: Math.min(productStart.y, anchors.character.productTarget.y) - 58,
+      x: (productStart.x + this.recipientAnchors.productTarget.x) / 2,
+      y: Math.min(productStart.y, this.recipientAnchors.productTarget.y) - 58,
     };
     const flight = { progress: 0 };
     this.productTween = this.tweens.add({
@@ -1534,10 +1539,10 @@ export class GreyboxScene extends Phaser.Scene {
           .setPosition(
             inverse * inverse * productStart.x +
               2 * inverse * progress * control.x +
-              progress * progress * anchors.character.productTarget.x,
+              progress * progress * this.recipientAnchors.productTarget.x,
             inverse * inverse * productStart.y +
               2 * inverse * progress * control.y +
-              progress * progress * anchors.character.productTarget.y,
+              progress * progress * this.recipientAnchors.productTarget.y,
           )
           .setAngle(
             this.prefersReducedMotion ? 0 : Math.sin(progress * Math.PI) * 5,

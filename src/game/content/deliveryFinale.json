@@ -29,7 +29,7 @@
   },
   "runtime": {
     "girlScale": 1,
-    "productScale": 1,
+    "productScale": 0.5,
     "destinationCityStartOffsetTexturePx": 526,
     "destinationCityReducedMotionOffsetTexturePx": 701
   },

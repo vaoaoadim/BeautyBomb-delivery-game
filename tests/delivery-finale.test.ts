@@ -3,11 +3,23 @@ import { describe, expect, it } from "vitest";
 import {
   advanceDeliveryPresentationPhase,
   DELIVERY_FINALE,
+  resolveRecipientAnchors,
   type DeliveryPresentationEvent,
   type DeliveryPresentationPhase,
 } from "../src/game/content/deliveryFinale";
 
 describe("delivery finale presentation", () => {
+  it("attaches the recipient to the actual door in normal and reduced motion", () => {
+    for (const offset of [694, 701, 695.5]) {
+      const anchors = resolveRecipientAnchors({x:0,y:0,tilePositionX:offset,
+        tilePositionY:0,tileScaleX:0.36,tileScaleY:0.55078125});
+      expect(anchors.doorwayStart.x).toBeCloseTo((1535-offset)*0.36);
+      expect(anchors.doorwayStart.y).toBeCloseTo(275.390625);
+      expect(anchors.doorstepEnd.x-anchors.doorwayStart.x).toBe(10);
+      expect(anchors.productTarget.x).toBe(anchors.doorstepEnd.x);
+      expect(anchors.productTarget.y).toBe(anchors.doorstepEnd.y-22);
+    }
+  });
   it("keeps the route duration separate from the 1.5 second finish road", () => {
     expect(DELIVERY_FINALE.finishRoadDurationMs).toBe(1_500);
     expect(DELIVERY_FINALE.finishRoadDurationMs).toBeGreaterThanOrEqual(1_000);

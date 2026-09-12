@@ -107,6 +107,12 @@ Keep this file short. Record only decisions that change product behavior, archit
 
 ## Open production questions
 
+### D-080 — Door-bound recipient and isolated transfer product (2026-09-12)
+
+The recipient now resolves the measured ENV-009 v3 door sill `(1535,500)` through the actual frozen city TileSprite transform. Her reveal and cream target share that resolved anchor, including reduced motion, instead of the stale independent screen x=243. Existing reveal timing, ease, endpoint offset, and reward flow remain intact.
+
+PRD-003 v4 is extracted from the immutable v8 courier master with a source-resolution contour excluding the mounting rail, clamps, van, and cast shadow. The one occluded edge region uses an explicitly documented adjacent tube-column repair before export. An exact counterclockwise transpose puts the cap below; a single aspect-preserving nearest-neighbor export to `64 × 128`, rendered at `0.5`, retains the same small world size with two backing samples per logical pixel. No roof master or vehicle asset is changed. v3 remains historical evidence only.
+
 - Official brand-book and asset permission.
 - Client website stack and iframe policy.
 - Production campaign rules, legal copy, geography, dates, and inventory.
