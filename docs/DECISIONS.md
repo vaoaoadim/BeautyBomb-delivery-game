@@ -111,6 +111,10 @@ The recipient now resolves the measured ENV-009 v3 door sill `(1535,500)` throug
 
 PRD-003 v4 is extracted from the immutable v8 courier master with a source-resolution contour excluding the mounting rail, clamps, van, and cast shadow. The one occluded edge region uses an explicitly documented adjacent tube-column repair before export. An exact counterclockwise transpose puts the cap below; a single aspect-preserving nearest-neighbor export to `64 × 128`, rendered at `0.5`, retains the same small world size with two backing samples per logical pixel. No roof master or vehicle asset is changed. v3 remains historical evidence only.
 
+### D-081 — Remove the cyan inset from the portfolio iframe frame (2026-09-20)
+
+The thin cyan rectangle was the `#00b7d6` background exposed by `.game-frame`'s internal padding in portfolio embed mode, not an iframe border, canvas outline, or focus treatment. The inset padding and cyan background are removed; the existing deep-violet border, pink outer accent, radius, clipping, canvas dimensions, and host communication remain unchanged.
+
 ## Open production questions
 
 - Official brand-book and asset permission.

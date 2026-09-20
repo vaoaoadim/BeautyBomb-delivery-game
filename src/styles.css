@@ -267,11 +267,9 @@ body {
     calc(100vw - 24px),
     calc((100dvh - 24px) * 9 / 16 + 20px)
   );
-  padding: var(--embed-frame-width);
   overflow: hidden;
   border: var(--embed-frame-width) solid #1e1d3e;
   border-radius: 12px;
-  background: #00b7d6;
   box-shadow:
     0 0 0 2px #ff4fab,
     0 0 0 4px #1e1d3e;
