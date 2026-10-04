@@ -10,13 +10,13 @@ The public iframe build is hosted at:
 https://beautybomb-delivery.vercel.app/?embed=portfolio
 ```
 
-Build the game with the exact origin of the portfolio site:
+Build the game with the comma-separated exact origins of the portfolio hosts:
 
 ```text
-VITE_PORTFOLIO_PARENT_ORIGIN=https://vao-dev-portfolio.bsdvbk.chatgpt.site
+VITE_PORTFOLIO_PARENT_ORIGIN=https://vao-dev-portfolio.bsdvbk.chatgpt.site,https://vaoaoadim.github.io
 ```
 
-The value must be an origin, not a path, and must not use `*`. Without it, the game remains safe but the close message is intentionally not sent.
+Each value must be an HTTP(S) origin, not a path, and must not use `*`. The bridge selects the allowed parent from the referrer or a validated activity message from `window.parent`; close messages target that exact origin. Without an allowed parent, the close message is intentionally not sent. The Vercel `frame-ancestors` policy permits both configured hosts.
 
 ## Recommended popup content
 

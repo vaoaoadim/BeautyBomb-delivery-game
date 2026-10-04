@@ -63,7 +63,8 @@ export function normalizePortfolioParentOrigin(
   }
 
   try {
-    return new URL(configuredOrigin).origin;
+    const url = new URL(configuredOrigin);
+    return ["http:", "https:"].includes(url.protocol) ? url.origin : null;
   } catch {
     return null;
   }
@@ -94,9 +95,15 @@ export function installPortfolioEmbedBridge(
   dispose: () => void;
 }> {
   const isEmbedded = isPortfolioEmbedSearch(window.location.search);
-  const parentOrigin = normalizePortfolioParentOrigin(
-    import.meta.env.VITE_PORTFOLIO_PARENT_ORIGIN,
-  );
+  const configuredOrigins: string = import.meta.env.VITE_PORTFOLIO_PARENT_ORIGIN ?? "";
+  const parentOrigins = configuredOrigins
+    .split(",")
+    .map(normalizePortfolioParentOrigin)
+    .filter((origin): origin is string => origin !== null);
+  const referrerOrigin = normalizePortfolioParentOrigin(document.referrer);
+  let parentOrigin = referrerOrigin && parentOrigins.includes(referrerOrigin)
+    ? referrerOrigin
+    : parentOrigins.length === 1 ? parentOrigins[0] : null;
   const parentWindow = window.parent;
   let closeRequested = false;
   let gameEvents: GameEventEmitter | null = null;
@@ -128,14 +135,15 @@ export function installPortfolioEmbedBridge(
   const onMessage = (event: MessageEvent<unknown>): void => {
     if (
       !isEmbedded ||
-      !parentOrigin ||
-      event.origin !== parentOrigin ||
+      !parentOrigins.includes(event.origin) ||
+      (parentOrigin !== null && event.origin !== parentOrigin) ||
       event.source !== parentWindow ||
       !isPortfolioHostActivityMessage(event.data)
     ) {
       return;
     }
 
+    parentOrigin = event.origin;
     options.onHostActivityChange(event.data.active);
   };
 

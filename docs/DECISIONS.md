@@ -115,6 +115,10 @@ PRD-003 v4 is extracted from the immutable v8 courier master with a source-resol
 
 The thin cyan rectangle was the `#00b7d6` background exposed by `.game-frame`'s internal padding in portfolio embed mode, not an iframe border, canvas outline, or focus treatment. The inset padding and cyan background are removed; the existing deep-violet border, pink outer accent, radius, clipping, canvas dimensions, and host communication remain unchanged.
 
+### D-082 — Support the GitHub Pages portfolio host (2026-10-04)
+
+The iframe CSP and host bridge now allow the existing Sites origin and `https://vaoaoadim.github.io`. The bridge sends messages only to the actual allowed parent, selected from the referrer or a validated message from `window.parent`. Wildcard origins remain forbidden. Game rules, assets, and the standalone Sites publication are unchanged.
+
 ## Open production questions
 
 - Official brand-book and asset permission.
